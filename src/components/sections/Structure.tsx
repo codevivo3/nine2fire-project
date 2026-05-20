@@ -12,7 +12,7 @@ export function ValueProps() {
   const t = useTranslations("ValueProps");
 
   return (
-    <section id='approach'>
+    <section id='approach' className='scroll-mt-20 md:scroll-mt-24'>
       <Container className='pt-8 pb-16 md:pt-12 md:pb-24 2xl:pt-8'>
         <SectionHeader
           eyebrow={t('eyebrow')}

@@ -1,6 +1,6 @@
 {
   "Footer": {
-    "tagline": "A bilingual foundation for editorial finance, tools, and deliberate growth.",
+    "tagline": "Freedom doesn’t happen. It’s built.",
     "copyright": "© Nine2Fire",
     "navTitle": "Navigate",
     "legalTitle": "Legal",
@@ -9,6 +9,7 @@
       "roadmap": "Roadmap",
       "insights": "Insights"
     },
+    "contactTitle": "Contact",
     "legal": {
       "disclaimer": "Disclaimer",
       "privacy": "Privacy",

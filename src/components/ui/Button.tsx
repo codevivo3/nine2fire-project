@@ -26,10 +26,10 @@ function getClasses(variant: Variant = 'gold') {
     'inline-flex h-12 cursor-pointer items-center justify-center rounded-full border px-5 text-sm font-bold tracking-tight transition-all duration-200';
 
   const gold =
-    'border-accent-token bg-accent-token text-[color:var(--color-on-accent)] hover:bg-secondary-token hover:text-[color:var(--color-on-accent)] dark:hover:text-accent-token';
+    'border-accent-token bg-accent-token text-[color:var(--color-button-text-dark)] hover:bg-secondary-token hover:text-[color:var(--color-button-text-light)]';
 
   const secondary =
-    'border-border-token bg-secondary-token text-foreground hover:bg-accent-token hover:text-[color:var(--color-highlight-text)] dark:text-accent-token dark:hover:text-[color:var(--color-highlight-text)]';
+    'border-border-token bg-secondary-token text-[color:var(--color-button-text-light)] hover:bg-accent-token hover:text-[color:var(--color-button-text-dark)]';
 
   return cn(base, variant === 'gold' ? gold : secondary);
 }

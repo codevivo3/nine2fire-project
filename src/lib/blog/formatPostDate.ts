@@ -9,10 +9,23 @@
  * - This helper should remain valid when posts move to Sanity
  * - It accepts ISO-like date strings from the shared `Post` model
  */
-export function formatPostDate(date: string, locale: string) {
+export function formatPostDate(
+  date: string | null | undefined,
+  locale: string,
+) {
+  if (!date) {
+    return "";
+  }
+
+  const parsedDate = new Date(date);
+
+  if (Number.isNaN(parsedDate.getTime())) {
+    return "";
+  }
+
   return new Intl.DateTimeFormat(locale, {
     month: "long",
     day: "numeric",
     year: "numeric",
-  }).format(new Date(`${date}T00:00:00`));
+  }).format(parsedDate);
 }

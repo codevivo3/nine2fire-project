@@ -12,7 +12,7 @@ export function Roadmap() {
   const t = useTranslations("Roadmap");
 
   return (
-    <section id='roadmap'>
+    <section id='roadmap' className='scroll-mt-20 md:scroll-mt-24'>
       <Container className='py-16 md:py-24'>
         <SectionHeader
           eyebrow={t('eyebrow')}

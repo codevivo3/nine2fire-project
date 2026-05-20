@@ -38,6 +38,8 @@ html.light {
 
   /* Text on accent (stable contrast) */
   --color-on-accent: #28282b;
+  --color-button-text-dark: #28282b;
+  --color-button-text-light: #f8f8f4;
 
   /* Surfaces & UI layers */
   --color-border: color-mix(in srgb, #738678 42%, #d6f3c4 58%);
@@ -79,6 +81,8 @@ html.dark {
 
   /* Text on accent (stable contrast) */
   --color-on-accent: #28282b;
+  --color-button-text-dark: #28282b;
+  --color-button-text-light: #f8f8f4;
 
   --color-border: color-mix(in srgb, #738678 38%, #28282b 62%);
   --color-surface: color-mix(in srgb, #28282b 88%, #4d5d53 12%);
@@ -235,7 +239,7 @@ input:disabled {
   top: 85%;
   height: 152%;
 
-  transform: translateY(-50%) rotate(-30deg) scaleX(0);
+  transform: translateY(-60%) rotate(-30deg) scaleX(0);
   transform-origin: left;
 
   background: var(--color-highlight);
@@ -248,10 +252,10 @@ input:disabled {
 }
 
 .link-highlight--icon::before {
-  top: 29%;
+  top: 55%;
   height: 85%;
-  left: -25%;
-  right: 36%;
+  left: 5%;
+  right: 6%;
 }
 
 .link-highlight:hover::before {

@@ -1,0 +1,15 @@
+import { draftMode } from "next/headers";
+import { NextResponse } from "next/server";
+
+const fallbackRedirectPath = "/en/blog";
+
+export async function GET(request: Request) {
+  const { searchParams } = new URL(request.url);
+  const redirectTo = searchParams.get("slug") || fallbackRedirectPath;
+  const redirectPathname = redirectTo.startsWith("/") ? redirectTo : fallbackRedirectPath;
+
+  const draft = await draftMode();
+  draft.disable();
+
+  return NextResponse.redirect(new URL(redirectPathname, request.url));
+}

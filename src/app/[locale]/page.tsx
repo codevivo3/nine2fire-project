@@ -28,7 +28,7 @@ export default async function LandingPage({ params }: LandingPageProps) {
       <Hero />
       <ValueProps />
       <Roadmap />
-      <Insights />
+      <Insights locale={locale} />
       <NewsletterSection />
     </main>
   );

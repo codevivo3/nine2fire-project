@@ -17,14 +17,20 @@ import Image from "next/image";
 
 import { formatPostDate } from "@/lib/blog/formatPostDate";
 import { Link } from "@/i18n/navigation";
+import {
+  getSanityImageDimensions,
+  isPortraitImage,
+  type SanityImageValue,
+} from "@/lib/sanity/image";
 
 type ArticleLayoutProps = {
   title: string;
-  date: string;
+  date?: string | null;
   locale?: string;
   readingTime?: string;
   imageSrc?: string;
   imageAlt?: string;
+  imageData?: SanityImageValue;
   excerpt?: string;
   tags?: string[];
   children: ReactNode;
@@ -37,20 +43,27 @@ export function ArticleLayout({
   readingTime,
   imageSrc,
   imageAlt,
+  imageData,
   excerpt,
   tags,
   children,
 }: ArticleLayoutProps) {
+  const portraitCover = isPortraitImage(imageData);
+  const coverDimensions = getSanityImageDimensions(imageData);
+  const formattedDate = formatPostDate(date, locale);
+  const metadata = [formattedDate, readingTime].filter(Boolean).join(" • ");
+
   return (
     <article className="mx-auto max-w-[720px] space-y-6 px-4 pt-24 pb-12">
       <header className="space-y-4">
         <h1 className="text-3xl md:text-4xl font-semibold tracking-[-0.025em] leading-snug">
           {title}
         </h1>
-        <p className="text-sm text-muted-foreground/80 tracking-tight mt-1">
-          {formatPostDate(date, locale)}
-          {readingTime ? ` • ${readingTime}` : ""}
-        </p>
+        {metadata ? (
+          <p className="text-sm text-muted-foreground/80 tracking-tight mt-1">
+            {metadata}
+          </p>
+        ) : null}
         {excerpt && (
           <p className="text-base text-foreground/70 leading-relaxed max-w-[640px]">
             {excerpt}
@@ -58,13 +71,23 @@ export function ArticleLayout({
         )}
       </header>
       {imageSrc && (
-        <div className="mt-4 overflow-hidden rounded-[var(--radius-sm)] border border-border-token">
+        <div
+          className={
+            portraitCover
+              ? "mx-auto mt-4 max-w-[460px] overflow-hidden rounded-[var(--radius-sm)] border border-border-token"
+              : "mt-4 overflow-hidden rounded-[var(--radius-sm)] border border-border-token"
+          }
+        >
           <Image
             src={imageSrc}
             alt={imageAlt || title}
-            width={1200}
-            height={630}
-            className="w-full h-auto object-cover"
+            width={coverDimensions?.width || 1200}
+            height={coverDimensions?.height || 630}
+            className={
+              portraitCover
+                ? "max-h-[70vh] w-full object-contain"
+                : "max-h-[560px] w-full object-cover"
+            }
           />
         </div>
       )}

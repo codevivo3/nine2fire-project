@@ -7,7 +7,7 @@
  * - Renders editorial blog lists from the shared `Post` model
  * - Keeps route files independent from the temporary local data source and ready for a future CMS
  */
-import type { Post } from "@/lib/blog/types";
+import type { Post } from "@/lib/sanity/types";
 import { BlogCard } from "./BlogCard";
 
 type BlogListProps = {

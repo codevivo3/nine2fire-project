@@ -15,35 +15,46 @@
  * - Shared list components stay data-source agnostic
  */
 import { setRequestLocale } from "next-intl/server";
+import { draftMode } from "next/headers";
 import { notFound } from "next/navigation";
 import { BlogList } from "@/components/blog/BlogList";
-import { getPosts } from "@/lib/blog/getPosts";
 import { routing, type AppLocale } from "@/i18n/routing";
+import { getSanityPosts } from "@/lib/sanity/fetch";
 
 type BlogTagPageProps = {
   params: Promise<{ locale: AppLocale; tag: string }>;
 };
 
-export function generateStaticParams() {
-  const tags = Array.from(
-    new Set(getPosts().flatMap((post) => post.tags)),
+export async function generateStaticParams() {
+  const localizedParams = await Promise.all(
+    routing.locales.map(async (locale) => {
+      const tags = new Set<string>();
+      const posts = await getSanityPosts(locale);
+
+      posts.forEach((post) => {
+        post.allTags.forEach((tag) => tags.add(tag));
+      });
+
+      return Array.from(tags).map((tag) => ({
+        locale,
+        tag,
+      }));
+    }),
   );
 
-  return routing.locales.flatMap((locale) =>
-    tags.map((tag) => ({
-      locale,
-      tag,
-    })),
-  );
+  return localizedParams.flat();
 }
 
 export default async function BlogTagPage({ params }: BlogTagPageProps) {
   const { locale, tag } = await params;
+  const { isEnabled: isDraftMode } = await draftMode();
   setRequestLocale(locale);
 
   const normalizedTag = tag;
-  const taggedPosts = getPosts().filter((post) =>
-    post.tags.some(
+  const taggedPosts = (
+    await getSanityPosts(locale, { preview: isDraftMode })
+  ).filter((post) =>
+    post.allTags.some(
       (postTag) => postTag.toLowerCase() === normalizedTag.toLowerCase(),
     ),
   );

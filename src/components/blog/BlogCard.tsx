@@ -14,7 +14,7 @@
 import Image from "next/image";
 import { Link } from "@/i18n/navigation";
 import { formatPostDate } from "@/lib/blog/formatPostDate";
-import type { Post } from "@/lib/blog/types";
+import type { Post } from "@/lib/sanity/types";
 
 type BlogCardVariant = "latest" | "archive";
 
@@ -29,6 +29,9 @@ export function BlogCard({
   locale = "en",
   variant = "latest",
 }: BlogCardProps) {
+  const formattedDate = formatPostDate(post.publishedAt, locale);
+  const metadata = [formattedDate, post.readingTime].filter(Boolean).join(" • ");
+
   if (variant === "archive") {
     return (
       <Link
@@ -37,7 +40,7 @@ export function BlogCard({
       >
         <h3 className="text-sm font-medium leading-snug">{post.title}</h3>
         <p className="shrink-0 text-xs text-muted-foreground">
-          {formatPostDate(post.date, locale)}
+          {formattedDate}
         </p>
       </Link>
     );
@@ -56,8 +59,7 @@ export function BlogCard({
             </h3>
 
             <p className="text-sm text-muted-foreground">
-              {formatPostDate(post.date, locale)}
-              {post.readingTime ? ` • ${post.readingTime}` : ""}
+              {metadata}
             </p>
 
             <p className="max-w-2xl text-sm leading-6 text-foreground/85">
@@ -66,7 +68,7 @@ export function BlogCard({
           </Link>
 
           <div className="flex flex-wrap gap-x-3 gap-y-2 text-xs text-muted-foreground">
-            {post.tags.map((tag) => (
+            {post.allTags.map((tag) => (
               <Link
                 key={tag}
                 href={`/blog/tag/${encodeURIComponent(tag)}`}
@@ -85,7 +87,7 @@ export function BlogCard({
           >
             <Image
               src={post.coverImage}
-              alt=""
+              alt={post.coverImageAlt || post.title}
               width={160}
               height={120}
               className="h-24 w-full object-cover md:h-20"

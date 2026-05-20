@@ -15,13 +15,14 @@
  * - Presentation logic stays here and in shared blog components, not in the storage layer
  */
 import Image from 'next/image';
+import { draftMode } from 'next/headers';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { BlogList } from '@/components/blog/BlogList';
 import { ScrollCue } from '@/components/ui/ScrollCue';
 import { Link } from '@/i18n/navigation';
-import { getPosts } from '@/lib/blog/getPosts';
 import { formatPostDate } from '@/lib/blog/formatPostDate';
 import type { AppLocale } from '@/i18n/routing';
+import { getSanityPosts } from '@/lib/sanity/fetch';
 
 type BlogPageProps = {
   params: Promise<{ locale: AppLocale }>;
@@ -29,13 +30,20 @@ type BlogPageProps = {
 
 export default async function BlogPage({ params }: BlogPageProps) {
   const { locale } = await params;
+  const { isEnabled: isDraftMode } = await draftMode();
   setRequestLocale(locale);
   const t = await getTranslations('Blog');
 
-  const posts = getPosts();
+  const posts = await getSanityPosts(locale, { preview: isDraftMode });
   const [featuredPost, ...remainingPosts] = posts;
   const latestPosts = remainingPosts.slice(0, 3);
   const archivePosts = remainingPosts.slice(3);
+  const featuredPostDate = featuredPost
+    ? formatPostDate(featuredPost.publishedAt, locale)
+    : "";
+  const featuredPostMetadata = [featuredPostDate, featuredPost?.readingTime]
+    .filter(Boolean)
+    .join(" • ");
 
   const sectionLabelClassName =
     'pl-[4px] text-sm font-semibold uppercase tracking-[0.18em] text-accent-eyebrow-token opacity-90';
@@ -63,12 +71,11 @@ export default async function BlogPage({ params }: BlogPageProps) {
 
           <article className='grid gap-8 lg:grid-cols-[minmax(0,1.2fr)_280px] lg:items-start'>
             <div className='space-y-5'>
-              <p className='text-sm text-muted-foreground'>
-                {formatPostDate(featuredPost.date, locale)}
-                {featuredPost.readingTime
-                  ? ` • ${featuredPost.readingTime}`
-                  : ''}
-              </p>
+              {featuredPostMetadata ? (
+                <p className='text-sm text-muted-foreground'>
+                  {featuredPostMetadata}
+                </p>
+              ) : null}
 
               <Link
                 href={`/blog/${featuredPost.slug}`}
@@ -84,7 +91,7 @@ export default async function BlogPage({ params }: BlogPageProps) {
               </Link>
 
               <div className='flex flex-wrap gap-x-4 gap-y-2 text-xs text-muted-foreground'>
-                {featuredPost.tags.map((tag) => (
+                {featuredPost.allTags.map((tag) => (
                   <Link
                     key={tag}
                     href={`/blog/tag/${encodeURIComponent(tag)}`}
@@ -103,7 +110,7 @@ export default async function BlogPage({ params }: BlogPageProps) {
               >
                 <Image
                   src={featuredPost.coverImage}
-                  alt=''
+                  alt={featuredPost.coverImageAlt || featuredPost.title}
                   width={560}
                   height={420}
                   className='h-full w-full object-cover'
