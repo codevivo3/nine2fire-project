@@ -1,38 +1,40 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useSyncExternalStore } from 'react';
 import { useTranslations } from 'next-intl';
 import { loadGoogleAnalytics } from '@/lib/analytics';
-import { getConsent, setConsent } from '@/lib/consent';
+import { getConsent, setConsent, type ConsentValue } from '@/lib/consent';
+
+function subscribe() {
+  return () => {};
+}
 
 export function CookieBanner() {
   const t = useTranslations('CookieBanner');
-  const [visible, setVisible] = useState(false);
+  const mounted = useSyncExternalStore(subscribe, () => true, () => false);
+  const [consentOverride, setConsentOverride] = useState<ConsentValue | null | undefined>(undefined);
+  const consent =
+    consentOverride === undefined ? (mounted ? getConsent() : null) : consentOverride;
+  const visible = mounted && !consent;
 
   useEffect(() => {
-    const consent = getConsent();
-
-    if (!consent) {
-      setVisible(true);
-      return;
-    }
-
     if (consent === 'accepted') {
       loadGoogleAnalytics();
     }
-  }, []);
+  }, [consent]);
 
   function handleAccept() {
     setConsent('accepted');
+    setConsentOverride('accepted');
     loadGoogleAnalytics();
-    setVisible(false);
   }
 
   function handleDecline() {
     setConsent('declined');
-    setVisible(false);
+    setConsentOverride('declined');
   }
 
+  if (!mounted) return null;
   if (!visible) return null;
 
   return (

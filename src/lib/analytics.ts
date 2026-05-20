@@ -1,3 +1,12 @@
+/**
+ * PURPOSE:
+ * Loads Google Analytics on demand after the user grants consent.
+ *
+ * NOTES:
+ * - Analytics is intentionally not part of the server-rendered document tree.
+ * - The loader is idempotent so consent-driven re-entry or route transitions do
+ *   not inject duplicate GA scripts.
+ */
 declare global {
   interface Window {
     dataLayer: unknown[];

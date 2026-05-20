@@ -1,3 +1,11 @@
+/**
+ * PURPOSE:
+ * Clears Next.js draft mode and returns the user to a safe published route.
+ *
+ * NOTES:
+ * - The redirect target is sanitized to an internal pathname so the exit flow
+ *   cannot be abused as an open redirect.
+ */
 import { draftMode } from "next/headers";
 import { NextResponse } from "next/server";
 

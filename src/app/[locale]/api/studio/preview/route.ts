@@ -1,10 +1,17 @@
+/**
+ * PURPOSE:
+ * Enables Next.js draft mode for localized blog preview requests from Sanity.
+ *
+ * NOTES:
+ * - The route accepts only internal localized blog paths to avoid turning the
+ *   preview secret into an open redirect mechanism.
+ * - Draft mode is only useful when the authenticated preview client is also
+ *   configured server-side.
+ */
 import { draftMode } from "next/headers";
 import { NextResponse } from "next/server";
 import { routing, type AppLocale } from "@/i18n/routing";
-import {
-  sanityPreviewSecret,
-  sanityReadToken,
-} from "@/lib/sanity/env";
+import { hasSanityPreviewAccess, sanityPreviewSecret } from "@/lib/sanity/serverEnv";
 
 type PreviewRouteContext = {
   params: Promise<{ locale: string }>;
@@ -28,9 +35,9 @@ export async function GET(request: Request, context: PreviewRouteContext) {
     return NextResponse.json({ message: "Invalid preview secret." }, { status: 401 });
   }
 
-  if (!sanityReadToken) {
+  if (!hasSanityPreviewAccess()) {
     return NextResponse.json(
-      { message: "SANITY_API_READ_TOKEN is required for preview." },
+      { message: "Sanity preview is not configured for authenticated draft reads." },
       { status: 500 },
     );
   }
@@ -57,5 +64,6 @@ export async function GET(request: Request, context: PreviewRouteContext) {
   const draft = await draftMode();
   draft.enable();
 
+  // Redirect into the real page route so subsequent server reads can detect draft mode.
   return NextResponse.redirect(new URL(previewPathname, request.url));
 }

@@ -1,11 +1,12 @@
 /**
- * FILE: src/components/sections/Hero.tsx
- *
  * PURPOSE:
- * - Renders the opening value proposition and top-of-page calls to action
+ * Renders the opening value proposition and primary CTA entry points.
  *
  * NOTES:
- * - CTA links target in-page anchors so the landing page stays a single focused flow
+ * - The right-hand panel is structured as a compact editorial summary rather
+ *   than separate components so the hero can stay visually unified.
+ * - CTAs intentionally target in-page anchors to keep the homepage as a single
+ *   narrative flow.
  */
 import { useTranslations } from 'next-intl';
 import { Button } from '@/components/ui/Button';

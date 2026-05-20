@@ -1,13 +1,13 @@
 'use client';
 /**
- * FILE: src/components/layout/LanguageSwitcher.tsx
- *
  * PURPOSE:
- * - Renders a locale toggle that preserves the current route
+ * Renders a locale toggle that preserves the current route shape.
  *
  * NOTES:
- * - Mirrors the ThemeToggle footprint and motion exactly
- * - Switches between English and Italian using locale-aware navigation
+ * - Navigation is delayed briefly so the switch animation can complete before
+ *   the route transition swaps localized content.
+ * - The component derives the next URL from the current pathname rather than
+ *   hardcoding section routes, which keeps it compatible with localized blog pages.
  */
 
 import * as React from 'react';
@@ -34,6 +34,7 @@ export function LanguageSwitcher() {
         if (isSwitching) return;
         setIsSwitching(true);
         setTimeout(() => {
+          // Rebuild the same pathname under the opposite locale prefix.
           router.push(`/${nextLocale}${pathname}`);
         }, 250);
       }}

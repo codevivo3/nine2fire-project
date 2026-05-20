@@ -1,18 +1,19 @@
 /**
- * FILE: src/app/layout.tsx
- *
  * PURPOSE:
- * - Defines the application shell shared by every route
- * - Registers global fonts, metadata, and document-level styling hooks
+ * Defines the document shell shared by every route.
  *
  * NOTES:
- * - Root metadata stays generic so locale segments can extend it safely
- * - `lang` is resolved from next-intl at render time to keep SSR output aligned
+ * - Root metadata stays generic so locale segments can extend it safely.
+ * - Theme is bootstrapped in `<head>` before hydration to avoid a flash of the
+ *   wrong theme and to keep the first client render aligned with the DOM.
+ * - Locale resolution falls back to English for routes that render outside the
+ *   localized segment tree.
  */
 import type { Metadata } from "next";
 import { Analytics } from "@vercel/analytics/react";
 import { getLocale } from "next-intl/server";
 import { Manrope } from "next/font/google";
+import Script from "next/script";
 import { THEME_STORAGE_KEY } from "@/lib/theme";
 import "./globals.css";
 
@@ -81,9 +82,10 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  // Falls back when locale resolution happens outside a localized segment.
   const locale = await getLocale().catch(() => "en");
   const plausibleDomain = process.env.NEXT_PUBLIC_PLAUSIBLE_DOMAIN;
+  // Keep this inline script string colocated with the document shell because it
+  // exists purely to establish the initial HTML theme before React hydrates.
   const themeScript = `
     (function () {
       var storageKey = ${JSON.stringify(THEME_STORAGE_KEY)};
@@ -140,10 +142,19 @@ export default async function RootLayout({
       suppressHydrationWarning
     >
       <head>
-        <script dangerouslySetInnerHTML={{ __html: themeScript }} />
+        {/* Apply the persisted/system theme before any client component mounts. */}
+        <Script
+          id="theme-init"
+          strategy="beforeInteractive"
+        >
+          {themeScript}
+        </Script>
         {plausibleDomain ? (
-          <script
-            defer
+          // Plausible is optional and loaded after hydration because it does not
+          // influence layout or any server-rendered HTML.
+          <Script
+            id="plausible-analytics"
+            strategy="afterInteractive"
             data-domain={plausibleDomain}
             src="https://plausible.io/js/script.js"
           />
@@ -151,6 +162,7 @@ export default async function RootLayout({
       </head>
       <body className="min-h-full text-foreground font-sans before:content-[''] before:fixed before:inset-[-32px] before:-z-10 before:bg-[var(--background-pattern)] before:bg-cover before:bg-center before:bg-no-repeat">
         {children}
+        {/* Vercel Analytics stays at the document edge so route changes are tracked globally. */}
         <Analytics />
       </body>
     </html>

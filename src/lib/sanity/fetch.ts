@@ -1,7 +1,20 @@
+import "server-only";
+
+/**
+ * PURPOSE:
+ * Centralizes all frontend-facing Sanity reads for the blog surface.
+ *
+ * NOTES:
+ * - This layer is where the app decides between published content and draft
+ *   content; page components should only signal intent via `preview`.
+ * - Published reads are cached and tagged for ISR-style freshness.
+ * - Draft reads bypass caches and require the authenticated preview client.
+ */
 import { unstable_cache } from "next/cache";
 import { POSTS_QUERY, POST_BY_SLUG_QUERY, POST_SLUGS_QUERY } from "@/lib/sanity/queries";
-import { getSanityClient, sanityClient } from "@/lib/sanity/client";
-import { isSanityConfigured, sanityReadToken } from "@/lib/sanity/env";
+import { sanityClient } from "@/lib/sanity/client";
+import { isSanityConfigured } from "@/lib/sanity/env";
+import { getPreviewSanityClient } from "@/lib/sanity/previewClient";
 import type { Post, SanityPostDocument } from "@/lib/sanity/types";
 import { getSanityImageUrl } from "@/lib/sanity/image";
 import type { AppLocale } from "@/i18n/routing";
@@ -73,6 +86,7 @@ const getCachedSanityPosts = unstable_cache(
       locale,
     });
 
+    // Normalize Sanity documents once so route components consume a stable app model.
     return documents.map(mapSanityPost);
   },
   ["sanity-posts"],
@@ -98,11 +112,7 @@ const getCachedSanitySlugs = unstable_cache(
 );
 
 async function getPreviewSanityPosts(locale: AppLocale) {
-  if (!sanityReadToken) {
-    return [] as Post[];
-  }
-
-  const previewClient = getSanityClient({ preview: true });
+  const previewClient = getPreviewSanityClient();
 
   if (!previewClient) {
     return [] as Post[];
@@ -111,6 +121,7 @@ async function getPreviewSanityPosts(locale: AppLocale) {
   const documents = await previewClient.fetch<SanityPostDocument[]>(
     POSTS_QUERY,
     { locale },
+    // Draft mode should always reflect the latest editor state.
     { cache: "no-store" },
   );
 
@@ -126,6 +137,7 @@ export async function getSanityPosts(
   }
 
   if (options.preview) {
+    // Draft mode must use authenticated preview reads instead of the cached client.
     return getPreviewSanityPosts(locale);
   }
 
@@ -141,16 +153,17 @@ export async function getSanityPostBySlug(
     return undefined;
   }
 
-  const client = options.preview
-    ? getSanityClient({ preview: true })
-    : sanityClient;
+  const client = options.preview ? getPreviewSanityClient() : sanityClient;
 
   if (!client) {
     return undefined;
   }
 
   const fetchOptions = options.preview
-    ? { cache: "no-store" as const }
+    ? {
+        // Slug-level preview reads must bypass caches for authoring feedback.
+        cache: "no-store" as const,
+      }
     : {
         next: {
           revalidate: 60,

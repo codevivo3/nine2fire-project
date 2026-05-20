@@ -1,3 +1,12 @@
+/**
+ * PURPOSE:
+ * Shared theme primitives used by the document bootstrap and client controls.
+ *
+ * NOTES:
+ * - The root layout handles the no-flash initialization path before hydration.
+ * - Client components reuse these helpers afterward so theme class management
+ *   stays consistent in one place.
+ */
 export type ThemeMode = "light" | "dark" | "system";
 
 export const THEME_STORAGE_KEY = "theme";
@@ -30,9 +39,9 @@ export function applyTheme(theme: ThemeMode) {
 
   const resolvedTheme = resolveTheme(theme);
 
+  // `html` is the single theme source of truth for CSS token switching.
   const html = document.documentElement;
   html.classList.remove("light", "dark");
   html.classList.add(resolvedTheme);
   html.setAttribute("data-theme", resolvedTheme);
 }
-

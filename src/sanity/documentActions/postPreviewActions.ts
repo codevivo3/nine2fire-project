@@ -1,5 +1,6 @@
 import type { DocumentActionComponent } from "sanity";
-import { sanityPreviewSecret } from "@/lib/sanity/env";
+
+const sanityPreviewSecret = process.env.SANITY_PREVIEW_SECRET?.trim() || "";
 
 type PreviewLocale = "en" | "it";
 

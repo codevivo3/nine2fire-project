@@ -15,7 +15,6 @@ import { NavLink } from '@/components/ui/NavLink';
 import { mainNavLinks } from '@/config/navigation';
 import {
   FaXTwitter,
-  FaInstagram,
   FaFacebook,
   FaEnvelope,
 } from 'react-icons/fa6';

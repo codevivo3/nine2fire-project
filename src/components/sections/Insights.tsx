@@ -1,8 +1,12 @@
 /**
- * FILE: src/components/sections/Insights.tsx
- *
  * PURPOSE:
- * - Presents editorial content themes that reinforce the site's point of view
+ * Presents the latest localized editorial content on the homepage.
+ *
+ * NOTES:
+ * - This section reads only published content because it is part of the public
+ *   landing page surface.
+ * - The slice happens here instead of inside the Sanity fetch layer so other
+ *   routes can reuse the full post list without homepage assumptions.
  */
 import { getTranslations } from "next-intl/server";
 import Image from "next/image";

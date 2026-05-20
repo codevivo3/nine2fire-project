@@ -7,17 +7,19 @@ import {
   openItalianPreviewAction,
 } from "./src/sanity/documentActions/postPreviewActions";
 import {
-  sanityDataset,
-  sanityProjectId,
+  sanityStudioApiVersion,
+  sanityStudioDataset,
+  sanityStudioProjectId,
   sanityStudioTitle,
-} from "./src/lib/sanity/env";
+} from "./src/lib/sanity/studioEnv";
 
 export default defineConfig({
   name: "default",
   title: sanityStudioTitle,
   basePath: "/studio",
-  projectId: sanityProjectId,
-  dataset: sanityDataset,
+  projectId: sanityStudioProjectId,
+  dataset: sanityStudioDataset,
+  apiVersion: sanityStudioApiVersion,
   plugins: [structureTool(), visionTool()],
   document: {
     actions: (previousActions, context) =>

@@ -1,15 +1,13 @@
 'use client';
 /**
- * FILE: src/components/layout/ThemeToggle.tsx
- *
  * PURPOSE:
- * - Renders the theme toggle control (light ↔ dark)
- * - Provides a shared `useTheme` hook for cross-component synchronization
+ * Renders the theme toggle and exposes a small shared theme state hook.
  *
  * NOTES:
- * - Theme is applied by toggling the `light` class on `<html>`
- * - A custom event (`nine2fire-theme-change`) keeps components in sync
- * - Toggle uses transform-based motion for smooth, hardware-like interaction
+ * - The initial theme is established in `src/app/layout.tsx`; this hook only
+ *   handles post-hydration synchronization.
+ * - A custom event keeps separate client components in sync without introducing
+ *   a larger global state layer for a tiny concern.
  */
 
 import * as React from 'react';
@@ -30,6 +28,7 @@ export function useTheme() {
   const [theme, setTheme] = React.useState<ThemeMode>('light');
 
   React.useEffect(() => {
+    // Align client state with whatever the root layout already applied.
     const systemTheme = getSystemTheme();
     applyTheme(systemTheme);
     setTheme(systemTheme);
@@ -45,8 +44,7 @@ export function useTheme() {
   React.useEffect(() => {
     const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
     const syncSystemTheme = () => {
-      // Always follow system unless user manually toggles in-session
-
+      // This project currently treats the toggle as a session-level override.
       const currentTheme = getSystemTheme();
       applyTheme(currentTheme);
       window.dispatchEvent(new Event(THEME_EVENT));
@@ -61,7 +59,7 @@ export function useTheme() {
 
   // Updates the root class and notifies other listeners in the same session.
   const setMode = (next: ThemeMode) => {
-    // Do NOT persist — override is session-only
+    // Do not persist here; the current UX intentionally resets to system on reload.
     applyTheme(next);
     window.dispatchEvent(new Event(THEME_EVENT));
     setTheme(next);

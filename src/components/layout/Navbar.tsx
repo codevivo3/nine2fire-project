@@ -1,13 +1,12 @@
 'use client';
 /**
- * FILE: src/components/layout/Navbar.tsx
- *
  * PURPOSE:
- * - Renders the persistent site header, localized navigation, and mobile menu
+ * Renders the persistent site header, localized navigation, and mobile controls.
  *
  * NOTES:
- * - Desktop links use the shared `NavLink` treatment so hover behavior stays consistent
- * - Mobile locale buttons preserve the current pathname while switching language
+ * - Theme and locale controls are visually hidden until the menu is opened so
+ *   the compact desktop header stays focused on navigation first.
+ * - The scroll state only affects presentation; it does not change layout structure.
  */
 import { useTranslations } from 'next-intl';
 import { useState, useEffect } from 'react';
@@ -55,7 +54,7 @@ export function Navbar() {
         </nav>
 
         <div className='flex items-center gap-2 md:ml-auto'>
-          {/* Desktop inline toggles */}
+          {/* Keep these controls mounted so their internal state persists while hidden. */}
           <div
             className={cn(
               'hidden items-center gap-2 md:flex transition-all duration-200 ease-out',
@@ -94,7 +93,6 @@ export function Navbar() {
             </div>
           </div>
 
-          {/* Hamburger / Close */}
           <button
             type='button'
             className='inline-flex items-center justify-center p-2 text-foreground'
@@ -104,7 +102,6 @@ export function Navbar() {
             aria-haspopup='menu'
           >
             <span className='relative inline-flex h-6 w-6'>
-              {/* LIST */}
               <span
                 className={cn(
                   'absolute inset-0 flex items-center justify-center transition-all duration-[500ms] ease-[cubic-bezier(0.22,1,0.36,1)]',
@@ -116,7 +113,6 @@ export function Navbar() {
                 <List size={24} weight='regular' />
               </span>
 
-              {/* X */}
               <span
                 className={cn(
                   'absolute inset-0 flex items-center justify-center transition-all duration-[500ms] ease-[cubic-bezier(0.22,1,0.36,1)]',

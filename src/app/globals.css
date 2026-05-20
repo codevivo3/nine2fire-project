@@ -1,16 +1,12 @@
 /**
- * FILE: src/app/globals.css
- *
  * PURPOSE:
- * - Central source of truth for design tokens (colors, radii, typography)
- * - Provides theme (dark/light) via CSS variables
- * - Exposes tokens to Tailwind through @theme mapping
- * - Defines global base styles and utilities
+ * Defines the global token system and document-level styling primitives.
  *
  * NOTES:
- * - Tokens first, components consume tokens (never raw colors)
- * - No hardcoded colors in components
- * - Theme switching is handled via `html.light` and `html.dark`
+ * - Semantic CSS variables are the source of truth; Tailwind consumes them via
+ *   `@theme` so component classes stay stable even if token values change.
+ * - Theme switching happens by changing `html.light` / `html.dark`, which makes
+ *   the entire token graph update without per-component theme logic.
  */
 
 @import 'tailwindcss';
@@ -104,7 +100,7 @@ html.dark {
    ========================================================= */
 
 @theme inline {
-  /* Keep naming stable for components */
+  /* Mirror semantic CSS variables into Tailwind v4 tokens for utility classes. */
   --color-background: var(--color-bg);
   --color-foreground: var(--color-fg);
   --color-primary-token: var(--color-primary);

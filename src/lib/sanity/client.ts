@@ -1,32 +1,34 @@
+/**
+ * PURPOSE:
+ * Creates the public Sanity client used by server-rendered pages.
+ *
+ * NOTES:
+ * - This client is intentionally safe to share with any published page fetch.
+ * - It never receives preview credentials and is pinned to `published`
+ *   perspective so draft content cannot leak through a default import.
+ */
 import { createClient } from "next-sanity";
 import {
   isSanityConfigured,
   sanityApiVersion,
   sanityDataset,
   sanityProjectId,
-  sanityReadToken,
 } from "@/lib/sanity/env";
 
-type SanityClientOptions = {
-  preview?: boolean;
-};
-
-export function getSanityClient(options: SanityClientOptions = {}) {
+export function getSanityClient() {
   if (!isSanityConfigured()) {
     return null;
   }
-
-  const { preview = false } = options;
 
   return createClient({
     projectId: sanityProjectId,
     dataset: sanityDataset,
     apiVersion: sanityApiVersion,
-    useCdn: !preview,
-    perspective: preview ? "drafts" : "published",
+    useCdn: true,
+    perspective: "published",
     stega: false,
-    token: preview ? sanityReadToken : undefined,
   });
 }
 
+// Shared singleton for the published-content path used across the app router.
 export const sanityClient = getSanityClient();

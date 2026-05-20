@@ -1,3 +1,11 @@
+/**
+ * PURPOSE:
+ * Encapsulates the browser-only consent storage contract.
+ *
+ * NOTES:
+ * - Returning `null` on the server keeps consent-aware components free to delay
+ *   rendering until hydration without guessing at browser state.
+ */
 export type ConsentValue = 'accepted' | 'declined';
 
 const CONSENT_STORAGE_KEY = 'consent';

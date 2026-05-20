@@ -1,8 +1,29 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+## Sanity On Vercel
+
+Required Vercel environment variables for the production Sanity integration:
+
+- `NEXT_PUBLIC_SANITY_PROJECT_ID`
+- `NEXT_PUBLIC_SANITY_DATASET`
+- `NEXT_PUBLIC_SANITY_API_VERSION`
+- `SANITY_STUDIO_PROJECT_ID`
+- `SANITY_STUDIO_DATASET`
+- `SANITY_STUDIO_API_VERSION`
+- `SANITY_PREVIEW_SECRET`
+- `SANITY_API_READ_TOKEN` only when draft previews must read unpublished content
+
+Environment responsibilities:
+
+- The frontend Sanity client reads only `NEXT_PUBLIC_SANITY_*`.
+- Embedded Studio at `/studio` and the Sanity CLI read only `SANITY_STUDIO_*`.
+- Draft preview reads use `SANITY_API_READ_TOKEN` server-side only.
+- The localized preview route at `/[locale]/api/studio/preview` requires `SANITY_PREVIEW_SECRET`.
+- Public blog routes must render published content unless Next.js draft mode is explicitly enabled.
+
+The same variables are listed in [.env.example](/Users/Francesco/Dev Projects/Nine2Fire/nine2fire-project/.env.example).
 
 ## Getting Started
 
-First, run the development server:
+Run the development server:
 
 ```bash
 npm run dev

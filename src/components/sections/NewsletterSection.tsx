@@ -62,7 +62,7 @@ export function NewsletterSection() {
 
                   setIsSuccess(true);
                   form.reset();
-                } catch (err) {
+                } catch {
                   setError('Something went wrong. Try again.');
                 } finally {
                   setIsSubmitting(false);
