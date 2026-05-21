@@ -8,6 +8,8 @@ function readEnv(name: string) {
 
 /**
  * Server-only values for authenticated preview reads and draft mode entry.
+ * `SANITY_PREVIEW_SECRET` protects the preview route, and
+ * `SANITY_API_READ_TOKEN` is reserved for server-side draft reads only.
  * Keep these out of browser bundles and client-facing Sanity utilities.
  */
 export const sanityReadToken = readEnv("SANITY_API_READ_TOKEN");

@@ -1,5 +1,6 @@
 import type { DocumentActionComponent } from "sanity";
 
+// Studio uses the preview secret only to construct the protected draft-mode URL.
 const sanityPreviewSecret = process.env.SANITY_PREVIEW_SECRET?.trim() || "";
 
 type PreviewLocale = "en" | "it";
