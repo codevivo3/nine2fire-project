@@ -56,7 +56,7 @@ export async function Insights({ locale }: InsightsProps) {
                 <span>{post.readingTime}</span>
               </div>
               <h3 className='mt-6 text-2xl font-bold leading-tight tracking-[-0.035em] text-foreground'>
-                <span className='relative inline bg-[linear-gradient(currentColor,currentColor)] bg-[length:0%_1px] bg-left-bottom bg-no-repeat pb-1 transition-[background-size] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:bg-[length:100%_1px]'>
+                <span className='relative block w-full after:absolute after:left-0 after:-bottom-1.5 after:h-px after:w-0 after:bg-current after:transition-all after:duration-500 after:ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:after:w-full'>
                   {post.title}
                 </span>
               </h3>
