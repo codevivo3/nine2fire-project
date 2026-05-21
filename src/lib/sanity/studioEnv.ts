@@ -5,12 +5,14 @@ function readEnv(name: string) {
 }
 
 const fallbackStudioTitle = "Nine2Fire Studio";
+const fallbackSanityProjectId = "5sw09zfb";
 const fallbackSanityDataset = "production";
 const fallbackSanityApiVersion = "2026-05-19";
 
 const resolvedProjectId =
   readEnv("SANITY_STUDIO_PROJECT_ID") ||
-  readEnv("NEXT_PUBLIC_SANITY_PROJECT_ID");
+  readEnv("NEXT_PUBLIC_SANITY_PROJECT_ID") ||
+  fallbackSanityProjectId;
 const resolvedDataset =
   readEnv("SANITY_STUDIO_DATASET") ||
   readEnv("NEXT_PUBLIC_SANITY_DATASET") ||
