@@ -1,8 +1,5 @@
 import type { DocumentActionComponent } from "sanity";
 
-// Studio uses the preview secret only to construct the protected draft-mode URL.
-const sanityPreviewSecret = process.env.SANITY_PREVIEW_SECRET?.trim() || "";
-
 type PreviewLocale = "en" | "it";
 
 type LocalizedSlugField = Partial<Record<PreviewLocale, { current?: string }>>;
@@ -11,36 +8,45 @@ type PreviewablePostDocument = {
   slug?: LocalizedSlugField;
 };
 
-function getPreviewDocument(
-  draft: unknown,
-  published: unknown,
-): PreviewablePostDocument | null {
-  if (draft && typeof draft === "object") {
-    return draft as PreviewablePostDocument;
-  }
+type PreviewActionContext = {
+  draft: unknown;
+  published: unknown;
+};
 
-  if (published && typeof published === "object") {
-    return published as PreviewablePostDocument;
-  }
-
-  return null;
+function asPreviewablePostDocument(value: unknown): PreviewablePostDocument | null {
+  return value && typeof value === "object" ? (value as PreviewablePostDocument) : null;
 }
 
 function getLocalizedSlug(
-  document: PreviewablePostDocument | null,
+  context: PreviewActionContext,
   locale: PreviewLocale,
 ) {
-  return document?.slug?.[locale]?.current?.trim() || "";
+  const draftDocument = asPreviewablePostDocument(context.draft);
+  const publishedDocument = asPreviewablePostDocument(context.published);
+
+  return (
+    draftDocument?.slug?.[locale]?.current?.trim() ||
+    publishedDocument?.slug?.[locale]?.current?.trim() ||
+    ""
+  );
 }
 
 function buildPreviewUrl(locale: PreviewLocale, slug: string) {
-  if (!sanityPreviewSecret || !slug) {
+  if (!slug) {
     return null;
   }
 
-  const previewPath = `/${locale}/blog/${slug}`;
+  return `/api/studio/launch-preview?locale=${encodeURIComponent(locale)}&slug=${encodeURIComponent(slug)}`;
+}
 
-  return `/${locale}/api/studio/preview?secret=${encodeURIComponent(sanityPreviewSecret)}&slug=${encodeURIComponent(previewPath)}`;
+function getDisabledReason(locale: PreviewLocale, slug: string) {
+  if (slug) {
+    return undefined;
+  }
+
+  return locale === "en"
+    ? "English preview is disabled because slug.en.current is missing."
+    : "Italian preview is disabled because slug.it.current is missing.";
 }
 
 function createPostPreviewAction(
@@ -48,13 +54,16 @@ function createPostPreviewAction(
   label: string,
 ): DocumentActionComponent {
   const PostPreviewAction: DocumentActionComponent = (props) => {
-    const document = getPreviewDocument(props.draft, props.published);
-    const slug = getLocalizedSlug(document, locale);
+    const slug = getLocalizedSlug(
+      { draft: props.draft, published: props.published },
+      locale,
+    );
     const previewUrl = buildPreviewUrl(locale, slug);
+    const disabledReason = getDisabledReason(locale, slug);
 
     return {
       label,
-      title: label,
+      title: disabledReason || label,
       disabled: !previewUrl,
       onHandle: () => {
         if (previewUrl) {

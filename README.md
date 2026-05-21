@@ -9,6 +9,7 @@ Required Vercel environment variables for the production Sanity integration:
 - `SANITY_STUDIO_DATASET`
 - `SANITY_STUDIO_API_VERSION`
 - `SANITY_PREVIEW_SECRET`
+- `SANITY_REVALIDATE_SECRET`
 - `SANITY_API_READ_TOKEN` only when draft previews must read unpublished content
 
 Environment responsibilities:
@@ -17,6 +18,7 @@ Environment responsibilities:
 - Embedded Studio at `/studio` and the Sanity CLI read only `SANITY_STUDIO_*`.
 - Draft preview reads use `SANITY_API_READ_TOKEN` server-side only.
 - The localized preview route at `/[locale]/api/studio/preview` requires `SANITY_PREVIEW_SECRET`.
+- The on-demand revalidation route at `/api/revalidate` requires `SANITY_REVALIDATE_SECRET`.
 - Public blog routes must render published content unless Next.js draft mode is explicitly enabled.
 
 The same variables are listed in [.env.example](/Users/Francesco/Dev Projects/Nine2Fire/nine2fire-project/.env.example).
