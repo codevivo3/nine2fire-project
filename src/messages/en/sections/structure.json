@@ -1,0 +1,24 @@
+{
+  "ValueProps": {
+    "eyebrow": "Structure",
+    "title": "A foundation designed for compounding.",
+    "description": "Markets move in cycles. Time does the work.",
+    "items": {
+      "system": {
+        "eyebrow": "Direction",
+        "title": "Clarity matters more than speed",
+        "description": "Most people move constantly without ever deciding where they actually want to go."
+      },
+      "clarity": {
+        "eyebrow": "Capital",
+        "title": "Money should create room",
+        "description": "Financial independence begins when income stops being consumed automatically."
+      },
+      "rhythm": {
+        "eyebrow": "Time",
+        "title": "Small habits compound quietly",
+        "description": "Most outcomes are built slowly through repeated decisions and everyday routines."
+      }
+    }
+  }
+}

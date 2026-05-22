@@ -2,9 +2,9 @@
   "Newsletter": {
     "eyebrow": "Stay close",
     "title": "Receive the next note when it’s ready.",
-    "description": "Each update follows when clarity is established.",
+    "description": "Thoughts, observations and reflections\nabout work, money and freedom.",
     "emailLabel": "Email address",
-    "emailPlaceholder": "Enter your email",
+    "emailPlaceholder": "Your email",
     "button": "Join the list"
   }
 }

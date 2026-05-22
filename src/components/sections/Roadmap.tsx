@@ -8,6 +8,15 @@ import { useTranslations } from "next-intl";
 import { Container } from "@/components/ui/Container";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 
+const ROADMAP_STEP_KEYS = [
+  "lifestyle",
+  "habits",
+  "capital",
+  "time",
+] as const;
+
+type RoadmapStepKey = (typeof ROADMAP_STEP_KEYS)[number];
+
 export function Roadmap() {
   const t = useTranslations("Roadmap");
 
@@ -21,7 +30,7 @@ export function Roadmap() {
         />
 
         <div className='mt-10 grid gap-4 md:mt-12 md:grid-cols-2 xl:grid-cols-4'>
-          {['spending', 'structure', 'capital', 'time'].map((step, index) => (
+          {ROADMAP_STEP_KEYS.map((step: RoadmapStepKey, index) => (
             <article
               key={step}
               className='rounded-[var(--radius-lg)] border border-border-token bg-surface/80 p-6 backdrop-blur-md'

@@ -1,25 +1,25 @@
 {
   "Roadmap": {
     "eyebrow": "Roadmap",
-    "title": "Each step builds what the next one carries forward.",
-    "description": "A sequence holds what would otherwise drift.",
+    "title": "Freedom is often lost quietly.",
+    "description": "Most people don’t lose freedom all at once. It disappears in small recurring expenses.",
     "stepLabel": "Step {index}",
     "steps": {
-      "spending": {
-        "title": "Spending",
-        "description": "Spending patterns define financial direction."
+      "lifestyle": {
+        "title": "Lifestyle",
+        "description": "Most financial pressure starts long before investing. It begins with what quietly becomes normal."
       },
-      "structure": {
-        "title": "Structure",
-        "description": "Structure prevents drift."
+      "habits": {
+        "title": "Habits",
+        "description": "The things we repeat every day slowly shape how much room we have in our lives."
       },
       "capital": {
         "title": "Capital",
-        "description": "Capital grows when it is allowed to stay."
+        "description": "Money changes meaning when it stops being consumed automatically."
       },
       "time": {
         "title": "Time",
-        "description": "Time compounds what remains consistent."
+        "description": "Freedom rarely arrives suddenly. Most of it is built slowly over years."
       }
     }
   }

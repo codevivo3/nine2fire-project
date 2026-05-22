@@ -1,10 +1,10 @@
 {
   "Newsletter": {
-    "eyebrow": "Resta vicino",
+    "eyebrow": "Rimani aggiornato",
     "title": "Ricevi la prossima nota quando è pronta.",
-    "description": "Ogni aggiornamento arriva quando la chiarezza è stata raggiunta.",
+    "description": "Pensieri, osservazioni e riflessioni\nsu lavoro, denaro e libertà.",
     "emailLabel": "Indirizzo email",
-    "emailPlaceholder": "Inserisci la tua email",
+    "emailPlaceholder": "La tua email",
     "button": "Iscriviti alla lista"
   }
 }

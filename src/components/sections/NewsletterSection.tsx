@@ -31,7 +31,7 @@ export function NewsletterSection() {
               <h2 className='max-w-2xl text-3xl font-bold tracking-[-0.04em] text-foreground sm:text-4xl'>
                 {t('title')}
               </h2>
-              <p className='max-w-xl text-sm leading-7 text-foreground/72 md:text-base'>
+              <p className='whitespace-break-spaces max-w-xl text-sm leading-7 text-foreground/72 md:text-base'>
                 {t('description')}
               </p>
             </div>

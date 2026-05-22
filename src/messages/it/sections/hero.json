@@ -1,25 +1,25 @@
 {
   "Hero": {
     "eyebrow": "Nine2Fire",
-    "title": "Trasforma il tempo in indipendenza finanziaria.",
-    "description": "Un livello operativo calmo per capitale, decisioni e segnale editoriale.\nPrima la struttura. Complessità solo quando si guadagna il suo posto.",
+    "title": "Lascia più spazio alla tua vita.",
+    "description": "Un approccio più lucido verso l’indipendenza finanziaria\nattraverso scelte consapevoli, chiarezza e visione di lungo periodo",
     "primaryCta": "Appunti",
-    "secondaryCta": "Strategia",
+    "secondaryCta": "Esplora la Strategia",
     "panel": {
-      "title": "Note operative",
-      "badge": "Prima fase",
+      "title": "Osservazioni",
+      "badge": "Primi appunti",
       "items": {
         "signal": {
           "label": "Obiettivo",
-          "value": "Tieni il piano visibile quando il mercato diventa rumoroso."
+          "value": "Mantieni chiara la tua direzione quando la vita diventa caotica."
         },
         "capital": {
           "label": "Capitale",
-          "value": "Il capitale scorre dove l’intenzione è definita."
+          "value": "Il denaro diventa utile quando crea spazio, non solo consumo."
         },
         "decisions": {
           "label": "Decisioni",
-          "value": "Trasforma il giudizio ripetuto in un sistema ripetibile."
+          "value": "Le abitudini quotidiane contano più delle decisioni occasionali."
         }
       }
     }

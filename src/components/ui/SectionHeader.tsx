@@ -23,7 +23,7 @@ export function SectionHeader({
       <h2 className='mt-4 text-3xl font-bold tracking-[-0.04em] text-foreground sm:text-4xl'>
         {title}
       </h2>
-      <p className='mt-4 text-sm leading-7 text-foreground/72 md:text-base'>
+      <p className='whitespace-break-spaces mt-4 text-sm leading-7 text-foreground/72 md:text-base'>
         {description}
       </p>
     </div>

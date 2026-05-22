@@ -1,25 +1,25 @@
 {
   "Roadmap": {
     "eyebrow": "Strategia",
-    "title": "Ogni passo costruisce ciò che il successivo porterà avanti.",
-    "description": "Una sequenza sostiene ciò che altrimenti andrebbe disperso.",
+    "title": "La vita cambia senza che ce ne accorgiamo.",
+    "description": "Spesso la libertà sparisce in piccole spese ricorrenti,\nabitudini automatiche e scelte che diventano normali.",
     "stepLabel": "Step {index}",
     "steps": {
-      "spending": {
-        "title": "Spesa",
-        "description": "Le abitudini di spesa definiscono la direzione finanziaria."
+      "lifestyle": {
+        "title": "Stile di vita",
+        "description": "La pressione finanziaria nasce prima degli investimenti: comincia da ciò che diventa normale mantenere."
       },
-      "structure": {
-        "title": "Struttura",
-        "description": "La struttura impedisce la deriva."
+      "habits": {
+        "title": "Abitudini",
+        "description": "Quello che ripetiamo ogni giorno finisce spesso per decidere quanto margine resta nella nostra vita."
       },
       "capital": {
         "title": "Capitale",
-        "description": "Il capitale cresce quando gli è permesso di restare."
+        "description": "Il denaro cambia significato quando smette di trasformarsi automaticamente in consumo."
       },
       "time": {
         "title": "Tempo",
-        "description": "Il tempo amplifica ciò che rimane coerente."
+        "description": "L’indipendenza finanziaria raramente arriva all’improvviso. Di solito si costruisce lentamente, anno dopo anno."
       }
     }
   }

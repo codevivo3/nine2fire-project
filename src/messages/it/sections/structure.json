@@ -1,0 +1,24 @@
+{
+  "ValueProps": {
+    "eyebrow": "Struttura",
+    "title": "Un sistema pensato per crescere nel tempo.",
+    "description": "I mercati si muovono in cicli. Il tempo fa gran parte del lavoro.",
+    "items": {
+      "system": {
+        "eyebrow": "Direzione",
+        "title": "La chiarezza conta più della velocità",
+        "description": "Molte persone continuano a muoversi senza fermarsi mai a decidere dove vogliono davvero andare."
+      },
+      "clarity": {
+        "eyebrow": "Capitale",
+        "title": "Il denaro dovrebbe creare libertà",
+        "description": "L’indipendenza finanziaria inizia quando il reddito smette di trasformarsi automaticamente in consumo."
+      },
+      "rhythm": {
+        "eyebrow": "Tempo",
+        "title": "Le abitudini quotidiane plasmano più di quanto sembri",
+        "description": "Molti risultati prendono forma lentamente attraverso ciò che ripetiamo ogni giorno."
+      }
+    }
+  }
+}
