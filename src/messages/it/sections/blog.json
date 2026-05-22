@@ -1,8 +1,8 @@
 {
   "Blog": {
-    "eyebrow": "Appunti",
-    "title": "Note su denaro e sulla forma di una vita più calma.",
-    "description": "Pensieri lucidi su denaro, decisioni e tempo.",
+    "eyebrow": "Blog",
+    "title": "Riflessioni su lavoro, denaro, abitudini e sulla lenta ricerca di una vita più libera.",
+    "description": "Osservazioni nate tra routine quotidiane, lavoro, denaro\ne visione di lungo periodo.",
     "sections": {
       "featured": "In evidenza",
       "latest": "Ultime note",

@@ -14,4 +14,20 @@ const nextConfig: NextConfig = {
   },
 };
 
-export default withNextIntl(nextConfig);
+const wrappedConfig = withNextIntl(nextConfig);
+
+if (typeof wrappedConfig.webpack === "function") {
+  const originalWebpack = wrappedConfig.webpack;
+
+  wrappedConfig.webpack = (config, context) => {
+    const normalizedConfig = config ?? {};
+
+    if (typeof normalizedConfig.context !== "string" || !normalizedConfig.context) {
+      normalizedConfig.context = process.cwd();
+    }
+
+    return originalWebpack(normalizedConfig, context);
+  };
+}
+
+export default wrappedConfig;

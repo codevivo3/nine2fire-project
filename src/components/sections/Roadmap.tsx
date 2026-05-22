@@ -7,6 +7,7 @@
 import { useTranslations } from "next-intl";
 import { Container } from "@/components/ui/Container";
 import { SectionHeader } from "@/components/ui/SectionHeader";
+import { sectionAnchorOffsets } from "@/config/sectionAnchors";
 
 const ROADMAP_STEP_KEYS = [
   "lifestyle",
@@ -21,7 +22,7 @@ export function Roadmap() {
   const t = useTranslations("Roadmap");
 
   return (
-    <section id='roadmap' className='scroll-mt-20 md:scroll-mt-24'>
+    <section id='roadmap' className={sectionAnchorOffsets.roadmap}>
       <Container className='py-16 md:py-24'>
         <SectionHeader
           eyebrow={t('eyebrow')}

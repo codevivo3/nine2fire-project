@@ -7,12 +7,13 @@
 import { useTranslations } from "next-intl";
 import { Container } from "@/components/ui/Container";
 import { SectionHeader } from "@/components/ui/SectionHeader";
+import { sectionAnchorOffsets } from "@/config/sectionAnchors";
 
 export function ValueProps() {
   const t = useTranslations("ValueProps");
 
   return (
-    <section id='approach' className='scroll-mt-20 md:scroll-mt-24'>
+    <section id='approach' className={sectionAnchorOffsets.base}>
       <Container className='pt-8 pb-16 md:pt-12 md:pb-24 2xl:pt-8'>
         <SectionHeader
           eyebrow={t('eyebrow')}

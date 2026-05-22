@@ -11,6 +11,7 @@
 import { getTranslations } from "next-intl/server";
 import Image from "next/image";
 import { Container } from "@/components/ui/Container";
+import { sectionAnchorOffsets } from "@/config/sectionAnchors";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { Link } from "@/i18n/navigation";
 import type { AppLocale } from "@/i18n/routing";
@@ -25,7 +26,7 @@ export async function Insights({ locale }: InsightsProps) {
   const posts = (await getSanityPosts(locale)).slice(0, 3);
 
   return (
-    <section id='insights' className='scroll-mt-20 md:scroll-mt-24'>
+    <section id='insights' className={sectionAnchorOffsets.insights}>
       <Container className='py-16 md:py-24'>
         <SectionHeader
           eyebrow={t('eyebrow')}
@@ -52,7 +53,7 @@ export async function Insights({ locale }: InsightsProps) {
                 )}
               </div>
               <div className='mt-5 flex items-center justify-between gap-4 text-xs font-semibold uppercase tracking-[0.18em] text-muted'>
-                <span className='text-accent-eyebrow-token'>Journal</span>
+                <span className='text-accent-eyebrow-token'>{t('eyebrow')}</span>
                 <span>{post.readingTime}</span>
               </div>
               <h3 className='mt-6 text-2xl font-bold leading-tight tracking-[-0.035em] text-foreground'>

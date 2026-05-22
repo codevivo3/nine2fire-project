@@ -1,10 +1,10 @@
 {
   "Navigation": {
     "links": {
-      "approach": "Approccio",
-      "roadmap": "Strategia",
-      "insights": "Visione",
-      "journal": "Appunti"
+      "approach": "Struttura",
+      "roadmap": "Piano",
+      "insights": "Appunti",
+      "journal": "Blog"
     },
     "openMenu": "Menu",
     "closeMenu": "Chiudi",

@@ -55,11 +55,11 @@ export default async function BlogPage({ params }: BlogPageProps) {
         <h1 className='whitespace-break-spaces text-4xl font-semibold tracking-[-0.04em] text-foreground md:text-6xl'>
           {t('title')}
         </h1>
-        <p className='max-w-xl text-sm leading-6 text-muted-foreground/70'>
+        <p className='whitespace-break-spaces max-w-xl text-sm leading-6 text-muted-foreground/70'>
           {t('description')}
         </p>
       </header>
-      <div className='block 2xl:hidden'>
+      <div className='block -mt-20 sm:-mt-18 lg:-mt-16 xl:-mt-14 2xl:hidden'>
         <ScrollCue />
       </div>
 
