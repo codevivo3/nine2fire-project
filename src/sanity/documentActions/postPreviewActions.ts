@@ -36,6 +36,8 @@ function buildPreviewUrl(locale: PreviewLocale, slug: string) {
     return null;
   }
 
+  // Keep the launch URL relative to the current Studio host so preview actions
+  // automatically follow localhost, preview deployments, or production.
   return `/api/studio/launch-preview?locale=${encodeURIComponent(locale)}&slug=${encodeURIComponent(slug)}`;
 }
 

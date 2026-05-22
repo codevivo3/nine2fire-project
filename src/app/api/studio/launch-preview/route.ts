@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { routing, type AppLocale } from "@/i18n/routing";
+import { getRequestOrigin } from "@/lib/env";
 import { sanityPreviewSecret } from "@/lib/sanity/serverEnv";
 
 const fallbackLocale: AppLocale = "en";
@@ -39,9 +40,11 @@ export async function GET(request: Request) {
   }
 
   const previewPath = `/${requestedLocale}/blog/${normalizedSlug}`;
+  // Use the active request host so Studio preview works unchanged on localhost,
+  // Vercel preview deployments, and the production domain.
   const localizedPreviewUrl = new URL(
     `/${requestedLocale}/api/studio/preview`,
-    request.url,
+    getRequestOrigin(request),
   );
 
   localizedPreviewUrl.searchParams.set("secret", sanityPreviewSecret);

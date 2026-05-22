@@ -21,6 +21,7 @@ import { ArticleLayout } from "@/components/blog/ArticleLayout";
 import { PortableTextContent } from "@/components/blog/PortableTextContent";
 import { routing, type AppLocale } from "@/i18n/routing";
 import type { Metadata } from "next";
+import { getProductionSiteUrl } from "@/lib/env";
 import { getSanityPostBySlug, getSanityPosts } from "@/lib/sanity/fetch";
 
 type BlogPostPageProps = {
@@ -53,17 +54,21 @@ export async function generateMetadata({
     return {};
   }
 
+  const productionArticleUrl =
+    post.canonicalUrl || `${getProductionSiteUrl()}/${locale}/blog/${post.slug}`;
+
   return {
     title: post.seoTitle || post.title,
     description: post.seoDescription || post.excerpt,
-    alternates: post.canonicalUrl
-      ? {
-          canonical: post.canonicalUrl,
-        }
-      : undefined,
+    // Canonical and Open Graph URLs stay on the production domain so preview
+    // deployments cannot leak branch URLs into search indexes or social shares.
+    alternates: {
+      canonical: productionArticleUrl,
+    },
     openGraph: {
       title: post.seoTitle || post.title,
       description: post.seoDescription || post.excerpt,
+      url: productionArticleUrl,
       type: "article",
       publishedTime: post.publishedAt,
       modifiedTime: post.updatedAt,

@@ -2,6 +2,8 @@
 
 Required Vercel environment variables for the production Sanity integration:
 
+- `NEXT_PUBLIC_SITE_URL` optional override for the current deployment origin. On
+  Vercel, preview routes can fall back to `VERCEL_URL` automatically.
 - `NEXT_PUBLIC_SANITY_PROJECT_ID`
 - `NEXT_PUBLIC_SANITY_DATASET`
 - `NEXT_PUBLIC_SANITY_API_VERSION`
@@ -14,11 +16,22 @@ Required Vercel environment variables for the production Sanity integration:
 
 Environment responsibilities:
 
+- `VERCEL_ENV` is provided by Vercel and resolves to `production`, `preview`,
+  or `development`; the app uses it to noindex non-production deployments.
+- Canonical URLs and Open Graph URLs always point to
+  `https://www.nine2fire.com` so preview deployments never become canonical.
+- Preview and development deployments are intentionally noindexed and return a
+  blocking `robots.txt` to keep branch URLs out of search results.
+- `NEXT_PUBLIC_SITE_URL` is optional and only affects runtime origin
+  resolution for preview redirects when the host must be forced explicitly.
 - The frontend Sanity client reads only `NEXT_PUBLIC_SANITY_*`.
 - Embedded Studio at `/studio` and the Sanity CLI read only `SANITY_STUDIO_*`.
 - Draft preview reads use `SANITY_API_READ_TOKEN` server-side only.
 - The localized preview route at `/[locale]/api/studio/preview` requires `SANITY_PREVIEW_SECRET`.
 - The on-demand revalidation route at `/api/revalidate` requires `SANITY_REVALIDATE_SECRET`.
+- Preview redirects resolve against the current request host, so draft preview
+  works on localhost, `*.vercel.app` branch deployments, and production
+  without hardcoded URLs.
 - Public blog routes must render published content unless Next.js draft mode is explicitly enabled.
 
 The same variables are listed in [.env.example](/Users/Francesco/Dev Projects/Nine2Fire/nine2fire-project/.env.example).

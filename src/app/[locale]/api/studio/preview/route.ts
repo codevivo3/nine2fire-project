@@ -11,6 +11,7 @@
 import { draftMode } from "next/headers";
 import { NextResponse } from "next/server";
 import { routing, type AppLocale } from "@/i18n/routing";
+import { getRequestOrigin } from "@/lib/env";
 import { hasSanityPreviewAccess, sanityPreviewSecret } from "@/lib/sanity/serverEnv";
 
 type PreviewRouteContext = {
@@ -65,5 +66,5 @@ export async function GET(request: Request, context: PreviewRouteContext) {
   draft.enable();
 
   // Redirect into the real page route so subsequent server reads can detect draft mode.
-  return NextResponse.redirect(new URL(previewPathname, request.url));
+  return NextResponse.redirect(new URL(previewPathname, getRequestOrigin(request)));
 }

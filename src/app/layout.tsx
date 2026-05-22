@@ -14,6 +14,7 @@ import { Analytics } from "@vercel/analytics/react";
 import { getLocale } from "next-intl/server";
 import { Manrope } from "next/font/google";
 import Script from "next/script";
+import { getProductionSiteUrl, isProduction } from "@/lib/env";
 import { THEME_STORAGE_KEY } from "@/lib/theme";
 import "./globals.css";
 
@@ -29,8 +30,15 @@ const manrope = Manrope({
  *
  * Includes base SEO fields, social metadata, and favicon declarations.
  */
+const productionSiteUrl = getProductionSiteUrl();
+
 export const metadata: Metadata = {
-  metadataBase: new URL("https://nine2fire.com"),
+  // Canonical SEO signals always target the public production domain so
+  // preview deployments never become the indexed source of truth.
+  metadataBase: new URL(productionSiteUrl),
+  alternates: {
+    canonical: "/",
+  },
   title: {
     default: "Nine2Fire — The Financial Architect",
     template: "%s | Nine2Fire",
@@ -47,7 +55,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Nine2Fire — The Financial Architect",
     description: "Build a system that runs without you.",
-    url: "https://nine2fire.com",
+    url: productionSiteUrl,
     siteName: "Nine2Fire",
     locale: "en",
     type: "website",
@@ -57,6 +65,24 @@ export const metadata: Metadata = {
     title: "Nine2Fire",
     description: "Structured thinking for financial independence.",
   },
+  // Preview and development deployments must stay out of search results even
+  // though their canonical URLs still point to production.
+  robots: isProduction
+    ? {
+        index: true,
+        follow: true,
+      }
+    : {
+        index: false,
+        follow: false,
+        googleBot: {
+          index: false,
+          follow: false,
+          noimageindex: true,
+          "max-image-preview": "none",
+          "max-snippet": 0,
+        },
+      },
   /**
    * Favicon & app icons configuration
    *

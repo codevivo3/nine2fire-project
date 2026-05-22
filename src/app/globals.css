@@ -53,6 +53,8 @@ html.light {
 
   /* Background pattern (light default) */
   --bg-pattern: url('/pattern/topographic-pattern-light-theme.svg');
+  --bg-pattern-opacity: 0.05;
+  --bg-pattern-opacity-reading: 0.022;
 
   /* Shadows (light theme) */
   --shadow-soft: 0 2px 6px rgba(0, 0, 0, 0.15);
@@ -89,6 +91,8 @@ html.dark {
 
   /* Pattern swap */
   --bg-pattern: url('/pattern/topographic-pattern-dark-theme.svg');
+  --bg-pattern-opacity: 0.04;
+  --bg-pattern-opacity-reading: 0.028;
 
   /* Shadows (dark theme) */
   --shadow-soft:
@@ -153,8 +157,12 @@ html::before {
   background-size: cover;
   background-position: center top;
 
-  /* Keep the pattern visible without competing with content surfaces. */
-  opacity: 0.05;
+  /*
+   * Atmospheric surfaces such as the homepage can carry more brand texture,
+   * while reading surfaces should recede so long-form typography sets the
+   * rhythm. The pattern stays the same; only opacity changes by page context.
+   */
+  opacity: var(--bg-pattern-opacity);
   z-index: 0;
 
   will-change: transform;
@@ -164,8 +172,13 @@ html::before {
   animation-range: 0% 100%;
 }
 
-html.dark::before {
-  opacity: 0.04;
+/*
+ * Article pages opt into a quieter reading mode through a stable route-level
+ * marker. This keeps the global pattern system centralized while reducing
+ * background competition behind editorial content.
+ */
+html:has([data-page-surface='article'])::before {
+  opacity: var(--bg-pattern-opacity-reading);
 }
 
 @keyframes float {
