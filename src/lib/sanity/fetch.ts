@@ -23,6 +23,13 @@ type SanityFetchOptions = {
   preview?: boolean;
 };
 
+async function devDelay() {
+  // TODO: Remove this temporary delay after skeleton loader QA is complete.
+  if (process.env.NODE_ENV === "development") {
+    await new Promise((resolve) => setTimeout(resolve, 2000));
+  }
+}
+
 function mergePostTags(tags?: string[], customTags?: string[]) {
   return Array.from(new Set([...(tags || []), ...(customTags || [])]));
 }
@@ -138,9 +145,11 @@ export async function getSanityPosts(
 
   if (options.preview) {
     // Draft mode must use authenticated preview reads instead of the cached client.
+    await devDelay();
     return getPreviewSanityPosts(locale);
   }
 
+  await devDelay();
   return getCachedSanityPosts(locale);
 }
 
@@ -158,6 +167,8 @@ export async function getSanityPostBySlug(
   if (!client) {
     return undefined;
   }
+
+  await devDelay();
 
   const fetchOptions = options.preview
     ? {

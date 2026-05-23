@@ -11,8 +11,8 @@
  * - Styling stays intentionally light and non-card-based
  * - Variant rendering supports index, tag, and future CMS-backed listing surfaces
  */
-import Image from "next/image";
 import { Link } from "@/i18n/navigation";
+import { EditorialImage } from "@/components/ui/EditorialImage";
 import { formatPostDate } from "@/lib/blog/formatPostDate";
 import type { Post } from "@/lib/sanity/types";
 
@@ -85,12 +85,12 @@ export function BlogCard({
             href={`/blog/${post.slug}`}
             className="order-first overflow-hidden rounded-sm md:order-none md:w-32 md:shrink-0"
           >
-            <Image
+            <EditorialImage
               src={post.coverImage}
               alt={post.coverImageAlt || post.title}
               width={160}
               height={120}
-              className="h-24 w-full object-cover md:h-20"
+              imageClassName="h-24 w-full object-cover md:h-20"
             />
           </Link>
         ) : null}

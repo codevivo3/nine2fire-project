@@ -8,8 +8,9 @@
  * - Section ordering here defines the narrative flow for every supported locale
  */
 import { setRequestLocale } from "next-intl/server";
+import { Suspense } from "react";
 import { Hero } from "@/components/sections/Hero";
-import { Insights } from "@/components/sections/Insights";
+import { Insights, InsightsSkeleton } from "@/components/sections/Insights";
 import { NewsletterSection } from "@/components/sections/NewsletterSection";
 import { Roadmap } from "@/components/sections/Roadmap";
 import { ValueProps } from "@/components/sections/Structure";
@@ -28,7 +29,9 @@ export default async function LandingPage({ params }: LandingPageProps) {
       <Hero />
       <ValueProps />
       <Roadmap />
-      <Insights locale={locale} />
+      <Suspense fallback={<InsightsSkeleton />}>
+        <Insights locale={locale} />
+      </Suspense>
       <NewsletterSection />
     </main>
   );

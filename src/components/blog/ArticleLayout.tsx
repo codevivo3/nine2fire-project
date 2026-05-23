@@ -13,10 +13,10 @@
  * - Stays generic so CMS-driven rich content can fit later
  */
 import type { ReactNode } from "react";
-import Image from "next/image";
 
 import { formatPostDate } from "@/lib/blog/formatPostDate";
 import { Link } from "@/i18n/navigation";
+import { EditorialImage } from "@/components/ui/EditorialImage";
 import {
   getSanityImageDimensions,
   isPortraitImage,
@@ -78,12 +78,12 @@ export function ArticleLayout({
               : "mt-4 overflow-hidden rounded-[var(--radius-sm)] border border-border-token"
           }
         >
-          <Image
+          <EditorialImage
             src={imageSrc}
             alt={imageAlt || title}
             width={coverDimensions?.width || 1200}
             height={coverDimensions?.height || 630}
-            className={
+            imageClassName={
               portraitCover
                 ? "max-h-[70vh] w-full object-contain"
                 : "max-h-[560px] w-full object-cover"

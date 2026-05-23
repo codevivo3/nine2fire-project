@@ -1,7 +1,7 @@
-import Image from "next/image";
 import { PortableText, type PortableTextComponents } from "@portabletext/react";
 import { Link } from "@/i18n/navigation";
 import { BlogCard } from "@/components/blog/BlogCard";
+import { EditorialImage } from "@/components/ui/EditorialImage";
 import type { PortableTextContent as PortableTextValue, Post } from "@/lib/sanity/types";
 import {
   getSanityImageDimensions,
@@ -93,12 +93,12 @@ function ResourceCard({
     <div className="grid gap-5 md:grid-cols-[160px_minmax(0,1fr)] md:items-center">
       {imageUrl ? (
         <div className="overflow-hidden rounded-[var(--radius-sm)] border border-border-token bg-surface/80">
-          <Image
+          <EditorialImage
             src={imageUrl}
             alt={value.imageAlt || value.title || ""}
             width={960}
             height={720}
-            className="h-40 w-full object-cover md:h-28"
+            imageClassName="h-40 w-full object-cover md:h-28"
           />
         </div>
       ) : null}
@@ -155,7 +155,7 @@ function ResourceCard({
   );
 }
 
-function EditorialImage({ value }: { value: PortableTextImageBlock }) {
+function PortableTextEditorialImage({ value }: { value: PortableTextImageBlock }) {
   const imageUrl = getSanityImageUrl(value.image, 1400, 1400);
 
   if (!imageUrl || !value.image) {
@@ -185,12 +185,12 @@ function EditorialImage({ value }: { value: PortableTextImageBlock }) {
   return (
     <figure className={`my-10 ${containerClassName}`}>
       <div className="overflow-hidden rounded-[var(--radius-sm)] border border-border-token bg-surface/70">
-        <Image
+        <EditorialImage
           src={imageUrl}
           alt={value.alt || ""}
           width={dimensions?.width || 1400}
           height={dimensions?.height || 1200}
-          className={
+          imageClassName={
             portrait
               ? "max-h-[70vh] w-full object-contain"
               : "max-h-[560px] w-full object-cover"
@@ -295,7 +295,7 @@ export function PortableTextContent({
       },
     },
     types: {
-      imageBlock: ({ value }) => <EditorialImage value={value as PortableTextImageBlock} />,
+      imageBlock: ({ value }) => <PortableTextEditorialImage value={value as PortableTextImageBlock} />,
       noteBlock: ({ value }) => {
         const note = value as PortableTextNoteBlock;
         const toneClassName =

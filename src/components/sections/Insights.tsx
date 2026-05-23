@@ -9,8 +9,10 @@
  *   routes can reuse the full post list without homepage assumptions.
  */
 import { getTranslations } from "next-intl/server";
-import Image from "next/image";
+import { SkeletonCard } from "@/components/ui/SkeletonCard";
+import { SkeletonBlock } from "@/components/ui/SkeletonBlock";
 import { Container } from "@/components/ui/Container";
+import { EditorialImage } from "@/components/ui/EditorialImage";
 import { sectionAnchorOffsets } from "@/config/sectionAnchors";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { Link } from "@/i18n/navigation";
@@ -20,6 +22,38 @@ import { getSanityPosts } from "@/lib/sanity/fetch";
 type InsightsProps = {
   locale: AppLocale;
 };
+
+export function InsightsSkeleton() {
+  return (
+    <section id='insights' className={sectionAnchorOffsets.insights}>
+      <Container className='py-16 md:py-24'>
+        <div aria-hidden='true' className='mt-10 grid gap-4 md:mt-12 md:grid-cols-3'>
+          {Array.from({ length: 3 }).map((_, index) => (
+            <SkeletonCard
+              key={index}
+              className='p-6 backdrop-blur-md'
+            >
+              <SkeletonBlock className='aspect-square w-full rounded-[var(--radius-md)] border border-border-token bg-surface/60' />
+              <div className='mt-5 flex items-center justify-between gap-4'>
+                <SkeletonBlock className='h-3 w-20 rounded-full' />
+                <SkeletonBlock className='h-3 w-14 rounded-full' />
+              </div>
+              <div className='mt-6 space-y-3'>
+                <SkeletonBlock className='h-8 w-[88%]' />
+                <SkeletonBlock className='h-8 w-[72%]' />
+              </div>
+              <div className='mt-4 space-y-2'>
+                <SkeletonBlock className='h-4 w-full' />
+                <SkeletonBlock className='h-4 w-[90%]' />
+                <SkeletonBlock className='h-4 w-[76%]' />
+              </div>
+            </SkeletonCard>
+          ))}
+        </div>
+      </Container>
+    </section>
+  );
+}
 
 export async function Insights({ locale }: InsightsProps) {
   const t = await getTranslations("Insights");
@@ -43,12 +77,12 @@ export async function Insights({ locale }: InsightsProps) {
             >
               <div className='relative aspect-square overflow-hidden rounded-[var(--radius-md)] border border-border-token bg-surface/60'>
                 {post.coverImage && (
-                  <Image
+                  <EditorialImage
                     src={post.coverImage}
                     alt={post.coverImageAlt || post.title}
                     fill
                     sizes='(min-width: 768px) 33vw, 100vw'
-                    className='object-cover transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.02]'
+                    imageClassName='object-cover transition-[opacity,transform] duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.02]'
                   />
                 )}
               </div>

@@ -14,10 +14,10 @@
  * - This route is designed to keep working when local data is replaced by Sanity
  * - Presentation logic stays here and in shared blog components, not in the storage layer
  */
-import Image from 'next/image';
 import { draftMode } from 'next/headers';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { BlogList } from '@/components/blog/BlogList';
+import { EditorialImage } from '@/components/ui/EditorialImage';
 import { ScrollCue } from '@/components/ui/ScrollCue';
 import { Link } from '@/i18n/navigation';
 import { formatPostDate } from '@/lib/blog/formatPostDate';
@@ -108,12 +108,12 @@ export default async function BlogPage({ params }: BlogPageProps) {
                 href={`/blog/${featuredPost.slug}`}
                 className='overflow-hidden rounded-sm'
               >
-                <Image
+                <EditorialImage
                   src={featuredPost.coverImage}
                   alt={featuredPost.coverImageAlt || featuredPost.title}
                   width={560}
                   height={420}
-                  className='h-full w-full object-cover'
+                  imageClassName='h-full w-full object-cover'
                   priority
                 />
               </Link>
