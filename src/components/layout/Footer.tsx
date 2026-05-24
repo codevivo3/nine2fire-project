@@ -8,11 +8,12 @@
  * - Reuses `NavLink` so link hover treatment matches the header
  * - Contact actions stay plain anchors because they target external destinations
  */
-import { useTranslations } from 'next-intl';
+import { getTranslations } from "next-intl/server";
 import { BrandLogo } from '@/components/layout/BrandLogo';
 import { Container } from '@/components/ui/Container';
 import { NavLink } from '@/components/ui/NavLink';
 import { mainNavLinks } from '@/config/navigation';
+import type { AppLocale } from "@/i18n/routing";
 import {
   FaXTwitter,
   FaFacebook,
@@ -20,9 +21,13 @@ import {
 } from 'react-icons/fa6';
 import { SiReddit } from 'react-icons/si';
 
-export function Footer() {
-  const t = useTranslations('Footer');
-  const navT = useTranslations('Navigation');
+type FooterProps = {
+  locale: AppLocale;
+};
+
+export async function Footer({ locale }: FooterProps) {
+  const t = await getTranslations({ locale, namespace: "Footer" });
+  const navT = await getTranslations({ locale, namespace: "Navigation" });
 
   const legalLinks = [
     { href: '/disclaimer', label: t('legal.disclaimer') },
@@ -65,7 +70,7 @@ export function Footer() {
                 key={link.href}
                 href={link.href}
                 className='inline-block w-fit'
-                aria-label={`Go to ${navT(link.labelKey)} page`}
+                aria-label={t('ariaLabels.goToPage', { page: navT(link.labelKey) })}
               >
                 {navT(link.labelKey)}
               </NavLink>
@@ -83,7 +88,7 @@ export function Footer() {
                 key={link.label}
                 href={link.href}
                 className='inline-block w-fit'
-                aria-label={`Go to ${link.label} page`}
+                aria-label={t('ariaLabels.goToPage', { page: link.label })}
               >
                 {link.label}
               </NavLink>
@@ -99,7 +104,7 @@ export function Footer() {
             <a
               href='mailto:info@nine2fire.com'
               className={contactLinkClasses}
-              aria-label='Send email to Nine2Fire'
+              aria-label={t('ariaLabels.email')}
             >
               <span className='flex items-center justify-center w-full h-full'>
                 <FaEnvelope className='h-4 w-4 opacity-80 group-hover:opacity-100 transition' />
@@ -110,7 +115,7 @@ export function Footer() {
               target='_blank'
               rel='noopener noreferrer'
               className={contactLinkClasses}
-              aria-label='Visit Nine2Fire on X'
+              aria-label={t('ariaLabels.x')}
             >
               <span className='flex items-center justify-center w-full h-full'>
                 <FaXTwitter className='h-4 w-4 opacity-80 group-hover:opacity-100 transition' />
@@ -121,7 +126,7 @@ export function Footer() {
               target='_blank'
               rel='noopener noreferrer'
               className={contactLinkClasses}
-              aria-label='Visit Nine2Fire on Facebook'
+              aria-label={t('ariaLabels.facebook')}
             >
               <span className='flex items-center justify-center w-full h-full'>
                 <FaFacebook className='h-4 w-4 opacity-80 group-hover:opacity-100 transition' />
@@ -132,7 +137,7 @@ export function Footer() {
               target='_blank'
               rel='noopener noreferrer'
               className={contactLinkClasses}
-              aria-label='Visit Nine2Fire on Reddit'
+              aria-label={t('ariaLabels.reddit')}
             >
               <span className='flex items-center justify-center w-full h-full'>
                 <SiReddit className='h-4 w-4 opacity-80 group-hover:opacity-100 transition' />

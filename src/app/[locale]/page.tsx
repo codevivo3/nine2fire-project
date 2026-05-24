@@ -31,9 +31,9 @@ export default async function LandingPage({ params }: LandingPageProps) {
 
   return (
     <main className="pt-24 md:pt-28">
-      <Hero />
-      <ValueProps />
-      <Roadmap />
+      <Hero locale={locale} />
+      <ValueProps locale={locale} />
+      <Roadmap locale={locale} />
       <Suspense fallback={<InsightsSkeleton />}>
         <Insights locale={locale} />
       </Suspense>

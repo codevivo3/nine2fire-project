@@ -1,6 +1,6 @@
 {
   "Footer": {
-    "tagline": "Una base bilingue per finanza editoriale, strumenti e crescita deliberata.",
+    "tagline": "La libertà non accade. Si costruisce.",
     "copyright": "© Nine2Fire",
     "navTitle": "Naviga",
     "legalTitle": "Legale",
@@ -10,6 +10,13 @@
       "insights": "Approfondimenti"
     },
     "contactTitle": "Contatti",
+    "ariaLabels": {
+      "goToPage": "Vai alla pagina {page}",
+      "email": "Invia un'email a Nine2Fire",
+      "x": "Visita Nine2Fire su X",
+      "facebook": "Visita Nine2Fire su Facebook",
+      "reddit": "Visita Nine2Fire su Reddit"
+    },
     "legal": {
       "disclaimer": "Disclaimer",
       "privacy": "Privacy",

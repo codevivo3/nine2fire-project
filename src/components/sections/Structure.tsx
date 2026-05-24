@@ -4,13 +4,18 @@
  * PURPOSE:
  * - Explains the core operating principles behind the product philosophy
  */
-import { useTranslations } from "next-intl";
+import { getTranslations } from "next-intl/server";
 import { Container } from "@/components/ui/Container";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { sectionAnchorOffsets } from "@/config/sectionAnchors";
+import type { AppLocale } from "@/i18n/routing";
 
-export function ValueProps() {
-  const t = useTranslations("ValueProps");
+type ValuePropsProps = {
+  locale: AppLocale;
+};
+
+export async function ValueProps({ locale }: ValuePropsProps) {
+  const t = await getTranslations({ locale, namespace: "ValueProps" });
 
   return (
     <section id='approach' className={sectionAnchorOffsets.base}>

@@ -8,13 +8,21 @@
  * - CTAs intentionally target in-page anchors to keep the homepage as a single
  *   narrative flow.
  */
-import { useTranslations } from 'next-intl';
+import { getTranslations } from "next-intl/server";
 import { Button } from '@/components/ui/Button';
 import { Container } from '@/components/ui/Container';
+import { routes } from "@/config/routes";
+import type { AppLocale } from "@/i18n/routing";
 import { ScrollCue } from '../ui/ScrollCue';
 
-export function Hero() {
-  const t = useTranslations('Hero');
+type HeroProps = {
+  locale: AppLocale;
+};
+
+export async function Hero({ locale }: HeroProps) {
+  // Bind server-rendered homepage copy to the route locale explicitly so
+  // hard refreshes on `/it` cannot fall back to the default request locale.
+  const t = await getTranslations({ locale, namespace: "Hero" });
 
   return (
     <section className='relative min-h-screen 2xl:min-h-[85vh] flex items-start 2xl:mt-72 justify-center'>
@@ -33,10 +41,10 @@ export function Hero() {
           </div>
 
           <div className='flex flex-col gap-3 sm:flex-row'>
-            <Button href='/#insights' variant='gold'>
+            <Button href={routes.sections.insights} variant='gold'>
               {t('primaryCta')}
             </Button>
-            <Button href='/#roadmap' variant='secondary'>
+            <Button href={routes.sections.roadmap} variant='secondary'>
               {t('secondaryCta')}
             </Button>
           </div>

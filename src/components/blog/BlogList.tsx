@@ -8,17 +8,18 @@
  * - Keeps route files independent from the temporary local data source and ready for a future CMS
  */
 import type { Post } from "@/lib/sanity/types";
+import type { AppLocale } from "@/i18n/routing";
 import { BlogCard } from "./BlogCard";
 
 type BlogListProps = {
   posts: Post[];
-  locale?: string;
+  locale: AppLocale;
   variant?: "latest" | "archive";
 };
 
 export function BlogList({
   posts,
-  locale = "en",
+  locale,
   variant = "latest",
 }: BlogListProps) {
   return (

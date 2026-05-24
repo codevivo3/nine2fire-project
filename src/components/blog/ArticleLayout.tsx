@@ -16,6 +16,8 @@ import type { ReactNode } from "react";
 
 import { formatPostDate } from "@/lib/blog/formatPostDate";
 import { Link } from "@/i18n/navigation";
+import { routes } from "@/config/routes";
+import type { AppLocale } from "@/i18n/routing";
 import { EditorialImage } from "@/components/ui/EditorialImage";
 import {
   getSanityImageDimensions,
@@ -26,7 +28,7 @@ import {
 type ArticleLayoutProps = {
   title: string;
   date?: string | null;
-  locale?: string;
+  locale: AppLocale;
   readingTime?: string;
   imageSrc?: string;
   imageAlt?: string;
@@ -39,7 +41,7 @@ type ArticleLayoutProps = {
 export function ArticleLayout({
   title,
   date,
-  locale = "en",
+  locale,
   readingTime,
   imageSrc,
   imageAlt,
@@ -96,7 +98,7 @@ export function ArticleLayout({
           {tags.map((tag) => (
             <Link
               key={tag}
-              href={`/blog/tag/${encodeURIComponent(tag)}`}
+              href={routes.blogTag(tag)}
               className="text-xs px-2 py-1 rounded-full text-muted-foreground transition-colors duration-200 hover:text-foreground"
             >
               #{tag}

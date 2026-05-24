@@ -13,6 +13,8 @@
  */
 import { Link } from "@/i18n/navigation";
 import { EditorialImage } from "@/components/ui/EditorialImage";
+import { routes } from "@/config/routes";
+import type { AppLocale } from "@/i18n/routing";
 import { formatPostDate } from "@/lib/blog/formatPostDate";
 import type { Post } from "@/lib/sanity/types";
 
@@ -20,13 +22,13 @@ type BlogCardVariant = "latest" | "archive";
 
 type BlogCardProps = {
   post: Post;
-  locale?: string;
+  locale: AppLocale;
   variant?: BlogCardVariant;
 };
 
 export function BlogCard({
   post,
-  locale = "en",
+  locale,
   variant = "latest",
 }: BlogCardProps) {
   const formattedDate = formatPostDate(post.publishedAt, locale);
@@ -35,7 +37,7 @@ export function BlogCard({
   if (variant === "archive") {
     return (
       <Link
-        href={`/blog/${post.slug}`}
+        href={routes.blogPost(post.slug)}
         className="flex items-baseline justify-between gap-4 border-t border-border/50 py-4 transition-opacity duration-200 hover:opacity-70"
       >
         <h3 className="text-sm font-medium leading-snug">{post.title}</h3>
@@ -51,7 +53,7 @@ export function BlogCard({
       <div className="flex flex-col gap-5 md:flex-row md:items-start md:justify-between">
         <div className="min-w-0 flex-1 space-y-3">
           <Link
-            href={`/blog/${post.slug}`}
+            href={routes.blogPost(post.slug)}
             className="block space-y-3 transition-opacity duration-200 hover:opacity-75"
           >
             <h3 className="text-2xl font-semibold tracking-[-0.02em] text-foreground">
@@ -71,7 +73,7 @@ export function BlogCard({
             {post.allTags.map((tag) => (
               <Link
                 key={tag}
-                href={`/blog/tag/${encodeURIComponent(tag)}`}
+                href={routes.blogTag(tag)}
                 className="transition-colors duration-200 hover:text-foreground"
               >
                 #{tag}
@@ -82,7 +84,7 @@ export function BlogCard({
 
         {post.coverImage ? (
           <Link
-            href={`/blog/${post.slug}`}
+            href={routes.blogPost(post.slug)}
             className="order-first overflow-hidden rounded-sm md:order-none md:w-32 md:shrink-0"
           >
             <EditorialImage

@@ -13,6 +13,7 @@ import { SkeletonCard } from "@/components/ui/SkeletonCard";
 import { SkeletonBlock } from "@/components/ui/SkeletonBlock";
 import { Container } from "@/components/ui/Container";
 import { EditorialImage } from "@/components/ui/EditorialImage";
+import { routes } from "@/config/routes";
 import { sectionAnchorOffsets } from "@/config/sectionAnchors";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { Link } from "@/i18n/navigation";
@@ -56,7 +57,7 @@ export function InsightsSkeleton() {
 }
 
 export async function Insights({ locale }: InsightsProps) {
-  const t = await getTranslations("Insights");
+  const t = await getTranslations({ locale, namespace: "Insights" });
   const posts = (await getSanityPosts(locale)).slice(0, 3);
 
   return (
@@ -72,7 +73,7 @@ export async function Insights({ locale }: InsightsProps) {
           {posts.slice(0, 3).map((post) => (
             <Link
               key={post.slug}
-              href={`/blog/${post.slug}`}
+              href={routes.blogPost(post.slug)}
               className='group block rounded-[var(--radius-lg)] border border-border-token bg-surface/80 p-6 backdrop-blur-md transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] hover:bg-surface/90 hover:shadow-[var(--shadow-soft)] hover:-translate-y-[2px]'
             >
               <div className='relative aspect-square overflow-hidden rounded-[var(--radius-md)] border border-border-token bg-surface/60'>

@@ -136,7 +136,7 @@ async function getPreviewSanityPosts(locale: AppLocale) {
 }
 
 export async function getSanityPosts(
-  locale: AppLocale = "en",
+  locale: AppLocale,
   options: SanityFetchOptions = {},
 ) {
   if (!isSanityConfigured()) {
@@ -155,7 +155,7 @@ export async function getSanityPosts(
 
 export async function getSanityPostBySlug(
   slug: string,
-  locale: AppLocale = "en",
+  locale: AppLocale,
   options: SanityFetchOptions = {},
 ) {
   if (!isSanityConfigured()) {
@@ -191,7 +191,7 @@ export async function getSanityPostBySlug(
   return document ? mapSanityPost(document) : undefined;
 }
 
-export async function getSanityPostSlugs(locale: AppLocale = "en") {
+export async function getSanityPostSlugs(locale: AppLocale) {
   if (!isSanityConfigured()) {
     return [];
   }

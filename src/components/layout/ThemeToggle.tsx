@@ -4,8 +4,8 @@
  * Renders the theme toggle and exposes a small shared theme state hook.
  *
  * NOTES:
- * - The initial theme is established in `src/app/layout.tsx`; this hook only
- *   handles post-hydration synchronization.
+ * - The root layout applies the initial persisted-or-system theme before
+ *   hydration; this hook keeps client state in sync afterward.
  * - A custom event keeps separate client components in sync without introducing
  *   a larger global state layer for a tiny concern.
  */
@@ -13,29 +13,32 @@
 import * as React from 'react';
 import {
   applyTheme,
+  getCurrentTheme,
+  getStoredTheme,
   getSystemTheme,
+  setStoredTheme,
   THEME_EVENT,
-  type ThemeMode,
+  type AppliedTheme,
 } from '@/lib/theme';
-
-function getTheme(): ThemeMode {
-  if (typeof document === 'undefined') return 'light';
-  return document.documentElement.classList.contains('dark') ? 'dark' : 'light';
-}
 
 // Exposes the current theme and a synchronized toggle action for UI controls.
 export function useTheme() {
-  const [theme, setTheme] = React.useState<ThemeMode>('light');
+  const [theme, setTheme] = React.useState<AppliedTheme>(() => getCurrentTheme());
 
   React.useEffect(() => {
-    // Align client state with whatever the root layout already applied.
-    const systemTheme = getSystemTheme();
-    applyTheme(systemTheme);
-    setTheme(systemTheme);
+    // Align client state with the persisted-or-system theme already applied by the root layout.
+    const storedTheme = getStoredTheme();
+    const initialTheme =
+      storedTheme && storedTheme !== 'system'
+        ? storedTheme
+        : getCurrentTheme();
+
+    applyTheme(initialTheme);
+    setTheme(initialTheme);
   }, []);
 
   React.useEffect(() => {
-    const sync = () => setTheme(getTheme());
+    const sync = () => setTheme(getCurrentTheme());
 
     window.addEventListener(THEME_EVENT, sync);
     return () => window.removeEventListener(THEME_EVENT, sync);
@@ -44,7 +47,13 @@ export function useTheme() {
   React.useEffect(() => {
     const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
     const syncSystemTheme = () => {
-      // This project currently treats the toggle as a session-level override.
+      const storedTheme = getStoredTheme();
+
+      // System changes should only affect visitors who have not saved a theme preference.
+      if (storedTheme === 'light' || storedTheme === 'dark') {
+        return;
+      }
+
       const currentTheme = getSystemTheme();
       applyTheme(currentTheme);
       window.dispatchEvent(new Event(THEME_EVENT));
@@ -57,9 +66,9 @@ export function useTheme() {
     return () => mediaQuery.removeEventListener('change', syncSystemTheme);
   }, []);
 
-  // Updates the root class and notifies other listeners in the same session.
-  const setMode = (next: ThemeMode) => {
-    // Do not persist here; the current UX intentionally resets to system on reload.
+  // Persist the selected theme and notify all mounted controls in the session.
+  const setMode = (next: AppliedTheme) => {
+    setStoredTheme(next);
     applyTheme(next);
     window.dispatchEvent(new Event(THEME_EVENT));
     setTheme(next);

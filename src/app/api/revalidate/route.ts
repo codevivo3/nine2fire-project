@@ -1,5 +1,6 @@
 import { revalidatePath } from "next/cache";
 import { NextResponse } from "next/server";
+import { routes, withLocale } from "@/config/routes";
 import { sanityRevalidateSecret } from "@/lib/sanity/serverEnv";
 
 type LocalizedSlug = {
@@ -14,7 +15,12 @@ type RevalidateWebhookBody = {
   };
 };
 
-const basePaths = ["/", "/en", "/it", "/en/blog", "/it/blog"] as const;
+const localizedBasePaths = (["en", "it"] as const).flatMap((locale) => [
+  withLocale(locale, routes.home),
+  withLocale(locale, routes.blog),
+]);
+
+const basePaths = [routes.home, ...localizedBasePaths] as const;
 
 function readSecret(request: Request) {
   const { searchParams } = new URL(request.url);
@@ -45,11 +51,11 @@ function getRevalidationPaths(body: RevalidateWebhookBody) {
   const italianSlug = readSlug(body.slug?.it?.current);
 
   if (englishSlug) {
-    paths.add(`/en/blog/${englishSlug}`);
+    paths.add(withLocale("en", routes.blogPost(englishSlug)));
   }
 
   if (italianSlug) {
-    paths.add(`/it/blog/${italianSlug}`);
+    paths.add(withLocale("it", routes.blogPost(italianSlug)));
   }
 
   return Array.from(paths);

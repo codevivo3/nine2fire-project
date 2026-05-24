@@ -10,6 +10,13 @@
       "insights": "Insights"
     },
     "contactTitle": "Contact",
+    "ariaLabels": {
+      "goToPage": "Go to {page} page",
+      "email": "Send email to Nine2Fire",
+      "x": "Visit Nine2Fire on X",
+      "facebook": "Visit Nine2Fire on Facebook",
+      "reddit": "Visit Nine2Fire on Reddit"
+    },
     "legal": {
       "disclaimer": "Disclaimer",
       "privacy": "Privacy",

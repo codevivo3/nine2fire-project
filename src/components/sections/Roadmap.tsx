@@ -4,10 +4,11 @@
  * PURPOSE:
  * - Breaks the service model into an ordered sequence of implementation steps
  */
-import { useTranslations } from "next-intl";
+import { getTranslations } from "next-intl/server";
 import { Container } from "@/components/ui/Container";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { sectionAnchorOffsets } from "@/config/sectionAnchors";
+import type { AppLocale } from "@/i18n/routing";
 
 const ROADMAP_STEP_KEYS = [
   "lifestyle",
@@ -18,8 +19,12 @@ const ROADMAP_STEP_KEYS = [
 
 type RoadmapStepKey = (typeof ROADMAP_STEP_KEYS)[number];
 
-export function Roadmap() {
-  const t = useTranslations("Roadmap");
+type RoadmapProps = {
+  locale: AppLocale;
+};
+
+export async function Roadmap({ locale }: RoadmapProps) {
+  const t = await getTranslations({ locale, namespace: "Roadmap" });
 
   return (
     <section id='roadmap' className={sectionAnchorOffsets.roadmap}>

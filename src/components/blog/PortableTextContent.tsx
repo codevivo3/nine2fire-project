@@ -1,5 +1,7 @@
 import { PortableText, type PortableTextComponents } from "@portabletext/react";
 import { Link } from "@/i18n/navigation";
+import { routes } from "@/config/routes";
+import type { AppLocale } from "@/i18n/routing";
 import { BlogCard } from "@/components/blog/BlogCard";
 import { EditorialImage } from "@/components/ui/EditorialImage";
 import type { PortableTextContent as PortableTextValue, Post } from "@/lib/sanity/types";
@@ -12,7 +14,7 @@ import {
 
 type PortableTextContentProps = {
   value: PortableTextValue;
-  locale?: string;
+  locale: AppLocale;
 };
 
 type PortableTextLinkValue = {
@@ -79,7 +81,7 @@ function ResourceCard({
   const href =
     value.isExternal === false
       ? value.linkedPost?.slug
-        ? `/blog/${value.linkedPost.slug}`
+        ? routes.blogPost(value.linkedPost.slug)
         : undefined
       : value.url;
 
@@ -208,7 +210,7 @@ function PortableTextEditorialImage({ value }: { value: PortableTextImageBlock }
 
 export function PortableTextContent({
   value,
-  locale = "en",
+  locale,
 }: PortableTextContentProps) {
   const noteComponents: PortableTextComponents = {
     block: {

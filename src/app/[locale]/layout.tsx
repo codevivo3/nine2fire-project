@@ -53,7 +53,7 @@ export default async function LocaleLayout({
       <div className="relative min-h-screen text-foreground">
         <Navbar />
         {children}
-        <Footer />
+        <Footer locale={resolvedLocale} />
         <CookieBanner />
       </div>
     </NextIntlClientProvider>

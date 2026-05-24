@@ -109,7 +109,6 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   const locale = await getLocale().catch(() => "en");
-  const plausibleDomain = process.env.NEXT_PUBLIC_PLAUSIBLE_DOMAIN;
   // Keep this inline script string colocated with the document shell because it
   // exists purely to establish the initial HTML theme before React hydrates.
   const themeScript = `
@@ -175,16 +174,6 @@ export default async function RootLayout({
         >
           {themeScript}
         </Script>
-        {plausibleDomain ? (
-          // Plausible is optional and loaded after hydration because it does not
-          // influence layout or any server-rendered HTML.
-          <Script
-            id="plausible-analytics"
-            strategy="afterInteractive"
-            data-domain={plausibleDomain}
-            src="https://plausible.io/js/script.js"
-          />
-        ) : null}
       </head>
       <body className="min-h-full text-foreground font-sans before:content-[''] before:fixed before:inset-[-32px] before:-z-10 before:bg-[var(--background-pattern)] before:bg-cover before:bg-center before:bg-no-repeat">
         {children}

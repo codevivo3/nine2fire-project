@@ -18,6 +18,7 @@ import type { Metadata } from "next";
 import { draftMode } from 'next/headers';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { BlogList } from '@/components/blog/BlogList';
+import { routes } from '@/config/routes';
 import { EditorialImage } from '@/components/ui/EditorialImage';
 import { ScrollCue } from '@/components/ui/ScrollCue';
 import { Link } from '@/i18n/navigation';
@@ -38,7 +39,7 @@ export default async function BlogPage({ params }: BlogPageProps) {
   const { locale } = await params;
   const { isEnabled: isDraftMode } = await draftMode();
   setRequestLocale(locale);
-  const t = await getTranslations('Blog');
+  const t = await getTranslations({ locale, namespace: "Blog" });
 
   const posts = await getSanityPosts(locale, { preview: isDraftMode });
   const [featuredPost, ...remainingPosts] = posts;
@@ -84,7 +85,7 @@ export default async function BlogPage({ params }: BlogPageProps) {
               ) : null}
 
               <Link
-                href={`/blog/${featuredPost.slug}`}
+                href={routes.blogPost(featuredPost.slug)}
                 className='block space-y-5 transition-opacity duration-200 hover:opacity-80'
               >
                 <h2 className='max-w-3xl text-3xl font-semibold tracking-[-0.04em] text-foreground md:text-5xl'>
@@ -100,7 +101,7 @@ export default async function BlogPage({ params }: BlogPageProps) {
                 {featuredPost.allTags.map((tag) => (
                   <Link
                     key={tag}
-                    href={`/blog/tag/${encodeURIComponent(tag)}`}
+                    href={routes.blogTag(tag)}
                     className='transition-colors duration-200 hover:text-foreground'
                   >
                     #{tag}
@@ -111,7 +112,7 @@ export default async function BlogPage({ params }: BlogPageProps) {
 
             {featuredPost.coverImage ? (
               <Link
-                href={`/blog/${featuredPost.slug}`}
+                href={routes.blogPost(featuredPost.slug)}
                 className='overflow-hidden rounded-sm'
               >
                 <EditorialImage

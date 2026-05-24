@@ -8,11 +8,12 @@
  *   stays consistent in one place.
  */
 export type ThemeMode = "light" | "dark" | "system";
+export type AppliedTheme = "light" | "dark";
 
 export const THEME_STORAGE_KEY = "theme";
 export const THEME_EVENT = "nine2fire-theme-change";
 
-export function getSystemTheme(): "light" | "dark" {
+export function getSystemTheme(): AppliedTheme {
   if (typeof window === "undefined" || typeof window.matchMedia !== "function") {
     return "light";
   }
@@ -27,11 +28,25 @@ export function getStoredTheme(): ThemeMode | null {
   return storedTheme === "light" || storedTheme === "dark" || storedTheme === "system" ? storedTheme : null;
 }
 
-export function resolveTheme(theme: ThemeMode): "light" | "dark" {
+export function setStoredTheme(theme: AppliedTheme) {
+  if (typeof window === "undefined") return;
+
+  window.localStorage.setItem(THEME_STORAGE_KEY, theme);
+}
+
+export function resolveTheme(theme: ThemeMode): AppliedTheme {
   if (theme === "system") {
     return getSystemTheme();
   }
   return theme;
+}
+
+export function getCurrentTheme(): AppliedTheme {
+  if (typeof document === "undefined") {
+    return "light";
+  }
+
+  return document.documentElement.classList.contains("dark") ? "dark" : "light";
 }
 
 export function applyTheme(theme: ThemeMode) {
