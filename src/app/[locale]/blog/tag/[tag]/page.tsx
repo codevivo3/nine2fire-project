@@ -14,16 +14,22 @@
  * - This route is designed to keep working when posts move from local data to Sanity
  * - Shared list components stay data-source agnostic
  */
+import type { Metadata } from "next";
 import { setRequestLocale } from "next-intl/server";
 import { draftMode } from "next/headers";
 import { notFound } from "next/navigation";
 import { BlogList } from "@/components/blog/BlogList";
 import { routing, type AppLocale } from "@/i18n/routing";
+import { BLOG_SEO_DESCRIPTION, buildPageMetadata } from "@/lib/metadata";
 import { getSanityPosts } from "@/lib/sanity/fetch";
 
 type BlogTagPageProps = {
   params: Promise<{ locale: AppLocale; tag: string }>;
 };
+
+export function generateMetadata(): Metadata {
+  return buildPageMetadata("Blog", BLOG_SEO_DESCRIPTION);
+}
 
 export async function generateStaticParams() {
   const localizedParams = await Promise.all(

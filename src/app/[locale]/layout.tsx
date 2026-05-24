@@ -10,9 +10,8 @@
  * - Shared chrome and the cookie/consent UI live here so they are mounted once
  *   per localized subtree rather than duplicated per page.
  */
-import type { Metadata } from "next";
 import { NextIntlClientProvider } from "next-intl";
-import { getTranslations, setRequestLocale } from "next-intl/server";
+import { setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { hasLocale } from "use-intl";
 import { Footer } from "@/components/layout/Footer";
@@ -28,25 +27,6 @@ type LocaleLayoutProps = {
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
-}
-
-export async function generateMetadata({
-  params,
-}: LocaleLayoutProps): Promise<Metadata> {
-  const { locale } = await params;
-  const resolvedLocale = hasLocale(routing.locales, locale)
-    ? locale
-    : routing.defaultLocale;
-  const t = await getTranslations({
-    locale: resolvedLocale,
-    namespace: "Metadata",
-  });
-
-  return {
-    // Locale layouts extend the generic root metadata instead of replacing it.
-    title: t("title"),
-    description: t("description"),
-  };
 }
 
 export default async function LocaleLayout({

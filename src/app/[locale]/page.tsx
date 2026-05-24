@@ -15,10 +15,15 @@ import { NewsletterSection } from "@/components/sections/NewsletterSection";
 import { Roadmap } from "@/components/sections/Roadmap";
 import { ValueProps } from "@/components/sections/Structure";
 import type { AppLocale } from "@/i18n/routing";
+import { buildPageMetadata, HOME_SEO_DESCRIPTION } from "@/lib/metadata";
 
 type LandingPageProps = {
   params: Promise<{ locale: AppLocale }>;
 };
+
+export function generateMetadata() {
+  return buildPageMetadata("Home", HOME_SEO_DESCRIPTION);
+}
 
 export default async function LandingPage({ params }: LandingPageProps) {
   const { locale } = await params;

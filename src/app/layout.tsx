@@ -15,6 +15,7 @@ import { getLocale } from "next-intl/server";
 import { Manrope } from "next/font/google";
 import Script from "next/script";
 import { getProductionSiteUrl, isProduction } from "@/lib/env";
+import { HOME_SEO_DESCRIPTION } from "@/lib/metadata";
 import { THEME_STORAGE_KEY } from "@/lib/theme";
 import "./globals.css";
 
@@ -40,11 +41,10 @@ export const metadata: Metadata = {
     canonical: "/",
   },
   title: {
-    default: "Nine2Fire — The Financial Architect",
+    default: "Nine2Fire",
     template: "%s | Nine2Fire",
   },
-  description:
-    "Build a system that runs without you. Structured thinking for financial independence.",
+  description: HOME_SEO_DESCRIPTION,
   keywords: [
     "financial independence",
     "FIRE",
@@ -53,8 +53,8 @@ export const metadata: Metadata = {
     "personal finance",
   ],
   openGraph: {
-    title: "Nine2Fire — The Financial Architect",
-    description: "Build a system that runs without you.",
+    title: "Nine2Fire",
+    description: HOME_SEO_DESCRIPTION,
     url: productionSiteUrl,
     siteName: "Nine2Fire",
     locale: "en",
@@ -63,7 +63,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Nine2Fire",
-    description: "Structured thinking for financial independence.",
+    description: HOME_SEO_DESCRIPTION,
   },
   // Preview and development deployments must stay out of search results even
   // though their canonical URLs still point to production.

@@ -14,6 +14,7 @@
  * - This route is designed to keep working when local data is replaced by Sanity
  * - Presentation logic stays here and in shared blog components, not in the storage layer
  */
+import type { Metadata } from "next";
 import { draftMode } from 'next/headers';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { BlogList } from '@/components/blog/BlogList';
@@ -22,11 +23,16 @@ import { ScrollCue } from '@/components/ui/ScrollCue';
 import { Link } from '@/i18n/navigation';
 import { formatPostDate } from '@/lib/blog/formatPostDate';
 import type { AppLocale } from '@/i18n/routing';
+import { BLOG_SEO_DESCRIPTION, buildPageMetadata } from '@/lib/metadata';
 import { getSanityPosts } from '@/lib/sanity/fetch';
 
 type BlogPageProps = {
   params: Promise<{ locale: AppLocale }>;
 };
+
+export function generateMetadata(): Metadata {
+  return buildPageMetadata("Blog", BLOG_SEO_DESCRIPTION);
+}
 
 export default async function BlogPage({ params }: BlogPageProps) {
   const { locale } = await params;

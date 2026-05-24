@@ -22,6 +22,7 @@ import { PortableTextContent } from "@/components/blog/PortableTextContent";
 import { routing, type AppLocale } from "@/i18n/routing";
 import type { Metadata } from "next";
 import { getProductionSiteUrl } from "@/lib/env";
+import { buildPageTitle } from "@/lib/metadata";
 import { getSanityPostBySlug, getSanityPosts } from "@/lib/sanity/fetch";
 
 type BlogPostPageProps = {
@@ -56,18 +57,22 @@ export async function generateMetadata({
 
   const productionArticleUrl =
     post.canonicalUrl || `${getProductionSiteUrl()}/${locale}/blog/${post.slug}`;
+  const pageTitle = buildPageTitle("Blog");
+  const pageDescription = post.seoDescription || post.excerpt;
 
   return {
-    title: post.seoTitle || post.title,
-    description: post.seoDescription || post.excerpt,
+    title: {
+      absolute: pageTitle,
+    },
+    description: pageDescription,
     // Canonical and Open Graph URLs stay on the production domain so preview
     // deployments cannot leak branch URLs into search indexes or social shares.
     alternates: {
       canonical: productionArticleUrl,
     },
     openGraph: {
-      title: post.seoTitle || post.title,
-      description: post.seoDescription || post.excerpt,
+      title: pageTitle,
+      description: pageDescription,
       url: productionArticleUrl,
       type: "article",
       publishedTime: post.publishedAt,
@@ -76,8 +81,8 @@ export async function generateMetadata({
     },
     twitter: {
       card: "summary_large_image",
-      title: post.seoTitle || post.title,
-      description: post.seoDescription || post.excerpt,
+      title: pageTitle,
+      description: pageDescription,
       images: post.ogImage ? [post.ogImage] : undefined,
     },
   };
