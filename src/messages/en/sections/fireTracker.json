@@ -1,0 +1,72 @@
+{
+  "FireTracker": {
+    "landing": {
+      "eyebrow": "Free beta access",
+      "title": "FIRE Tracker Beta",
+      "intro": "Explore your path toward Coast FIRE, semi-retirement, and flexible financial independence. The tool is free during beta. Leave your email to get access and receive occasional updates about the tracker and Nine2Fire.",
+      "help": {
+        "items": {
+          "coast": "Model Coast FIRE scenarios and see how far your current trajectory can carry you.",
+          "semiRetirement": "Sketch semi-retirement and lighter-work options without forcing a single finish line.",
+          "progress": "Track progress toward financial independence with simple planning assumptions.",
+          "tradeoffs": "Compare contributions, return assumptions, inflation, and spending tradeoffs in one place."
+        }
+      }
+    },
+    "form": {
+      "emailLabel": "Email address",
+      "emailPlaceholder": "Your email",
+      "consent": "I agree to receive occasional emails about the FIRE Tracker and Nine2Fire. I can unsubscribe at any time.",
+      "submit": "Get free beta access",
+      "submitting": "Opening access...",
+      "reassurance": "No spam. No tricks. If you unsubscribe, you're out. Simple as that.",
+      "errors": {
+        "validation": "Please add your email and confirm consent to continue.",
+        "submit": "Something went wrong. Please try again."
+      }
+    },
+    "beta": {
+      "eyebrow": "Early beta",
+      "title": "FIRE Tracker",
+      "description": "This is the first beta version of the calculator. The structure is here so we can start testing the planning flow before adding the full math and outputs.",
+      "note": "Beta note: inputs and assumptions may change as the tool becomes more useful and more precise.",
+      "calculatorTitle": "Calculator",
+      "calculatorDescription": "Use a simple Coast FIRE projection to estimate the portfolio you may need and how far your current assets already go.",
+      "actions": {
+        "calculate": "Calculate"
+      },
+      "errors": {
+        "generic": "Something went wrong while running the calculation."
+      },
+      "fields": {
+        "currentAge": "Current age",
+        "retirementAge": "Retirement age",
+        "annualSpending": "Annual spending",
+        "currentInvestedAssets": "Current invested assets",
+        "monthlyContribution": "Monthly contribution",
+        "expectedReturn": "Expected return",
+        "inflation": "Inflation",
+        "safeWithdrawalRate": "Safe withdrawal rate"
+      },
+      "results": {
+        "title": "Results",
+        "fireNumber": "FIRE number",
+        "coastFireNumberToday": "Coast FIRE number today",
+        "projectedPortfolioAtRetirement": "Projected portfolio at retirement",
+        "hasReachedCoastFire": "Has reached Coast FIRE",
+        "progressToCoastFire": "Progress to Coast FIRE",
+        "progressToFullFire": "Progress to Full FIRE",
+        "yearsToRetirement": "Years to retirement",
+        "realReturn": "Real return",
+        "yes": "Yes",
+        "no": "No"
+      },
+      "guard": {
+        "eyebrow": "Access step",
+        "title": "Beta access starts on the previous page",
+        "description": "This beta is free, but we ask for an email first so we can share occasional tool updates and improvements. Leave your email there and you'll be redirected here.",
+        "cta": "Go to beta access"
+      }
+    }
+  }
+}

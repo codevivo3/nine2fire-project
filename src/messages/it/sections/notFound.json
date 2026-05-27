@@ -1,0 +1,12 @@
+{
+  "NotFound": {
+    "eyebrow": "404",
+    "title": "Oops! Pagina non trovata.",
+    "description": "La pagina che stai cercando non esiste piu oppure e stata spostata.",
+    "note": "Oops! Pagina non trovata.",
+    "actions": {
+      "home": "Torna alla Home",
+      "journal": "Blog"
+    }
+  }
+}

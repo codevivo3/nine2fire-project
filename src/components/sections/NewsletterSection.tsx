@@ -12,6 +12,7 @@ import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { Button } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
+import { subscriptionSources } from "@/lib/subscriptions";
 
 export function NewsletterSection() {
   const t = useTranslations('Newsletter');
@@ -55,7 +56,10 @@ export function NewsletterSection() {
                     headers: {
                       'Content-Type': 'application/json',
                     },
-                    body: JSON.stringify({ email }),
+                    body: JSON.stringify({
+                      email,
+                      source: subscriptionSources.newsletter,
+                    }),
                   });
 
                   if (!res.ok) throw new Error('Failed to subscribe');

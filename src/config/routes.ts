@@ -9,6 +9,8 @@ import type { AppLocale } from "@/i18n/routing";
 export const routes = {
   home: "/",
   blog: "/blog",
+  fireTracker: "/tools/fire-tracker",
+  fireTrackerBeta: "/tools/fire-tracker/beta",
   blogPost: (slug: string) => `/blog/${slug}`,
   blogTag: (tag: string) => `/blog/tag/${encodeURIComponent(tag)}`,
   section: (id: string) => `/#${id}`,

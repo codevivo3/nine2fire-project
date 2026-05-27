@@ -1,0 +1,72 @@
+{
+  "FireTracker": {
+    "landing": {
+      "eyebrow": "Accesso beta gratuito",
+      "title": "FIRE Tracker Beta",
+      "intro": "Esplora il tuo percorso verso Coast FIRE, semi-pensionamento e indipendenza finanziaria flessibile. Lo strumento e gratuito durante la beta. Lascia la tua email per ottenere l'accesso e ricevere aggiornamenti occasionali sul tracker e su Nine2Fire.",
+      "help": {
+        "items": {
+          "coast": "Modella scenari Coast FIRE e capisci fin dove puo portarti la traiettoria attuale.",
+          "semiRetirement": "Abbozza opzioni di semi-pensionamento e di lavoro piu leggero senza forzare un unico traguardo.",
+          "progress": "Monitora i progressi verso l'indipendenza finanziaria con ipotesi semplici e leggibili.",
+          "tradeoffs": "Confronta contributi, rendimenti attesi, inflazione e spesa in un unico posto."
+        }
+      }
+    },
+    "form": {
+      "emailLabel": "Indirizzo email",
+      "emailPlaceholder": "La tua email",
+      "consent": "Accetto di ricevere email occasionali sul FIRE Tracker e su Nine2Fire. Posso disiscrivermi in qualsiasi momento.",
+      "submit": "Ottieni l'accesso beta gratuito",
+      "submitting": "Sto aprendo l'accesso...",
+      "reassurance": "Niente spam. Nessun trucco. Se ti disiscrivi, esci. Tutto qui.",
+      "errors": {
+        "validation": "Inserisci la tua email e conferma il consenso per continuare.",
+        "submit": "Qualcosa e andato storto. Riprova."
+      }
+    },
+    "beta": {
+      "eyebrow": "Beta iniziale",
+      "title": "FIRE Tracker",
+      "description": "Questa e la prima versione beta del calcolatore. La struttura c'e gia, cosi possiamo testare il flusso di pianificazione prima di aggiungere tutta la logica e i risultati.",
+      "note": "Nota beta: input e ipotesi potrebbero cambiare mentre lo strumento diventa piu utile e piu preciso.",
+      "calculatorTitle": "Calcolatore",
+      "calculatorDescription": "Usa una proiezione Coast FIRE semplice per stimare il portafoglio necessario e quanto i tuoi asset attuali ti stiano gia aiutando.",
+      "actions": {
+        "calculate": "Calcola"
+      },
+      "errors": {
+        "generic": "Qualcosa e andato storto durante il calcolo."
+      },
+      "fields": {
+        "currentAge": "Eta attuale",
+        "retirementAge": "Eta di pensionamento",
+        "annualSpending": "Spesa annuale",
+        "currentInvestedAssets": "Patrimonio investito attuale",
+        "monthlyContribution": "Contributo mensile",
+        "expectedReturn": "Rendimento atteso",
+        "inflation": "Inflazione",
+        "safeWithdrawalRate": "Safe withdrawal rate"
+      },
+      "results": {
+        "title": "Risultati",
+        "fireNumber": "Numero FIRE",
+        "coastFireNumberToday": "Numero Coast FIRE oggi",
+        "projectedPortfolioAtRetirement": "Portafoglio stimato al pensionamento",
+        "hasReachedCoastFire": "Coast FIRE raggiunto",
+        "progressToCoastFire": "Progresso verso Coast FIRE",
+        "progressToFullFire": "Progresso verso FIRE completo",
+        "yearsToRetirement": "Anni al pensionamento",
+        "realReturn": "Rendimento reale",
+        "yes": "Si",
+        "no": "No"
+      },
+      "guard": {
+        "eyebrow": "Passaggio di accesso",
+        "title": "L'accesso beta parte dalla pagina precedente",
+        "description": "Questa beta e gratuita, ma chiediamo prima un'email per condividere aggiornamenti occasionali e miglioramenti dello strumento. Lascia l'email li e verrai reindirizzato qui.",
+        "cta": "Vai alla pagina di accesso"
+      }
+    }
+  }
+}
