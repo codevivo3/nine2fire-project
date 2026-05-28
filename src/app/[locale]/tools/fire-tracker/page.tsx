@@ -31,28 +31,28 @@ export default async function FireTrackerAccessPage({
   ];
 
   return (
-    <main className="pt-24 md:pt-28">
-      <Container className="py-16 md:py-24">
-        <div className="grid gap-8 rounded-[var(--radius-lg)] border border-border-token bg-surface p-6 md:grid-cols-[minmax(0,1.1fr)_minmax(320px,0.9fr)] md:p-10">
-          <div className="section-grid gap-5">
-            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-accent-eyebrow-token">
-              {t("landing.eyebrow")}
+    <main className='pt-20 md:pt-24'>
+      <Container className='flex min-h-[calc(100svh-6rem)] items-center py-6 md:py-8'>
+        <div className='grid -translate-y-4 gap-8 rounded-[var(--radius-lg)] border border-border-token bg-surface p-6 md:grid-cols-[minmax(0,1.1fr)_minmax(320px,0.9fr)] md:p-10'>
+          <div className='section-grid gap-4'>
+            <p className='text-xs font-semibold uppercase tracking-[0.18em] text-accent-eyebrow-token'>
+              {t('landing.eyebrow')}
             </p>
-            <div className="section-grid gap-4">
-              <h1 className="max-w-3xl text-4xl font-bold tracking-[-0.04em] text-foreground sm:text-5xl">
-                {t("landing.title")}
+            <div className='section-grid gap-3'>
+              <h1 className='max-w-3xl text-4xl font-bold tracking-[-0.04em] text-foreground sm:text-5xl'>
+                {t('landing.title')}
               </h1>
-              <p className="max-w-2xl text-sm leading-7 text-foreground/72 md:text-base">
-                {t("landing.intro")}
+              <p className='max-w-2xl text-sm leading-6 text-foreground/72 md:text-[15px]'>
+                {t('landing.intro')}
               </p>
             </div>
 
-            <ul className="section-grid gap-3 text-sm leading-7 text-foreground/78 md:text-base">
+            <ul className='section-grid gap-1 text-[11px] leading-[1.15] text-foreground/78 md:text-[13px] md:leading-[1.2]'>
               {helpItems.map((item) => (
-                <li key={item} className="flex items-start gap-3">
+                <li key={item} className='flex items-start gap-2'>
                   <span
-                    aria-hidden="true"
-                    className="mt-3 h-1.5 w-1.5 shrink-0 rounded-full bg-accent-token"
+                    aria-hidden='true'
+                    className='mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-accent-token'
                   />
                   <span>{item}</span>
                 </li>
@@ -60,7 +60,7 @@ export default async function FireTrackerAccessPage({
             </ul>
           </div>
 
-          <div className="rounded-[var(--radius-lg)] border border-border-token bg-surface-strong p-5 md:p-6">
+          <div className='self-start rounded-[var(--radius-lg)] border border-border-token bg-background/70 p-5 md:p-6'>
             <FireTrackerBetaAccessForm />
           </div>
         </div>

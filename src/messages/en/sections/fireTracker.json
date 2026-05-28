@@ -3,13 +3,13 @@
     "landing": {
       "eyebrow": "Free beta access",
       "title": "FIRE Tracker Beta",
-      "intro": "Explore your path toward Coast FIRE, semi-retirement, and flexible financial independence. The tool is free during beta. Leave your email to get access and receive occasional updates about the tracker and Nine2Fire.",
+      "intro": "Explore Coast FIRE, semi-retirement, and flexible financial independence. Free of chanrge — leave your email to get access and occasional updates from Nine2Fire.",
       "help": {
         "items": {
-          "coast": "Model Coast FIRE scenarios and see how far your current trajectory can carry you.",
-          "semiRetirement": "Sketch semi-retirement and lighter-work options without forcing a single finish line.",
-          "progress": "Track progress toward financial independence with simple planning assumptions.",
-          "tradeoffs": "Compare contributions, return assumptions, inflation, and spending tradeoffs in one place."
+          "coast": "Explore Coast FIRE scenarios and long-term projections.",
+          "semiRetirement": "Sketch semi-retirement and lighter-work paths.",
+          "progress": "Track progress toward financial independence.",
+          "tradeoffs": "Compare spending, inflation, returns, and contributions."
         }
       }
     },

@@ -8,9 +8,8 @@ export default function RootNotFoundPage() {
   return (
     <NotFoundPage
       eyebrow="404"
-      title="This page drifted away."
-      description="The page you are looking for no longer exists or was moved."
-      note="Oops! We couldn't find what you're looking for."
+      title="Not every route leads where expected."
+      description="We couldn't find the page you were looking for."
       homeLabel="Back Home"
       journalLabel="Journal"
       homeHref={withLocale(locale, routes.home)}

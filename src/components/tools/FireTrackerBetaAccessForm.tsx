@@ -18,7 +18,7 @@ export function FireTrackerBetaAccessForm() {
 
   return (
     <form
-      className="section-grid gap-4"
+      className="section-grid gap-3"
       onSubmit={async (event) => {
         event.preventDefault();
 
@@ -67,11 +67,8 @@ export function FireTrackerBetaAccessForm() {
         }
       }}
     >
-      <div className="section-grid gap-2">
-        <label
-          htmlFor="fire-tracker-email"
-          className="text-sm font-semibold text-foreground"
-        >
+      <div className="section-grid gap-3">
+        <label htmlFor="fire-tracker-email" className="sr-only">
           {t("form.emailLabel")}
         </label>
         <input
@@ -81,11 +78,12 @@ export function FireTrackerBetaAccessForm() {
           required
           autoComplete="email"
           placeholder={t("form.emailPlaceholder")}
-          className="h-12 rounded-full border border-border-token bg-input px-5 text-sm text-foreground outline-none placeholder:text-foreground/50 focus:border-accent-token"
+          aria-label={t("form.emailLabel")}
+          className="h-12 rounded-full border border-border-token bg-input px-5 text-sm text-foreground outline-none placeholder:text-primary-token focus:border-accent-token"
         />
       </div>
 
-      <label className="flex items-start gap-3 rounded-[var(--radius-md)] border border-border-token bg-surface/70 p-4 text-sm leading-6 text-foreground/80">
+      <label className="flex items-start gap-3 rounded-[var(--radius-md)] border border-border-token bg-surface/70 p-3 text-xs leading-5 text-foreground/80">
         <input
           name="consent"
           type="checkbox"
@@ -95,11 +93,11 @@ export function FireTrackerBetaAccessForm() {
         <span>{t("form.consent")}</span>
       </label>
 
-      <Button type="submit" variant="gold" disabled={isSubmitting}>
+      <Button type="submit" variant="gold" className="w-full" disabled={isSubmitting}>
         {isSubmitting ? t("form.submitting") : t("form.submit")}
       </Button>
 
-      <p className="text-sm text-foreground/64">{t("form.reassurance")}</p>
+      <p className="text-xs leading-5 text-foreground/64">{t("form.reassurance")}</p>
 
       {error ? <p className="text-sm text-red-500">{error}</p> : null}
     </form>

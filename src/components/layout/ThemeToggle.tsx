@@ -23,7 +23,8 @@ import {
 
 // Exposes the current theme and a synchronized toggle action for UI controls.
 export function useTheme() {
-  const [theme, setTheme] = React.useState<AppliedTheme>(() => getCurrentTheme());
+  const [theme, setTheme] = React.useState<AppliedTheme>('light');
+  const [mounted, setMounted] = React.useState(false);
 
   React.useEffect(() => {
     // Align client state with the persisted-or-system theme already applied by the root layout.
@@ -35,6 +36,7 @@ export function useTheme() {
 
     applyTheme(initialTheme);
     setTheme(initialTheme);
+    setMounted(true);
   }, []);
 
   React.useEffect(() => {
@@ -82,45 +84,59 @@ export function useTheme() {
   return {
     theme,
     isLight: theme === 'light',
+    mounted,
     toggleTheme,
   };
 }
 
 export function ThemeToggle() {
-  const { isLight, toggleTheme } = useTheme();
+  const { isLight, mounted, toggleTheme } = useTheme();
+  const isPressed = mounted ? isLight : false;
+  const trackBoxShadow = mounted
+    ? isLight
+      ? 'inset 0 2px 3px rgba(0,0,0,0.7), inset 0 -0.5px 3px var(--color-accent), 0 1.5px 2px 1px var(--color-secondary)'
+      : 'inset 0 2px 3px rgba(0,0,0,1), inset 0 -2px 2px rgba(255,255,255,0.33), 0 0 3px 1px var(--color-accent)'
+    : 'inset 0 2px 3px rgba(0,0,0,0.75), 0 1px 2px rgba(0,0,0,0.18)';
+  const thumbBackground = mounted
+    ? isLight
+      ? 'var(--color-accent)'
+      : 'var(--color-primary)'
+    : 'var(--color-secondary)';
+  const thumbBoxShadow = mounted
+    ? isLight
+      ? 'inset 0 2px 3px rgba(255,255,255,0.2), inset 0 -2px 3px rgba(0,0,0,0.2), 0 2px 6px rgba(0,0,0,0.25), 0 0 4px var(--color-primary)'
+      : 'inset 0 2px 3px rgba(255,255,255,0.05), inset 0 -2px 3px rgba(0,0,0,0.6), 0 2px 6px rgba(0,0,0,0.6), 0 0 4px var(--color-accent)'
+    : 'inset 0 1px 2px rgba(255,255,255,0.08), inset 0 -1px 2px rgba(0,0,0,0.25), 0 2px 4px rgba(0,0,0,0.18)';
+  const thumbTransform = mounted
+    ? isLight
+      ? 'translateX(26px)'
+      : 'translateX(2px)'
+    : 'translateX(14px)';
 
   // The switch keeps the motion on transforms so the control does not shift layout.
   return (
     <button
       onClick={toggleTheme}
       aria-label='Toggle theme'
-      aria-pressed={isLight}
+      aria-pressed={isPressed}
       className='relative inline-flex h-6 w-12 items-center rounded-full border border-border-token bg-surface transition-all'
       style={{
-        boxShadow: isLight
-          ? 'inset 0 2px 3px rgba(0,0,0,0.7), inset 0 -0.5px 3px var(--color-accent), 0 1.5px 2px 1px var(--color-secondary)'
-          : 'inset 0 2px 3px rgba(0,0,0,1), inset 0 -2px 2px rgba(255,255,255,0.33), 0 0 3px 1px var(--color-accent)',
+        boxShadow: trackBoxShadow,
       }}
     >
       <span className='relative inline-flex h-full w-full items-center'>
         <span
           className='relative z-10 inline-flex h-4.5 w-4.5 items-center justify-center rounded-full transition-all duration-[150ms]'
           style={{
-            backgroundColor: isLight
-              ? 'var(--color-accent)'
-              : 'var(--color-primary)',
-            boxShadow: isLight
-              ? 'inset 0 2px 3px rgba(255,255,255,0.2), inset 0 -2px 3px rgba(0,0,0,0.2), 0 2px 6px rgba(0,0,0,0.25), 0 0 4px var(--color-primary)'
-              : 'inset 0 2px 3px rgba(255,255,255,0.05), inset 0 -2px 3px rgba(0,0,0,0.6), 0 2px 6px rgba(0,0,0,0.6), 0 0 4px var(--color-accent)',
-            transform: isLight ? 'translateX(26px)' : 'translateX(2px)',
+            backgroundColor: thumbBackground,
+            boxShadow: thumbBoxShadow,
+            transform: thumbTransform,
           }}
         >
           <span
             className='absolute h-4 w-4 rounded-full overflow-hidden'
             style={{
-              backgroundColor: isLight
-                ? 'var(--color-accent)'
-                : 'var(--color-primary)',
+              backgroundColor: thumbBackground,
               boxShadow:
                 'inset 0 1px 2px rgba(0,0,0,0.5), 0 2px 3px rgba(0,0,0,0.5)',
             }}
@@ -128,15 +144,20 @@ export function ThemeToggle() {
             <span
               className='absolute left-1/2 top-1/2 h-0.5 w-0.5 -translate-x-1/2 -translate-y-1/2 rounded-full'
               style={{
-                backgroundColor: isLight
-                  ? 'var(--color-primary)'
-                  : 'var(--color-accent)',
-                boxShadow: isLight
-                  ? '0 0 12px 1px var(--color-primary), 0 0 10px 1px var(--color-primary)'
-                  : '0 0 12px 1px var(--color-accent), 0 0 10px 1px var(--color-accent)',
-                animation: isLight
-                  ? undefined
-                  : 'lightPulse 2.5s ease-in-out infinite',
+                backgroundColor: mounted
+                  ? isLight
+                    ? 'var(--color-primary)'
+                    : 'var(--color-accent)'
+                  : 'var(--color-primary)',
+                boxShadow: mounted
+                  ? isLight
+                    ? '0 0 12px 1px var(--color-primary), 0 0 10px 1px var(--color-primary)'
+                    : '0 0 12px 1px var(--color-accent), 0 0 10px 1px var(--color-accent)'
+                  : '0 0 8px rgba(0,0,0,0.18)',
+                animation:
+                  mounted && !isLight
+                    ? 'lightPulse 2.5s ease-in-out infinite'
+                    : undefined,
               }}
             />
           </span>

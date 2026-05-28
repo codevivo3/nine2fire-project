@@ -11,9 +11,8 @@
  */
 import type { Metadata } from "next";
 import { Analytics } from "@vercel/analytics/react";
-import { getLocale } from "next-intl/server";
 import { Manrope } from "next/font/google";
-import Script from "next/script";
+import { ThemeBootstrap } from "@/components/theme/ThemeBootstrap";
 import { getProductionSiteUrl, isProduction } from "@/lib/env";
 import { HOME_SEO_DESCRIPTION } from "@/lib/metadata";
 import { THEME_STORAGE_KEY } from "@/lib/theme";
@@ -108,7 +107,6 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const locale = await getLocale().catch(() => "en");
   // Keep this inline script string colocated with the document shell because it
   // exists purely to establish the initial HTML theme before React hydrates.
   const themeScript = `
@@ -162,20 +160,12 @@ export default async function RootLayout({
 
   return (
     <html
-      lang={locale}
+      lang="en"
       className={`${manrope.variable} h-full scroll-smooth antialiased`}
       suppressHydrationWarning
     >
-      <head>
-        {/* Apply the persisted/system theme before any client component mounts. */}
-        <Script
-          id="theme-init"
-          strategy="beforeInteractive"
-        >
-          {themeScript}
-        </Script>
-      </head>
       <body className="min-h-full text-foreground font-sans before:content-[''] before:fixed before:inset-[-32px] before:-z-10 before:bg-[var(--background-pattern)] before:bg-cover before:bg-center before:bg-no-repeat">
+        <ThemeBootstrap script={themeScript} />
         {children}
         {/* Vercel Analytics stays at the document edge so route changes are tracked globally. */}
         <Analytics />

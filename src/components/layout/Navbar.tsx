@@ -33,7 +33,7 @@ export function Navbar() {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
-  const { isLight } = useTheme();
+  const { isLight, mounted } = useTheme();
 
   return (
     <header className='fixed inset-x-0 top-0 z-50 bg-surface/80 backdrop-blur-xl'>
@@ -64,7 +64,7 @@ export function Navbar() {
             )}
           >
             <div className='flex items-center gap-1.5'>
-              {isLight ? (
+              {!mounted || isLight ? (
                 <GlobeIcon
                   size={22}
                   weight='thin'
@@ -83,7 +83,7 @@ export function Navbar() {
 
             <div className='flex items-center gap-1.5'>
               <Image
-                src={isLight ? '/theme/off-bulb.svg' : '/theme/on-bulb.svg'}
+                src={!mounted || isLight ? '/theme/off-bulb.svg' : '/theme/on-bulb.svg'}
                 alt=''
                 width={12}
                 height={12}
