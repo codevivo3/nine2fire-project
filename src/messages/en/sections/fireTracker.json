@@ -29,7 +29,14 @@
       "eyebrow": "Early beta",
       "title": "FIRE Tracker",
       "description": "This is the first beta version of the calculator. The structure is here so we can start testing the planning flow before adding the full math and outputs.",
+      "inputs": {
+        "title": "Your numbers",
+        "description": "Start with simple assumptions. You can refine them later."
+      },
       "note": "Beta note: inputs and assumptions may change as the tool becomes more useful and more precise.",
+      "calculator": {
+        "title": "Calculator"
+      },
       "calculatorTitle": "Calculator",
       "calculatorDescription": "Use a simple Coast FIRE projection to estimate the portfolio you may need and how far your current assets already go.",
       "actions": {
@@ -39,6 +46,7 @@
         "generic": "Something went wrong while running the calculation."
       },
       "fields": {
+        "currency": "Currency",
         "currentAge": "Current age",
         "retirementAge": "Retirement age",
         "annualSpending": "Annual spending",
@@ -60,6 +68,21 @@
         "realReturn": "Real return",
         "yes": "Yes",
         "no": "No"
+      },
+      "chart": {
+        "title": "Projection",
+        "description": "A simple view of your portfolio path toward FIRE in today's money.",
+        "age": "Age",
+        "fireTarget": "FIRE target",
+        "gapToFire": "Gap to FIRE",
+        "atRetirement": "At retirement",
+        "progress": "Progress",
+        "summaryText": "At retirement, this scenario reaches about {progress} of your FIRE target, or roughly {value}.",
+        "legend": {
+          "withContributions": "With contributions",
+          "withoutContributions": "Without contributions",
+          "fireTarget": "FIRE target"
+        }
       },
       "guard": {
         "eyebrow": "Access step",

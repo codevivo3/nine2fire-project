@@ -11,6 +11,33 @@ import {
 // - BEEHIIV_API_KEY
 // - BEEHIIV_PUBLICATION_ID
 
+function getRequiredEnv(name: 'BEEHIIV_API_KEY' | 'BEEHIIV_PUBLICATION_ID') {
+  const value = process.env[name]?.trim();
+  return value ? value : null;
+}
+
+function getSafeEmailHint(email: string) {
+  const [localPart = '', domain = ''] = email.split('@');
+  const localHint =
+    localPart.length > 0 ? `${localPart.slice(0, 1)}***` : '***';
+
+  return domain ? `${localHint}@${domain}` : localHint;
+}
+
+async function readBeehiivErrorBody(response: Response) {
+  const contentType = response.headers.get('content-type') ?? '';
+
+  try {
+    if (contentType.includes('application/json')) {
+      return await response.json();
+    }
+
+    return await response.text();
+  } catch {
+    return 'Unable to read Beehiiv error body';
+  }
+}
+
 function buildBeehiivSubscriptionPayload(
   email: string,
   source: string,
@@ -42,15 +69,32 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: 'Invalid source' }, { status: 400 });
     }
 
-    const API_KEY = process.env.BEEHIIV_API_KEY;
-    const PUBLICATION_ID = process.env.BEEHIIV_PUBLICATION_ID;
+    const API_KEY = getRequiredEnv('BEEHIIV_API_KEY');
+    const PUBLICATION_ID = getRequiredEnv('BEEHIIV_PUBLICATION_ID');
 
     if (!API_KEY || !PUBLICATION_ID) {
+      console.error('[subscribe] missing Beehiiv configuration', {
+        hasApiKey: Boolean(API_KEY),
+        hasPublicationId: Boolean(PUBLICATION_ID),
+        source: resolvedSource,
+      });
+
       return NextResponse.json(
-        { error: 'Server not configured' },
+        {
+          error: 'Server not configured',
+          details: {
+            missing: [
+              !API_KEY ? 'BEEHIIV_API_KEY' : null,
+              !PUBLICATION_ID ? 'BEEHIIV_PUBLICATION_ID' : null,
+            ].filter(Boolean),
+            source: resolvedSource,
+          },
+        },
         { status: 500 }
       );
     }
+
+    const beehiivPayload = buildBeehiivSubscriptionPayload(email, resolvedSource);
 
     const res = await fetch(
       `https://api.beehiiv.com/v2/publications/${PUBLICATION_ID}/subscriptions`,
@@ -60,26 +104,51 @@ export async function POST(req: Request) {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${API_KEY}`,
         },
-        body: JSON.stringify(
-          buildBeehiivSubscriptionPayload(email, resolvedSource)
-        ),
+        body: JSON.stringify(beehiivPayload),
       }
     );
 
     if (!res.ok) {
-      const text = await res.text();
+      const responseBody = await readBeehiivErrorBody(res);
+
+      console.error('[subscribe] Beehiiv subscription failed', {
+        status: res.status,
+        statusText: res.statusText,
+        source: resolvedSource,
+        emailHint: getSafeEmailHint(email),
+        beehiivResponse: responseBody,
+      });
+
       return NextResponse.json(
-        { error: 'Beehiiv error', details: text },
+        {
+          error: 'Beehiiv subscription failed',
+          details: {
+            status: res.status,
+            source: resolvedSource,
+            beehiivResponse: responseBody,
+          },
+        },
         { status: 502 }
       );
     }
 
     console.info('[subscribe] subscription accepted', {
       source: resolvedSource,
+      emailHint: getSafeEmailHint(email),
     });
 
     return NextResponse.json({ ok: true, source: resolvedSource });
-  } catch {
+  } catch (error) {
+    console.error('[subscribe] unexpected subscription error', {
+      error:
+        error instanceof Error
+          ? {
+              name: error.name,
+              message: error.message,
+            }
+          : 'Unknown error',
+    });
+
     return NextResponse.json(
       { error: 'Unexpected error' },
       { status: 500 }

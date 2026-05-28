@@ -9,6 +9,13 @@ export type CoastFireInput = {
   withdrawalRate: number;
 };
 
+export type CoastFireProjectionPoint = {
+  age: number;
+  portfolioWithContributions: number;
+  portfolioWithoutContributions: number;
+  fireNumber: number;
+};
+
 export type CoastFireResult = {
   yearsToRetirement: number;
   realReturn: number;
@@ -18,6 +25,7 @@ export type CoastFireResult = {
   hasReachedCoastFire: boolean;
   progressToCoastFire: number;
   progressToFullFire: number;
+  projection: CoastFireProjectionPoint[];
 };
 
 function assertFiniteNumber(value: number, label: string) {
@@ -57,6 +65,22 @@ function validateInput(input: CoastFireInput) {
   }
 }
 
+function projectPortfolio(
+  currentInvestedAssets: number,
+  monthlyContribution: number,
+  monthlyReturn: number,
+  months: number,
+) {
+  const growthFactor = Math.pow(1 + monthlyReturn, months);
+  const futureValueCurrentAssets = currentInvestedAssets * growthFactor;
+  const futureValueContributions =
+    monthlyReturn === 0
+      ? monthlyContribution * months
+      : monthlyContribution * ((growthFactor - 1) / monthlyReturn);
+
+  return futureValueCurrentAssets + futureValueContributions;
+}
+
 export function calculateCoastFire(
   input: CoastFireInput,
 ): CoastFireResult {
@@ -70,18 +94,12 @@ export function calculateCoastFire(
 
   const monthlyReturn = realReturn / 12;
   const months = yearsToRetirement * 12;
-  const growthFactor = Math.pow(1 + monthlyReturn, months);
-
-  const futureValueCurrentAssets =
-    input.currentInvestedAssets * growthFactor;
-
-  const futureValueContributions =
-    monthlyReturn === 0
-      ? input.monthlyContribution * months
-      : input.monthlyContribution * ((growthFactor - 1) / monthlyReturn);
-
-  const projectedPortfolioAtRetirement =
-    futureValueCurrentAssets + futureValueContributions;
+  const projectedPortfolioAtRetirement = projectPortfolio(
+    input.currentInvestedAssets,
+    input.monthlyContribution,
+    monthlyReturn,
+    months,
+  );
 
   const hasReachedCoastFire =
     input.currentInvestedAssets >= coastFireNumberToday;
@@ -90,6 +108,29 @@ export function calculateCoastFire(
     input.currentInvestedAssets / coastFireNumberToday;
 
   const progressToFullFire = input.currentInvestedAssets / fireNumber;
+  const projection: CoastFireProjectionPoint[] = Array.from(
+    { length: yearsToRetirement + 1 },
+    (_, yearOffset) => {
+      const pointMonths = yearOffset * 12;
+
+      return {
+        age: input.currentAge + yearOffset,
+        portfolioWithContributions: projectPortfolio(
+          input.currentInvestedAssets,
+          input.monthlyContribution,
+          monthlyReturn,
+          pointMonths,
+        ),
+        portfolioWithoutContributions: projectPortfolio(
+          input.currentInvestedAssets,
+          0,
+          monthlyReturn,
+          pointMonths,
+        ),
+        fireNumber,
+      };
+    },
+  );
 
   return {
     yearsToRetirement,
@@ -100,5 +141,6 @@ export function calculateCoastFire(
     hasReachedCoastFire,
     progressToCoastFire,
     progressToFullFire,
+    projection,
   };
 }

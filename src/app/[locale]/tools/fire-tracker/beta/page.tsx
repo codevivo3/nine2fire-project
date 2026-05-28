@@ -25,40 +25,29 @@ export default async function FireTrackerBetaPage({
   const t = await getTranslations({ locale, namespace: "FireTracker" });
 
   return (
-    <main className="pt-24 md:pt-28">
-      <Container className="py-16 md:py-24">
+    <main className="pt-20 md:pt-24">
+      <Container className="pb-16 md:pb-20">
         <FireTrackerBetaGuard>
-          <div className="section-grid gap-8">
-            <section className="rounded-[var(--radius-lg)] border border-border-token bg-surface p-6 md:p-10">
-              <div className="section-grid gap-4">
-                <p className="text-xs font-semibold uppercase tracking-[0.18em] text-accent-eyebrow-token">
+          <div className="section-grid gap-10 md:gap-12">
+            <div className="grid gap-5 lg:grid-cols-2 lg:items-start">
+              <div className="section-grid gap-5 lg:pt-6">
+                <p className="pl-[4px] text-xs font-semibold uppercase tracking-[0.18em] text-accent-eyebrow-token opacity-90">
                   {t("beta.eyebrow")}
                 </p>
-                <h1 className="text-4xl font-bold tracking-[-0.04em] text-foreground sm:text-5xl">
+                <h1 className="text-4xl font-extrabold leading-tight tracking-[-0.045em] text-foreground sm:text-5xl md:text-6xl">
                   {t("beta.title")}
                 </h1>
-                <p className="max-w-3xl text-sm leading-7 text-foreground/72 md:text-base">
+                <p className="text-base leading-8 text-foreground/72 md:text-lg">
                   {t("beta.description")}
                 </p>
-                <div className="rounded-[var(--radius-md)] border border-border-token bg-surface-strong px-4 py-3 text-sm leading-6 text-foreground/80">
-                  {t("beta.note")}
-                </div>
               </div>
-            </section>
 
-            <section className="rounded-[var(--radius-lg)] border border-border-token bg-surface p-6 md:p-8">
-              <div className="section-grid gap-6">
-                <div className="section-grid gap-2">
-                  <h2 className="text-2xl font-bold tracking-[-0.03em] text-foreground">
-                    {t("beta.calculatorTitle")}
-                  </h2>
-                  <p className="text-sm leading-7 text-foreground/72 md:text-base">
-                    {t("beta.calculatorDescription")}
-                  </p>
-                </div>
-                <FireTrackerCalculator />
-              </div>
-            </section>
+              <FireTrackerCalculator />
+            </div>
+
+            <p className="max-w-2xl text-[11px] leading-4 text-foreground/60 md:text-xs md:leading-5">
+              {t("beta.note")}
+            </p>
           </div>
         </FireTrackerBetaGuard>
       </Container>

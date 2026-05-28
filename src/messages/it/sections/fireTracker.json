@@ -29,7 +29,14 @@
       "eyebrow": "Beta iniziale",
       "title": "FIRE Tracker",
       "description": "Questa e la prima versione beta del calcolatore. La struttura c'e gia, cosi possiamo testare il flusso di pianificazione prima di aggiungere tutta la logica e i risultati.",
+      "inputs": {
+        "title": "I tuoi numeri",
+        "description": "Parti da ipotesi semplici. Potrai rifinirle più avanti."
+      },
       "note": "Nota beta: input e ipotesi potrebbero cambiare mentre lo strumento diventa piu utile e piu preciso.",
+      "calculator": {
+        "title": "Calcolatore"
+      },
       "calculatorTitle": "Calcolatore",
       "calculatorDescription": "Usa una proiezione Coast FIRE semplice per stimare il portafoglio necessario e quanto i tuoi asset attuali ti stiano gia aiutando.",
       "actions": {
@@ -39,6 +46,7 @@
         "generic": "Qualcosa e andato storto durante il calcolo."
       },
       "fields": {
+        "currency": "Valuta",
         "currentAge": "Eta attuale",
         "retirementAge": "Eta di pensionamento",
         "annualSpending": "Spesa annuale",
@@ -60,6 +68,21 @@
         "realReturn": "Rendimento reale",
         "yes": "Si",
         "no": "No"
+      },
+      "chart": {
+        "title": "Proiezione",
+        "description": "Una vista semplice del percorso del tuo portafoglio verso il FIRE in euro di oggi.",
+        "age": "Eta",
+        "fireTarget": "Target FIRE",
+        "gapToFire": "Distanza dal FIRE",
+        "atRetirement": "Al pensionamento",
+        "progress": "Progresso",
+        "summaryText": "Al pensionamento, questo scenario raggiunge circa il {progress} del tuo target FIRE, pari a circa {value}.",
+        "legend": {
+          "withContributions": "Con contributi",
+          "withoutContributions": "Senza contributi",
+          "fireTarget": "Target FIRE"
+        }
       },
       "guard": {
         "eyebrow": "Passaggio di accesso",
