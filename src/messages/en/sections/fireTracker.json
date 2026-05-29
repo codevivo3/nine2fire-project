@@ -58,14 +58,28 @@
       },
       "results": {
         "title": "Results",
+        "planStatus": "Plan status",
         "fireNumber": "FIRE number",
         "coastFireNumberToday": "Coast FIRE number today",
         "projectedPortfolioAtRetirement": "Projected portfolio at retirement",
-        "hasReachedCoastFire": "Has reached Coast FIRE",
+        "coastFireToday": "Coast FIRE today",
+        "fireByRetirement": "FIRE by retirement",
         "progressToCoastFire": "Progress to Coast FIRE",
         "progressToFullFire": "Progress to Full FIRE",
         "yearsToRetirement": "Years to retirement",
         "realReturn": "Real return",
+        "statuses": {
+          "coastAndFireReached": "Coast FIRE reached and FIRE on track",
+          "fireReached": "FIRE on track by retirement",
+          "coastReachedOnly": "Coast FIRE reached only",
+          "notOnTrack": "Not on track yet"
+        },
+        "summaries": {
+          "coastAndFireReached": "You have reached Coast FIRE and this plan reaches your FIRE target by retirement.",
+          "fireReached": "You have not reached Coast FIRE yet, but this plan reaches your FIRE target by retirement.",
+          "coastReachedOnly": "You have reached Coast FIRE, but this plan falls short of your FIRE target by retirement.",
+          "notOnTrack": "This plan does not yet reach Coast FIRE or your FIRE target by retirement."
+        },
         "yes": "Yes",
         "no": "No"
       },
@@ -77,11 +91,29 @@
         "gapToFire": "Gap to FIRE",
         "atRetirement": "At retirement",
         "progress": "Progress",
-        "summaryText": "At retirement, this scenario reaches about {progress} of your FIRE target, or roughly {value}.",
+        "summaryText": "This scenario reaches about {progress} of your FIRE target, or roughly {value}.",
         "legend": {
-          "withContributions": "With contributions",
-          "withoutContributions": "Without contributions",
+          "totalPortfolio": "Total portfolio",
+          "capitalInvested": "Capital invested",
+          "currentCapitalGrowth": "Current capital growth",
           "fireTarget": "FIRE target"
+        },
+        "help": {
+          "title": "How to read this chart",
+          "items": {
+            "totalPortfolio": "Total portfolio shows your projected portfolio value including growth and future contributions.",
+            "capitalInvested": "Capital invested shows how much money you personally contribute over time.",
+            "currentCapitalGrowth": "Current capital growth shows what your current portfolio could become if you never added another contribution.",
+            "fireTarget": "FIRE target is the portfolio value required to support your target retirement spending.",
+            "reachesFire": "If the gold line reaches or crosses the green line, this scenario reaches FIRE."
+          }
+        },
+        "tooltip": {
+          "age": "Age",
+          "portfolio": "Projected portfolio",
+          "withoutContributions": "Without contributions",
+          "fireTarget": "FIRE target",
+          "gap": "Gap"
         }
       },
       "guard": {

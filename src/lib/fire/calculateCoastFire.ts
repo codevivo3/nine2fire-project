@@ -16,13 +16,23 @@ export type CoastFireProjectionPoint = {
   fireNumber: number;
 };
 
+export type CoastFirePlanStatus =
+  | "coastAndFireReached"
+  | "fireReached"
+  | "coastReachedOnly"
+  | "notOnTrack";
+
 export type CoastFireResult = {
+  currentInvestedAssets: number;
+  monthlyContribution: number;
   yearsToRetirement: number;
   realReturn: number;
   fireNumber: number;
   coastFireNumberToday: number;
   projectedPortfolioAtRetirement: number;
   hasReachedCoastFire: boolean;
+  hasReachedFireByRetirement: boolean;
+  planStatus: CoastFirePlanStatus;
   progressToCoastFire: number;
   progressToFullFire: number;
   projection: CoastFireProjectionPoint[];
@@ -44,8 +54,8 @@ function validateInput(input: CoastFireInput) {
   assertFiniteNumber(input.inflationRate, "inflationRate");
   assertFiniteNumber(input.withdrawalRate, "withdrawalRate");
 
-  if (input.retirementAge <= input.currentAge) {
-    throw new Error("retirementAge must be greater than currentAge");
+  if (input.retirementAge < input.currentAge) {
+    throw new Error("retirementAge must be greater than or equal to currentAge");
   }
 
   if (input.annualSpending <= 0) {
@@ -103,6 +113,16 @@ export function calculateCoastFire(
 
   const hasReachedCoastFire =
     input.currentInvestedAssets >= coastFireNumberToday;
+  const hasReachedFireByRetirement =
+    projectedPortfolioAtRetirement >= fireNumber;
+  const planStatus: CoastFirePlanStatus =
+    hasReachedCoastFire && hasReachedFireByRetirement
+      ? "coastAndFireReached"
+      : !hasReachedCoastFire && hasReachedFireByRetirement
+        ? "fireReached"
+        : hasReachedCoastFire && !hasReachedFireByRetirement
+          ? "coastReachedOnly"
+          : "notOnTrack";
 
   const progressToCoastFire =
     input.currentInvestedAssets / coastFireNumberToday;
@@ -133,12 +153,16 @@ export function calculateCoastFire(
   );
 
   return {
+    currentInvestedAssets: input.currentInvestedAssets,
+    monthlyContribution: input.monthlyContribution,
     yearsToRetirement,
     realReturn,
     fireNumber,
     coastFireNumberToday,
     projectedPortfolioAtRetirement,
     hasReachedCoastFire,
+    hasReachedFireByRetirement,
+    planStatus,
     progressToCoastFire,
     progressToFullFire,
     projection,

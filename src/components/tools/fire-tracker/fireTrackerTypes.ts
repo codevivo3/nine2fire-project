@@ -1,4 +1,4 @@
-import type { CoastFireProjectionPoint } from '@/lib/fire';
+import type { CoastFirePlanStatus, CoastFireProjectionPoint } from '@/lib/fire';
 
 /**
  * FILE: src/components/tools/fire-tracker/fireTrackerTypes.ts
@@ -33,6 +33,8 @@ export type ResultItem = {
   label: string;
   value: string;
 };
+
+export type FireTrackerPlanStatus = CoastFirePlanStatus;
 
 export type ProjectionChartSeries = {
   label: string;

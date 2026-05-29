@@ -58,14 +58,28 @@
       },
       "results": {
         "title": "Risultati",
+        "planStatus": "Stato del piano",
         "fireNumber": "Numero FIRE",
         "coastFireNumberToday": "Numero Coast FIRE oggi",
         "projectedPortfolioAtRetirement": "Portafoglio stimato al pensionamento",
-        "hasReachedCoastFire": "Coast FIRE raggiunto",
+        "coastFireToday": "Coast FIRE oggi",
+        "fireByRetirement": "FIRE entro il pensionamento",
         "progressToCoastFire": "Progresso verso Coast FIRE",
         "progressToFullFire": "Progresso verso FIRE completo",
         "yearsToRetirement": "Anni al pensionamento",
         "realReturn": "Rendimento reale",
+        "statuses": {
+          "coastAndFireReached": "Coast FIRE raggiunto e FIRE in linea",
+          "fireReached": "FIRE in linea entro il pensionamento",
+          "coastReachedOnly": "Solo Coast FIRE raggiunto",
+          "notOnTrack": "Non ancora in linea"
+        },
+        "summaries": {
+          "coastAndFireReached": "Hai raggiunto il Coast FIRE e questo piano raggiunge il tuo obiettivo FIRE entro il pensionamento.",
+          "fireReached": "Non hai ancora raggiunto il Coast FIRE, ma questo piano raggiunge il tuo obiettivo FIRE entro il pensionamento.",
+          "coastReachedOnly": "Hai raggiunto il Coast FIRE, ma questo piano non raggiunge il tuo obiettivo FIRE entro il pensionamento.",
+          "notOnTrack": "Questo piano non raggiunge ancora né il Coast FIRE né il tuo obiettivo FIRE entro il pensionamento."
+        },
         "yes": "Si",
         "no": "No"
       },
@@ -79,9 +93,27 @@
         "progress": "Progresso",
         "summaryText": "Al pensionamento, questo scenario raggiunge circa il {progress} del tuo target FIRE, pari a circa {value}.",
         "legend": {
-          "withContributions": "Con contributi",
-          "withoutContributions": "Senza contributi",
+          "totalPortfolio": "Portafoglio totale",
+          "capitalInvested": "Capitale investito",
+          "currentCapitalGrowth": "Capitale iniziale",
           "fireTarget": "Target FIRE"
+        },
+        "help": {
+          "title": "Come leggere questo grafico",
+          "items": {
+            "totalPortfolio": "Portafoglio totale mostra il valore complessivo stimato del portafoglio, includendo capitale iniziale, contributi e crescita.",
+            "capitalInvested": "Capitale investito rappresenta la somma cumulata di tutti i contributi che aggiungi al portafoglio nel tempo.",
+            "currentCapitalGrowth": "Capitale iniziale rappresenta la crescita del patrimonio che possiedi oggi, assumendo che non vengano effettuati nuovi contributi.",
+            "fireTarget": "Target FIRE e il valore del portafoglio necessario per sostenere la tua spesa pensionistica obiettivo.",
+            "reachesFire": "Se la linea oro raggiunge o supera la linea verde, questo scenario raggiunge il FIRE."
+          }
+        },
+        "tooltip": {
+          "age": "Eta",
+          "portfolio": "Portafoglio previsto",
+          "withoutContributions": "Senza contributi",
+          "fireTarget": "Obiettivo FIRE",
+          "gap": "Distanza"
         }
       },
       "guard": {

@@ -3,30 +3,31 @@
  * FILE: src/components/tools/fire-tracker/FireTrackerCalculator.tsx
  *
  * PURPOSE:
- * - Hosts the localized FIRE Tracker calculator state, field config, and result mapping
+ * - Hosts FIRE Tracker calculator state, parsing, calculation execution, and high-level rendering
  *
  * NOTES:
- * - Formatting and parsing helpers are kept in sibling modules so this file can
- *   stay focused on calculator behavior and rendering
+ * - Field config, input panel rendering, and result-item mapping live in sibling modules
+ *   so this component stays focused on orchestration
  */
 
 import { useState } from 'react';
 import { useLocale, useTranslations } from 'next-intl';
-import { Button } from '@/components/ui/Button';
 import { calculateCoastFire } from '@/lib/fire';
-import { FireTrackerCard } from './FireTrackerCard';
-import { FireTrackerInputField } from './FireTrackerInputField';
+import { FireTrackerCalculatorForm } from './FireTrackerCalculatorForm';
 import { FireTrackerProjectionChart } from './FireTrackerProjectionChart';
 import { FireTrackerResults } from './FireTrackerResults';
+import { getFireTrackerCalculatorFields } from './fireTrackerCalculatorFields';
+import {
+  buildFireTrackerResultItems,
+} from './fireTrackerResultItems';
 import {
   getLocaleTag,
   parseNumber,
   toDecimalPercent,
 } from './fireTrackerFormatters';
 import type {
-  CalculatorField,
   CalculatorFormState,
-  ResultItem,
+  FireTrackerPlanStatus,
 } from './fireTrackerTypes';
 
 const defaultValues: CalculatorFormState = {
@@ -54,13 +55,6 @@ export function FireTrackerCalculator() {
   const locale = useLocale();
   const decimalSeparator = locale === 'it' ? ',' : '.';
   const t = useTranslations('FireTracker');
-  const chartPercentFormatter = new Intl.NumberFormat(
-    locale === 'it' ? 'it-IT' : 'en-US',
-    {
-      style: 'percent',
-      maximumFractionDigits: 1,
-    },
-  );
   const [form, setForm] = useState<CalculatorFormState>(defaultValues);
   const [editingField, setEditingField] = useState<keyof CalculatorFormState | null>(
     null,
@@ -70,69 +64,17 @@ export function FireTrackerCalculator() {
   );
   const [error, setError] = useState<string | null>(null);
 
-  const fields: CalculatorField[] = [
-    {
-      key: 'currency',
-      label: t('beta.fields.currency'),
-      kind: 'currency',
-    },
-    {
-      key: 'currentAge',
-      label: t('beta.fields.currentAge'),
-      kind: 'number',
-      inputMode: 'numeric',
-      step: '1',
-    },
-    {
-      key: 'retirementAge',
-      label: t('beta.fields.retirementAge'),
-      kind: 'number',
-      inputMode: 'numeric',
-      step: '1',
-    },
-    {
-      key: 'annualSpending',
-      label: t('beta.fields.annualSpending'),
-      kind: 'money',
-      inputMode: 'decimal',
-    },
-    {
-      key: 'currentInvestedAssets',
-      label: t('beta.fields.currentInvestedAssets'),
-      kind: 'money',
-      inputMode: 'decimal',
-    },
-    {
-      key: 'monthlyContribution',
-      label: t('beta.fields.monthlyContribution'),
-      kind: 'money',
-      inputMode: 'decimal',
-    },
-    {
-      key: 'expectedReturn',
-      label: t('beta.fields.expectedReturn'),
-      kind: 'percent',
-      inputMode: 'decimal',
-      step: '0.5',
-      suffix: '%',
-    },
-    {
-      key: 'inflationRate',
-      label: t('beta.fields.inflation'),
-      kind: 'percent',
-      inputMode: 'decimal',
-      step: '0.5',
-      suffix: '%',
-    },
-    {
-      key: 'withdrawalRate',
-      label: t('beta.fields.safeWithdrawalRate'),
-      kind: 'percent',
-      inputMode: 'decimal',
-      step: '0.5',
-      suffix: '%',
-    },
-  ];
+  const fields = getFireTrackerCalculatorFields({
+    currency: t('beta.fields.currency'),
+    currentAge: t('beta.fields.currentAge'),
+    retirementAge: t('beta.fields.retirementAge'),
+    annualSpending: t('beta.fields.annualSpending'),
+    currentInvestedAssets: t('beta.fields.currentInvestedAssets'),
+    monthlyContribution: t('beta.fields.monthlyContribution'),
+    expectedReturn: t('beta.fields.expectedReturn'),
+    inflationRate: t('beta.fields.inflation'),
+    withdrawalRate: t('beta.fields.safeWithdrawalRate'),
+  });
 
   const currencyFormatter = new Intl.NumberFormat(getLocaleTag(locale), {
     style: 'currency',
@@ -190,101 +132,92 @@ export function FireTrackerCalculator() {
     }
   }
 
-  const resultItems: ResultItem[] = result
+  const resultItems = result
     ? [
-        {
-          label: t('beta.results.fireNumber'),
-          value: currencyFormatter.format(result.fireNumber),
-        },
-        {
-          label: t('beta.results.coastFireNumberToday'),
-          value: currencyFormatter.format(result.coastFireNumberToday),
-        },
-        {
-          label: t('beta.results.projectedPortfolioAtRetirement'),
-          value: currencyFormatter.format(result.projectedPortfolioAtRetirement),
-        },
-        {
-          label: t('beta.results.hasReachedCoastFire'),
-          value: result.hasReachedCoastFire
-            ? t('beta.results.yes')
-            : t('beta.results.no'),
-        },
-        {
-          label: t('beta.results.progressToCoastFire'),
-          value: percentFormatter.format(result.progressToCoastFire),
-        },
-        {
-          label: t('beta.results.progressToFullFire'),
-          value: percentFormatter.format(result.progressToFullFire),
-        },
-        {
-          label: t('beta.results.yearsToRetirement'),
-          value: numberFormatter.format(result.yearsToRetirement),
-        },
-        {
-          label: t('beta.results.realReturn'),
-          value: percentFormatter.format(result.realReturn),
-        },
+        ...buildFireTrackerResultItems({
+          result,
+          formatCurrency: (value) => currencyFormatter.format(value),
+          formatPercent: (value) => percentFormatter.format(value),
+          formatNumber: (value) => numberFormatter.format(value),
+          labels: {
+            planStatus: t('beta.results.planStatus'),
+            fireNumber: t('beta.results.fireNumber'),
+            coastFireNumberToday: t('beta.results.coastFireNumberToday'),
+            projectedPortfolioAtRetirement: t('beta.results.projectedPortfolioAtRetirement'),
+            coastFireToday: t('beta.results.coastFireToday'),
+            fireByRetirement: t('beta.results.fireByRetirement'),
+            progressToCoastFire: t('beta.results.progressToCoastFire'),
+            progressToFullFire: t('beta.results.progressToFullFire'),
+            yearsToRetirement: t('beta.results.yearsToRetirement'),
+            realReturn: t('beta.results.realReturn'),
+            yes: t('beta.results.yes'),
+            no: t('beta.results.no'),
+          },
+          getStatusLabel: (status) =>
+            t(`beta.results.statuses.${status as FireTrackerPlanStatus}`),
+        }),
       ]
     : [];
 
   return (
     <>
-      <FireTrackerCard title={t('beta.calculator.title')} className='gap-4'>
-        <div className='grid w-full grid-cols-1 gap-x-5 gap-y-5 md:grid-cols-2 lg:grid-cols-3'>
-          {fields.map((field) => (
-            <FireTrackerInputField
-              key={field.key}
-              field={field}
-              value={form[field.key]}
-              currency={form.currency}
-              locale={locale}
-              decimalSeparator={decimalSeparator}
-              isEditing={editingField === field.key}
-              onChange={handleChange}
-              onFocus={setEditingField}
-              onBlur={() => setEditingField(null)}
-            />
-          ))}
-        </div>
-
-        <div className='flex items-center justify-end gap-2 pt-2'>
-          <Button type='button' onClick={handleCalculate}>
-            {t('beta.actions.calculate')}
-          </Button>
-        </div>
-
-        {error ? <p className='text-sm text-red-500'>{error}</p> : null}
-      </FireTrackerCard>
+      <FireTrackerCalculatorForm
+        title={t('beta.calculator.title')}
+        calculateLabel={t('beta.actions.calculate')}
+        fields={fields}
+        form={form}
+        currency={form.currency}
+        locale={locale}
+        decimalSeparator={decimalSeparator}
+        editingField={editingField}
+        error={error}
+        onChange={handleChange}
+        onFocus={setEditingField}
+        onBlur={() => setEditingField(null)}
+        onCalculate={handleCalculate}
+      />
 
       {result ? (
         <>
-          <FireTrackerResults title={t('beta.results.title')} items={resultItems} />
+          <FireTrackerResults
+            title={t('beta.results.title')}
+            summaryText={t(
+              `beta.results.summaries.${result.planStatus as FireTrackerPlanStatus}`,
+            )}
+            items={resultItems}
+          />
           <FireTrackerProjectionChart
             title={t('beta.chart.title')}
-            description={t('beta.chart.description')}
             startLabel={`${t('beta.chart.age')} ${result.projection[0]?.age ?? ''}`}
             endLabel={`${t('beta.chart.age')} ${
               result.projection[result.projection.length - 1]?.age ?? ''
             }`}
             legend={{
-              withContributions: t('beta.chart.legend.withContributions'),
-              withoutContributions: t('beta.chart.legend.withoutContributions'),
+              totalPortfolio: t('beta.chart.legend.totalPortfolio'),
+              capitalInvested: t('beta.chart.legend.capitalInvested'),
+              currentCapitalGrowth: t('beta.chart.legend.currentCapitalGrowth'),
               fireTarget: t('beta.chart.legend.fireTarget'),
             }}
-            summaryText={t('beta.chart.summaryText', {
-              value: currencyFormatter.format(
-                result.projection[result.projection.length - 1]?.portfolioWithContributions ?? 0,
-              ),
-              progress: chartPercentFormatter.format(
-                result.fireNumber === 0
-                  ? 0
-                  : (result.projection[result.projection.length - 1]?.portfolioWithContributions ??
-                      0) / result.fireNumber,
-              ),
-            })}
+            help={{
+              title: t('beta.chart.help.title'),
+              items: [
+                t('beta.chart.help.items.totalPortfolio'),
+                t('beta.chart.help.items.capitalInvested'),
+                t('beta.chart.help.items.currentCapitalGrowth'),
+                t('beta.chart.help.items.fireTarget'),
+                t('beta.chart.help.items.reachesFire'),
+              ],
+            }}
+            tooltipLabels={{
+              age: t('beta.chart.tooltip.age'),
+              portfolio: t('beta.chart.tooltip.portfolio'),
+              withoutContributions: t('beta.chart.tooltip.withoutContributions'),
+              fireTarget: t('beta.chart.tooltip.fireTarget'),
+              gap: t('beta.chart.tooltip.gap'),
+            }}
             formatCurrency={(value) => currencyFormatter.format(value)}
+            initialCapital={result.currentInvestedAssets}
+            monthlyContribution={result.monthlyContribution}
             points={result.projection}
           />
         </>

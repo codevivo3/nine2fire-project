@@ -26,6 +26,15 @@ html.light {
   --color-primary: #28282b;
   --color-secondary: #4d5d53;
   --color-accent: #ffcf40;
+
+  /* Chart tokens */
+  --chart-total: var(--color-accent);
+  --chart-total-label: #9a6a00;
+  --chart-contributions: #007acc;
+  --chart-capital: var(--color-button-text-dark);
+  --chart-target: #368D55
+;
+
   --color-accent-eyebrow: var(--color-primary);
 
   /* Highlight (universal interaction layer) */
@@ -71,6 +80,14 @@ html.dark {
   --color-primary: #28282b;
   --color-secondary: #738678;
   --color-accent: #ffcf40;
+
+  /* Chart tokens */
+  --chart-total: var(--color-accent);
+  --chart-total-label: var(--color-accent);
+  --chart-contributions: #007acc;
+  --chart-capital: var(--color-button-text-light);
+  --chart-target: #3cc393;
+
   --color-accent-eyebrow: var(--color-accent);
 
   /* Highlight (same across themes) */
@@ -110,6 +127,11 @@ html.dark {
   --color-primary-token: var(--color-primary);
   --color-secondary-token: var(--color-secondary);
   --color-accent-token: var(--color-accent);
+  --color-chart-total: var(--chart-total);
+  --color-chart-total-label: var(--chart-total-label);
+  --color-chart-contributions: var(--chart-contributions);
+  --color-chart-capital: var(--chart-capital);
+  --color-chart-target: var(--chart-target);
   --color-accent-eyebrow-token: var(--color-accent-eyebrow);
   --color-border-token: var(--color-border);
 

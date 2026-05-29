@@ -9,15 +9,23 @@ import type { ResultItem } from './fireTrackerTypes';
 
 type FireTrackerResultsProps = {
   title: string;
+  summaryText?: string;
   items: ResultItem[];
 };
 
 export function FireTrackerResults({
   title,
+  summaryText,
   items,
 }: FireTrackerResultsProps) {
   return (
     <FireTrackerCard title={title} className='h-full content-start gap-3 xl:p-5'>
+      {summaryText ? (
+        <p className='rounded-[var(--radius-sm)] border border-border-token/60 bg-surface/40 px-4 py-3 text-xs leading-6 text-foreground/70 md:text-sm'>
+          {summaryText}
+        </p>
+      ) : null}
+
       <dl className='grid gap-2 sm:grid-cols-2 xl:gap-2.5'>
         {items.map((item) => (
           <div
