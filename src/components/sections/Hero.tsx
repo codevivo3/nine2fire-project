@@ -11,7 +11,7 @@
 import { getTranslations } from "next-intl/server";
 import { Button } from '@/components/ui/Button';
 import { Container } from '@/components/ui/Container';
-import { routes } from "@/config/routes";
+import { routes, withLocale } from "@/config/routes";
 import type { AppLocale } from "@/i18n/routing";
 import { ScrollCue } from '../ui/ScrollCue';
 
@@ -44,7 +44,7 @@ export async function Hero({ locale }: HeroProps) {
             <Button href={routes.sections.insights} variant='gold'>
               {t('primaryCta')}
             </Button>
-            <Button href={routes.sections.roadmap} variant='secondary'>
+            <Button href={withLocale(locale, routes.fireTracker)} variant='secondary'>
               {t('secondaryCta')}
             </Button>
           </div>

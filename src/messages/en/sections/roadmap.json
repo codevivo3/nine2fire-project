@@ -21,6 +21,11 @@
         "title": "Time",
         "description": "Freedom rarely arrives suddenly. Most of it is built slowly over years."
       }
+    },
+    "cta": {
+      "title": "Start estimating your path to financial independence.",
+      "description": "Explore Coast FIRE scenarios, long-term projections and flexible retirement planning.",
+      "button": "Open FIRE Tracker →"
     }
   }
 }

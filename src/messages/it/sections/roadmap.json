@@ -21,6 +21,11 @@
         "title": "Tempo",
         "description": "L’indipendenza finanziaria raramente arriva all’improvviso. Di solito si costruisce lentamente, anno dopo anno."
       }
+    },
+    "cta": {
+      "title": "Inizia a stimare il tuo percorso verso l'indipendenza finanziaria.",
+      "description": "Esplora scenari Coast FIRE, proiezioni di lungo periodo e percorsi di pensionamento flessibili.",
+      "button": "Apri FIRE Tracker →"
     }
   }
 }

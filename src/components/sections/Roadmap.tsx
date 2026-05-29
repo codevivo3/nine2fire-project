@@ -5,8 +5,10 @@
  * - Breaks the service model into an ordered sequence of implementation steps
  */
 import { getTranslations } from "next-intl/server";
+import { Button } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
 import { SectionHeader } from "@/components/ui/SectionHeader";
+import { routes, withLocale } from "@/config/routes";
 import { sectionAnchorOffsets } from "@/config/sectionAnchors";
 import type { AppLocale } from "@/i18n/routing";
 
@@ -52,6 +54,18 @@ export async function Roadmap({ locale }: RoadmapProps) {
               </p>
             </article>
           ))}
+        </div>
+
+        <div className='mt-12 flex flex-col items-center gap-4 text-center md:mt-16'>
+          <h3 className='max-w-2xl text-2xl font-bold tracking-[-0.04em] text-foreground sm:text-3xl'>
+            {t('cta.title')}
+          </h3>
+          <p className='max-w-2xl text-sm leading-7 text-foreground/72 md:text-base'>
+            {t('cta.description')}
+          </p>
+          <Button href={withLocale(locale, routes.fireTracker)} variant='secondary'>
+            {t('cta.button')}
+          </Button>
         </div>
       </Container>
     </section>
