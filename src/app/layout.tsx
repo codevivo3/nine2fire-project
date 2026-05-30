@@ -31,11 +31,18 @@ const manrope = Manrope({
  * Includes base SEO fields, social metadata, and favicon declarations.
  */
 const productionSiteUrl = getProductionSiteUrl();
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL?.trim() || productionSiteUrl;
+const openGraphImage = {
+  url: "/opengraph-image.png",
+  width: 1200,
+  height: 630,
+  alt: "Nine2Fire",
+};
 
 export const metadata: Metadata = {
   // Canonical SEO signals always target the public production domain so
   // preview deployments never become the indexed source of truth.
-  metadataBase: new URL(productionSiteUrl),
+  metadataBase: new URL(siteUrl),
   alternates: {
     canonical: "/",
   },
@@ -54,15 +61,17 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Nine2Fire",
     description: HOME_SEO_DESCRIPTION,
-    url: productionSiteUrl,
+    url: siteUrl,
     siteName: "Nine2Fire",
     locale: "en",
     type: "website",
+    images: [openGraphImage],
   },
   twitter: {
     card: "summary_large_image",
     title: "Nine2Fire",
     description: HOME_SEO_DESCRIPTION,
+    images: [openGraphImage.url],
   },
   // Preview and development deployments must stay out of search results even
   // though their canonical URLs still point to production.
