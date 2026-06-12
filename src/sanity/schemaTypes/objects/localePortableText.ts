@@ -1,19 +1,58 @@
-import { defineArrayMember, defineField, defineType } from "sanity";
+import {
+  BoldIcon,
+  HighlightIcon,
+  ItalicIcon,
+  TextIcon,
+  UnderlineIcon,
+} from "@sanity/icons";
+import { createElement } from "react";
+import {
+  defineArrayMember,
+  defineField,
+  defineType,
+  type BlockStyleProps,
+} from "sanity";
+
+function StudioBlockquoteStyle(props: BlockStyleProps) {
+  return createElement(
+    "blockquote",
+    {
+      style: {
+        margin: 0,
+        paddingLeft: "1rem",
+        borderLeft: "3px solid var(--card-border-color)",
+      },
+    },
+    props.children,
+  );
+}
 
 const portableTextMembers = [
   defineArrayMember({
     type: "block",
     styles: [
       { title: "Normal", value: "normal" },
-      { title: "Section heading", value: "sectionHeading" },
+      { title: "Heading 2", value: "h2" },
+      { title: "Heading 3", value: "h3" },
+      { title: "Heading 4", value: "h4" },
+      {
+        title: "Quote",
+        value: "blockquote",
+        component: StudioBlockquoteStyle,
+      },
     ],
-    lists: [],
+    lists: [
+      { title: "Bullet", value: "bullet" },
+      { title: "Numbered", value: "number" },
+    ],
     marks: {
       decorators: [
-        { title: "Strong", value: "strong" },
-        { title: "Muted", value: "muted" },
-        { title: "Highlight", value: "highlight" },
-        { title: "Small note", value: "smallNote" },
+        { title: "Bold", value: "strong", icon: BoldIcon },
+        { title: "Italic", value: "em", icon: ItalicIcon },
+        { title: "Underline", value: "underline", icon: UnderlineIcon },
+        { title: "Muted", value: "muted", icon: TextIcon },
+        { title: "Highlight", value: "highlight", icon: HighlightIcon },
+        { title: "Small note", value: "smallNote", icon: TextIcon },
       ],
       annotations: [
         defineArrayMember({

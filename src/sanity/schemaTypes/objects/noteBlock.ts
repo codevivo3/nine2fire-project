@@ -1,3 +1,10 @@
+import {
+  BoldIcon,
+  HighlightIcon,
+  ItalicIcon,
+  TextIcon,
+  UnderlineIcon,
+} from "@sanity/icons";
 import { defineField, defineType } from "sanity";
 
 export const noteBlockType = defineType({
@@ -23,10 +30,12 @@ export const noteBlockType = defineType({
           lists: [],
           marks: {
             decorators: [
-              { title: "Strong", value: "strong" },
-              { title: "Muted", value: "muted" },
-              { title: "Highlight", value: "highlight" },
-              { title: "Small note", value: "smallNote" },
+              { title: "Bold", value: "strong", icon: BoldIcon },
+              { title: "Italic", value: "em", icon: ItalicIcon },
+              { title: "Underline", value: "underline", icon: UnderlineIcon },
+              { title: "Muted", value: "muted", icon: TextIcon },
+              { title: "Highlight", value: "highlight", icon: HighlightIcon },
+              { title: "Small note", value: "smallNote", icon: TextIcon },
             ],
           },
         },

@@ -23,6 +23,34 @@ type SanityFetchOptions = {
   preview?: boolean;
 };
 
+const LEGACY_SECTION_HEADING_STYLE = "section" + "Heading";
+
+function normalizePortableTextNode<T>(value: T): T {
+  if (Array.isArray(value)) {
+    return value.map((item) => normalizePortableTextNode(item)) as T;
+  }
+
+  if (!value || typeof value !== "object") {
+    return value;
+  }
+
+  const record = value as Record<string, unknown>;
+  const normalizedEntries = Object.entries(record).map(([key, entryValue]) => [
+    key,
+    normalizePortableTextNode(entryValue),
+  ]);
+  const normalizedRecord = Object.fromEntries(normalizedEntries) as Record<string, unknown>;
+
+  if (
+    normalizedRecord._type === "block" &&
+    normalizedRecord.style === LEGACY_SECTION_HEADING_STYLE
+  ) {
+    normalizedRecord.style = "h3";
+  }
+
+  return normalizedRecord as T;
+}
+
 async function devDelay() {
   // TODO: Remove this temporary delay after skeleton loader QA is complete.
   if (process.env.NODE_ENV === "development") {
@@ -43,7 +71,7 @@ function mapSanityPost(document: SanityPostDocument): Post {
     slug: document.slug,
     title: document.title,
     excerpt: document.excerpt,
-    body: document.body || [],
+    body: normalizePortableTextNode(document.body || []),
     publishedAt: document.publishedAt,
     updatedAt: document.updatedAt,
     readingTime: document.readingTime,

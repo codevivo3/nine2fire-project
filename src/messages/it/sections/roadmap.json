@@ -2,7 +2,7 @@
   "Roadmap": {
     "eyebrow": "Piano",
     "title": "La vita cambia senza che ce ne accorgiamo.",
-    "description": "Spesso la libertà sparisce in piccole spese ricorrenti,\nabitudini automatiche e scelte che diventano normali.",
+    "description": "La libertà si perde un'abitudine alla volta.",
     "stepLabel": "Step {index}",
     "steps": {
       "lifestyle": {
@@ -19,12 +19,12 @@
       },
       "time": {
         "title": "Tempo",
-        "description": "L’indipendenza finanziaria raramente arriva all’improvviso. Di solito si costruisce lentamente, anno dopo anno."
+        "description": "L’indipendenza finanziaria raramente arriva all’improvviso. Si costruisce lentamente, anno dopo anno."
       }
     },
     "cta": {
       "title": "Inizia a stimare il tuo percorso verso l'indipendenza finanziaria.",
-      "description": "Esplora scenari Coast FIRE, proiezioni di lungo periodo e percorsi di pensionamento flessibili.",
+      "description": "Esplora come le scelte di oggi possono ampliare la tua libertà di domani.",
       "button": "Apri FIRE Tracker →"
     }
   }

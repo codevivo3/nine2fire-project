@@ -56,28 +56,28 @@ export function ArticleLayout({
   const metadata = [formattedDate, readingTime].filter(Boolean).join(" • ");
 
   return (
-    <article className="mx-auto max-w-[720px] space-y-6 px-4 pt-24 pb-12">
+    <article className="mx-auto max-w-[720px] space-y-8 px-4 pb-12 pt-24">
       <header className="space-y-4">
         <h1 className="text-3xl md:text-4xl font-semibold tracking-[-0.025em] leading-snug">
           {title}
         </h1>
-        {metadata ? (
-          <p className="text-sm text-muted-foreground/80 tracking-tight mt-1">
-            {metadata}
-          </p>
-        ) : null}
         {excerpt && (
-          <p className="text-base text-foreground/70 leading-relaxed max-w-[640px]">
+          <p className="max-w-[640px] text-lg leading-relaxed text-foreground/70 md:text-xl">
             {excerpt}
           </p>
         )}
+        {metadata ? (
+          <p className="mt-1 text-sm tracking-tight text-muted-foreground/80">
+            {metadata}
+          </p>
+        ) : null}
       </header>
       {imageSrc && (
         <div
           className={
             portraitCover
-              ? "mx-auto mt-4 max-w-[460px] overflow-hidden rounded-[var(--radius-sm)] border border-border-token"
-              : "mt-4 overflow-hidden rounded-[var(--radius-sm)] border border-border-token"
+              ? "mx-auto max-w-[460px] overflow-hidden rounded-[var(--radius-sm)] border border-border-token"
+              : "overflow-hidden rounded-[var(--radius-sm)] border border-border-token"
           }
         >
           <EditorialImage
@@ -94,7 +94,7 @@ export function ArticleLayout({
         </div>
       )}
       {tags && tags.length > 0 && (
-        <div className="flex flex-wrap gap-2 mt-4">
+        <div className="mt-2 flex flex-wrap gap-2">
           {tags.map((tag) => (
             <Link
               key={tag}
@@ -107,7 +107,7 @@ export function ArticleLayout({
         </div>
       )}
 
-      <div className="space-y-4 leading-7 text-[15px] text-foreground/90 mt-4 [&>p:first-child]:text-[17px] [&>p:first-child]:leading-8 [&>p:first-child]:font-medium">
+      <div className="mt-2 space-y-4 text-[15px] leading-7 text-foreground/90 [&>p:first-child]:text-[17px] [&>p:first-child]:leading-8 [&>p:first-child]:font-medium">
         {children}
       </div>
     </article>
