@@ -1,25 +1,25 @@
 {
   "Roadmap": {
     "eyebrow": "Roadmap",
-    "title": "Freedom is often lost quietly.",
-    "description": "Most people don’t lose freedom all at once. It disappears in small recurring expenses.",
+    "title": "Freedom is built one decision at a time.",
+    "description": "Financial independence rarely begins with investing. It often starts with the everyday choices that slowly shape our future options.",
     "stepLabel": "Step {index}",
     "steps": {
       "lifestyle": {
         "title": "Lifestyle",
-        "description": "Most financial pressure starts long before investing. It begins with what quietly becomes normal."
+        "description": "The way we live determines how much freedom we can create tomorrow."
       },
       "habits": {
         "title": "Habits",
-        "description": "The things we repeat every day slowly shape how much room we have in our lives."
+        "description": "Small actions repeated over time become surprisingly powerful."
       },
       "capital": {
         "title": "Capital",
-        "description": "Money changes meaning when it stops being consumed automatically."
+        "description": "Money becomes a tool when it starts working for your future instead of your next purchase."
       },
       "time": {
         "title": "Time",
-        "description": "Freedom rarely arrives suddenly. Most of it is built slowly over years."
+        "description": "Freedom is rarely built quickly. Most of it grows through patience and consistency."
       }
     },
     "cta": {

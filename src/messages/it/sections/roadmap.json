@@ -1,25 +1,25 @@
 {
   "Roadmap": {
     "eyebrow": "Piano",
-    "title": "La vita cambia senza che ce ne accorgiamo.",
-    "description": "La libertà si perde un'abitudine alla volta.",
+    "title": "La libertà si costruisce una scelta alla volta.",
+    "description": "L'indipendenza finanziaria spesso inizia molto prima del primo investimento.",
     "stepLabel": "Step {index}",
     "steps": {
       "lifestyle": {
         "title": "Stile di vita",
-        "description": "La pressione finanziaria nasce prima degli investimenti: comincia da ciò che diventa normale mantenere."
+        "description": "Il modo in cui viviamo oggi determina quanta libertà potremo costruire domani."
       },
       "habits": {
         "title": "Abitudini",
-        "description": "Quello che ripetiamo ogni giorno finisce spesso per decidere quanto margine resta nella nostra vita."
+        "description": "Le piccole azioni ripetute nel tempo hanno effetti più grandi di quanto immaginiamo."
       },
       "capital": {
         "title": "Capitale",
-        "description": "Il denaro cambia significato quando smette di trasformarsi automaticamente in consumo."
+        "description": "Il denaro diventa uno strumento quando inizia a lavorare per il nostro futuro."
       },
       "time": {
         "title": "Tempo",
-        "description": "L’indipendenza finanziaria raramente arriva all’improvviso. Si costruisce lentamente, anno dopo anno."
+        "description": "La libertà raramente arriva all'improvviso. Cresce lentamente attraverso anni di pazienza e costanza."
       }
     },
     "cta": {

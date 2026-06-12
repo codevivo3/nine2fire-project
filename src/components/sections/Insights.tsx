@@ -32,21 +32,21 @@ export function InsightsSkeleton() {
           {Array.from({ length: 3 }).map((_, index) => (
             <SkeletonCard
               key={index}
-              className='p-6 backdrop-blur-md'
+              className='p-5 backdrop-blur-md lg:p-[18px]'
             >
-              <SkeletonBlock className='aspect-square w-full rounded-[var(--radius-md)] border border-border-token bg-surface/60' />
-              <div className='mt-5 flex items-center justify-between gap-4'>
+              <SkeletonBlock className='aspect-[16/10] w-full rounded-[var(--radius-md)] border border-border-token bg-surface/60 lg:h-[184px] lg:aspect-auto' />
+              <div className='mt-4 flex items-center justify-between gap-3 lg:mt-3.5'>
                 <SkeletonBlock className='h-3 w-20 rounded-full' />
                 <SkeletonBlock className='h-3 w-14 rounded-full' />
               </div>
-              <div className='mt-6 space-y-3'>
-                <SkeletonBlock className='h-8 w-[88%]' />
-                <SkeletonBlock className='h-8 w-[72%]' />
+              <div className='mt-5 space-y-2.5 lg:mt-4 lg:space-y-2'>
+                <SkeletonBlock className='h-7 w-[88%] lg:h-6' />
+                <SkeletonBlock className='h-7 w-[72%] lg:h-6' />
               </div>
-              <div className='mt-4 space-y-2'>
+              <div className='mt-3.5 space-y-2 lg:mt-3'>
                 <SkeletonBlock className='h-4 w-full' />
                 <SkeletonBlock className='h-4 w-[90%]' />
-                <SkeletonBlock className='h-4 w-[76%]' />
+                <SkeletonBlock className='h-4 w-[76%] lg:hidden' />
               </div>
             </SkeletonCard>
           ))}
@@ -74,9 +74,9 @@ export async function Insights({ locale }: InsightsProps) {
             <Link
               key={post.slug}
               href={routes.blogPost(post.slug)}
-              className='group block rounded-[var(--radius-lg)] border border-border-token bg-surface/80 p-6 backdrop-blur-md transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] hover:bg-surface/90 hover:shadow-[var(--shadow-soft)] hover:-translate-y-[2px]'
+              className='group block rounded-[var(--radius-lg)] border border-border-token bg-surface/80 p-5 backdrop-blur-md transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] hover:bg-surface/90 hover:shadow-[var(--shadow-soft)] hover:-translate-y-[2px] lg:p-[18px]'
             >
-              <div className='relative aspect-square overflow-hidden rounded-[var(--radius-md)] border border-border-token bg-surface/60'>
+              <div className='relative aspect-[16/10] overflow-hidden rounded-[var(--radius-md)] border border-border-token bg-surface/60 lg:h-[184px] lg:aspect-auto'>
                 {post.coverImage && (
                   <EditorialImage
                     src={post.coverImage}
@@ -87,16 +87,16 @@ export async function Insights({ locale }: InsightsProps) {
                   />
                 )}
               </div>
-              <div className='mt-5 flex items-center justify-between gap-4 text-xs font-semibold uppercase tracking-[0.18em] text-muted'>
+              <div className='mt-4 flex items-center justify-between gap-3 text-[11px] font-semibold uppercase tracking-[0.18em] text-muted md:text-xs lg:mt-3.5'>
                 <span className='text-accent-eyebrow-token'>{t('eyebrow')}</span>
                 <span>{post.readingTime}</span>
               </div>
-              <h3 className='mt-6 text-2xl font-bold leading-tight tracking-[-0.035em] text-foreground'>
+              <h3 className='mt-5 line-clamp-2 text-[1.35rem] font-bold leading-tight tracking-[-0.035em] text-foreground md:text-[1.45rem] lg:mt-4 lg:text-[1.3rem]'>
                 <span className='relative block w-full after:absolute after:left-0 after:-bottom-1.5 after:h-px after:w-0 after:bg-current after:transition-all after:duration-500 after:ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:after:w-full'>
                   {post.title}
                 </span>
               </h3>
-              <p className='mt-4 text-sm leading-7 text-foreground/72 group-hover:text-foreground'>
+              <p className='mt-3 line-clamp-3 text-sm leading-6 text-foreground/72 group-hover:text-foreground lg:mt-2.5 lg:line-clamp-2 lg:leading-[1.35rem]'>
                 {post.excerpt}
               </p>
             </Link>

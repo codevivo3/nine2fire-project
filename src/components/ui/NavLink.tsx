@@ -1,3 +1,4 @@
+'use client';
 /**
  * FILE: src/components/ui/NavLink.tsx
  *
@@ -6,34 +7,57 @@
  *
  * NOTES:
  * - `link-highlight` centralizes the underline animation so header and footer links stay aligned
+ * - Same-page section links stay native to avoid dev-only delays in App Router hash navigation
  */
-import { Link } from '@/i18n/navigation';
+import type { AnchorHTMLAttributes } from 'react';
+import { Link, usePathname } from '@/i18n/navigation';
 import { cn } from '@/lib/utils';
 
-type NavLinkProps = {
+type NavLinkProps = Omit<AnchorHTMLAttributes<HTMLAnchorElement>, 'href'> & {
   href: string;
   children: React.ReactNode;
   className?: string;
-  onClick?: () => void;
 };
 
-export function NavLink({ href, children, className, onClick }: NavLinkProps) {
+function isHomeSectionHref(href: string) {
+  return href.startsWith('/#');
+}
+
+export function NavLink({ href, children, className, ...props }: NavLinkProps) {
+  const pathname = usePathname();
+  const shouldUseNativeHashLink = pathname === '/' && isHomeSectionHref(href);
+  const resolvedHref = shouldUseNativeHashLink ? href.slice(1) : href;
+
+  const linkClasses = cn(
+    `
+    link-highlight
+    relative
+    inline-block
+    text-sm
+    font-semibold
+    text-[color:var(--color-fg)]
+    transition-colors duration-200
+    `,
+    className,
+  );
+
+  if (shouldUseNativeHashLink) {
+    return (
+      <a
+        {...props}
+        href={resolvedHref}
+        className={linkClasses}
+      >
+        <span>{children}</span>
+      </a>
+    );
+  }
+
   return (
     <Link
-      href={href}
-      onClick={onClick}
-      className={cn(
-        `
-        link-highlight
-        relative
-        inline-block
-        text-sm
-        font-semibold
-        text-[color:var(--color-fg)]
-        transition-colors duration-200
-        `,
-        className,
-      )}
+      {...props}
+      href={resolvedHref}
+      className={linkClasses}
     >
       <span>{children}</span>
     </Link>
