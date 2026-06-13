@@ -25,12 +25,12 @@ export default async function FireTrackerBetaPage({
   const t = await getTranslations({ locale, namespace: "FireTracker" });
 
   return (
-    <main className="pt-20 md:pt-24">
-      <Container className="pb-16 md:pb-20">
+    <main className="flex flex-1 flex-col pt-14">
+      <Container className="flex flex-1 flex-col py-4">
         <FireTrackerBetaGuard>
-          <div className="section-grid gap-10 md:gap-12">
-            <div className="grid gap-5 lg:grid-cols-2 lg:items-start">
-              <div className="section-grid gap-5 lg:pt-6">
+          <div className="flex flex-1 flex-col justify-center gap-6 md:gap-8">
+            <div className="grid gap-5 lg:grid-cols-2 lg:items-center">
+              <div className="section-grid gap-4">
                 <p className="pl-[4px] text-xs font-semibold uppercase tracking-[0.18em] text-accent-eyebrow-token opacity-90">
                   {t("beta.eyebrow")}
                 </p>

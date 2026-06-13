@@ -49,17 +49,40 @@
         "currency": "Valuta",
         "currentAge": "Eta attuale",
         "retirementAge": "Eta di pensionamento",
+        "pensionStartAge": "Eta inizio pensione",
         "annualSpending": "Spesa annuale",
-        "currentInvestedAssets": "Patrimonio investito attuale",
+        "annualPensionIncome": "Reddito pensione",
+        "currentInvestedAssets": "Patrimonio investito",
         "monthlyContribution": "Contributo mensile",
         "expectedReturn": "Rendimento atteso",
         "inflation": "Inflazione",
         "safeWithdrawalRate": "Safe withdrawal rate"
       },
+      "fieldsInfo": {
+        "ariaLabel": "Maggiori informazioni su {field}",
+        "items": {
+          "currency": "Scegli la valuta usata per tutti gli importi del calcolatore.",
+          "currentAge": "La tua età oggi. La proiezione parte da qui.",
+          "retirementAge": "L'età in cui prevedi di smettere o ridurre il lavoro full-time.",
+          "pensionStartAge": "L'età in cui inizia il reddito pensionistico.",
+          "annualSpending": "La tua spesa annua prevista in pensione.",
+          "annualPensionIncome": "Il reddito pensionistico annuo previsto dopo l'inizio.",
+          "currentInvestedAssets": "Denaro già investito per il tuo piano FI.",
+          "monthlyContribution": "Quanto prevedi di investire ogni mese.",
+          "expectedReturn": "Rendimento annuo stimato degli investimenti prima dell'inflazione.",
+          "inflation": "Aumento annuo stimato del costo della vita.",
+          "safeWithdrawalRate": "La quota del portafoglio che prevedi di prelevare ogni anno."
+        }
+      },
       "results": {
         "title": "Risultati",
         "planStatus": "Stato del piano",
         "fireNumber": "Numero FIRE",
+        "adjustedFireNumber": "Numero FIRE corretto",
+        "yearsToFire": "Anni all'indipendenza finanziaria",
+        "estimatedFireAge": "Età FI stimata",
+        "pensionStartAge": "Eta inizio pensione",
+        "annualPensionIncome": "Pensione annua",
         "coastFireNumberToday": "Numero Coast FIRE oggi",
         "projectedPortfolioAtRetirement": "Portafoglio stimato al pensionamento",
         "coastFireToday": "Coast FIRE oggi",
@@ -81,7 +104,9 @@
           "notOnTrack": "Questo piano non raggiunge ancora né il Coast FIRE né il tuo obiettivo FIRE entro il pensionamento."
         },
         "yes": "Si",
-        "no": "No"
+        "no": "No",
+        "alreadyReached": "Già raggiunta",
+        "notReachedWithinCurrentAssumptions": "Non raggiunta con le ipotesi attuali"
       },
       "chart": {
         "title": "Proiezione",
@@ -101,19 +126,25 @@
         "help": {
           "title": "Come leggere questo grafico",
           "items": {
-            "totalPortfolio": "Portafoglio totale mostra il valore complessivo stimato del portafoglio, includendo capitale iniziale, contributi e crescita.",
-            "capitalInvested": "Capitale investito rappresenta la somma cumulata di tutti i contributi che aggiungi al portafoglio nel tempo.",
-            "currentCapitalGrowth": "Capitale iniziale rappresenta la crescita del patrimonio che possiedi oggi, assumendo che non vengano effettuati nuovi contributi.",
-            "fireTarget": "Target FIRE e il valore del portafoglio necessario per sostenere la tua spesa pensionistica obiettivo.",
-            "reachesFire": "Se la linea oro raggiunge o supera la linea verde, questo scenario raggiunge il FIRE."
+            "totalPortfolio": "La linea oro mostra il portafoglio totale stimato: patrimonio attuale, contributi futuri e crescita composta.",
+            "capitalInvested": "La linea blu tratteggiata mostra il capitale versato nel tempo, senza considerare la crescita degli investimenti.",
+            "currentCapitalGrowth": "La linea scura mostra come crescerebbe il patrimonio già investito oggi se non aggiungessi altri contributi.",
+            "fireTarget": "La linea verde tratteggiata mostra il target FIRE: il patrimonio stimato necessario per coprire la spesa annuale indicata.",
+            "reachesFire": "Le linee verticali indicano pensionamento, previdenza e FI. Se la linea oro raggiunge o supera il target verde, lo scenario entra nell'area FIRE."
           }
+        },
+        "markers": {
+          "retirementAge": "Pensione",
+          "pensionStartAge": "Previdenza",
+          "fireAge": "FI"
         },
         "tooltip": {
           "age": "Eta",
           "portfolio": "Portafoglio previsto",
           "withoutContributions": "Senza contributi",
           "fireTarget": "Obiettivo FIRE",
-          "gap": "Distanza"
+          "gap": "Distanza",
+          "pensionActive": "Pensione attiva"
         }
       },
       "guard": {

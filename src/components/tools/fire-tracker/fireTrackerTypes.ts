@@ -12,7 +12,9 @@ export type CalculatorFormState = {
   currency: CurrencyCode;
   currentAge: string;
   retirementAge: string;
+  pensionStartAge: string;
   annualSpending: string;
+  annualPensionIncome: string;
   currentInvestedAssets: string;
   monthlyContribution: string;
   expectedReturn: string;
@@ -23,6 +25,8 @@ export type CalculatorFormState = {
 export type CalculatorField = {
   key: keyof CalculatorFormState;
   label: string;
+  tooltip: string;
+  tooltipAriaLabel: string;
   kind: 'currency' | 'number' | 'money' | 'percent';
   inputMode?: 'numeric' | 'decimal';
   step?: string;
@@ -30,8 +34,11 @@ export type CalculatorField = {
 };
 
 export type ResultItem = {
+  key: string;
   label: string;
   value: string;
+  tone?: 'positive' | 'warning';
+  progressPercent?: number;
 };
 
 export type FireTrackerPlanStatus = CoastFirePlanStatus;

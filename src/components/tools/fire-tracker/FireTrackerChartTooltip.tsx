@@ -34,7 +34,7 @@ export function FireTrackerChartTooltip({
         </div>
         <div className='flex items-center justify-between gap-3'>
           <span className='text-foreground/64'>{labels.portfolio}</span>
-          <span className='text-chart-total font-semibold'>
+          <span className='text-warning-text-token font-semibold'>
             {formatCurrency(point.portfolioWithContributions)}
           </span>
         </div>
@@ -53,6 +53,12 @@ export function FireTrackerChartTooltip({
         <div className='flex items-center justify-between gap-3 text-foreground/64'>
           <span>{labels.gap}</span>
           <span className='text-foreground font-semibold'>{formatCurrency(gap)}</span>
+        </div>
+        <div className='flex items-center justify-between gap-3 text-foreground/64'>
+          <span>{labels.pensionActive}</span>
+          <span className='text-foreground font-semibold'>
+            {point.pensionActive ? labels.yes : labels.no}
+          </span>
         </div>
       </div>
     </div>

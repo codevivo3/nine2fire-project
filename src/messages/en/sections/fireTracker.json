@@ -49,17 +49,40 @@
         "currency": "Currency",
         "currentAge": "Current age",
         "retirementAge": "Retirement age",
+        "pensionStartAge": "Pension start age",
         "annualSpending": "Annual spending",
-        "currentInvestedAssets": "Current invested assets",
+        "annualPensionIncome": "Pension income",
+        "currentInvestedAssets": "Invested assets",
         "monthlyContribution": "Monthly contribution",
         "expectedReturn": "Expected return",
         "inflation": "Inflation",
         "safeWithdrawalRate": "Safe withdrawal rate"
       },
+      "fieldsInfo": {
+        "ariaLabel": "More info about {field}",
+        "items": {
+          "currency": "Choose the currency used for all amounts in this calculator.",
+          "currentAge": "Your age today. The projection starts from here.",
+          "retirementAge": "The age you plan to stop or reduce full-time work.",
+          "pensionStartAge": "The age when pension income begins.",
+          "annualSpending": "Your expected yearly spending in retirement.",
+          "annualPensionIncome": "Your expected yearly pension income after it starts.",
+          "currentInvestedAssets": "Money already invested for your FI plan.",
+          "monthlyContribution": "How much you plan to invest each month.",
+          "expectedReturn": "Estimated yearly investment return before inflation.",
+          "inflation": "Estimated yearly increase in living costs.",
+          "safeWithdrawalRate": "The share of your portfolio you plan to withdraw each year."
+        }
+      },
       "results": {
         "title": "Results",
         "planStatus": "Plan status",
         "fireNumber": "FIRE number",
+        "adjustedFireNumber": "Adjusted FIRE number",
+        "yearsToFire": "Years to FI",
+        "estimatedFireAge": "Estimated FI age",
+        "pensionStartAge": "Pension start age",
+        "annualPensionIncome": "Annual pension income",
         "coastFireNumberToday": "Coast FIRE number today",
         "projectedPortfolioAtRetirement": "Projected portfolio at retirement",
         "coastFireToday": "Coast FIRE today",
@@ -81,7 +104,9 @@
           "notOnTrack": "This plan does not yet reach Coast FIRE or your FIRE target by retirement."
         },
         "yes": "Yes",
-        "no": "No"
+        "no": "No",
+        "alreadyReached": "Already reached",
+        "notReachedWithinCurrentAssumptions": "Not reached within current assumptions"
       },
       "chart": {
         "title": "Projection",
@@ -101,19 +126,25 @@
         "help": {
           "title": "How to read this chart",
           "items": {
-            "totalPortfolio": "Total portfolio shows your projected portfolio value including growth and future contributions.",
-            "capitalInvested": "Capital invested shows how much money you personally contribute over time.",
-            "currentCapitalGrowth": "Current capital growth shows what your current portfolio could become if you never added another contribution.",
-            "fireTarget": "FIRE target is the portfolio value required to support your target retirement spending.",
-            "reachesFire": "If the gold line reaches or crosses the green line, this scenario reaches FIRE."
+            "totalPortfolio": "The gold line shows your estimated total portfolio: current assets, future contributions, and compound growth.",
+            "capitalInvested": "The blue dashed line shows the capital you contribute over time, excluding investment growth.",
+            "currentCapitalGrowth": "The dark line shows how your current invested assets could grow if you never added another contribution.",
+            "fireTarget": "The green dashed line shows your FIRE target: the estimated portfolio needed to support your chosen annual spending.",
+            "reachesFire": "The vertical markers indicate retirement, pension, and FI. When the gold line reaches or exceeds the green target, the scenario enters FIRE territory."
           }
+        },
+        "markers": {
+          "retirementAge": "Retirement",
+          "pensionStartAge": "Pension",
+          "fireAge": "FI"
         },
         "tooltip": {
           "age": "Age",
           "portfolio": "Projected portfolio",
           "withoutContributions": "Without contributions",
           "fireTarget": "FIRE target",
-          "gap": "Gap"
+          "gap": "Gap",
+          "pensionActive": "Pension active"
         }
       },
       "guard": {

@@ -4,11 +4,11 @@
  * PURPOSE:
  * - Holds reusable chart geometry constants and SVG coordinate helpers
  */
-export const CHART_WIDTH = 760;
-export const CHART_HEIGHT = 456;
-export const CHART_PADDING_LEFT = 16;
-export const CHART_PADDING_TOP = 6;
-export const CHART_PADDING_RIGHT = 120;
+export const CHART_WIDTH = 920;
+export const CHART_HEIGHT = 484;
+export const CHART_PADDING_LEFT = 2;
+export const CHART_PADDING_TOP = 12;
+export const CHART_PADDING_RIGHT = 10;
 export const CHART_PADDING_BOTTOM = 42;
 
 export function buildLinePath(
@@ -48,6 +48,23 @@ export function getChartXForIndex(
     CHART_PADDING_LEFT +
     (totalPoints === 1 ? innerWidth / 2 : (index / (totalPoints - 1)) * innerWidth)
   );
+}
+
+export function getChartXForAge(
+  age: number,
+  startAge: number,
+  endAge: number,
+  innerWidth: number,
+) {
+  const ageSpan = endAge - startAge;
+
+  if (ageSpan <= 0) {
+    return CHART_PADDING_LEFT + innerWidth / 2;
+  }
+
+  const clampedAge = Math.min(Math.max(age, startAge), endAge);
+
+  return CHART_PADDING_LEFT + ((clampedAge - startAge) / ageSpan) * innerWidth;
 }
 
 export function getChartYForValue(

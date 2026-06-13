@@ -17,12 +17,14 @@ import {
   CHART_PADDING_RIGHT,
   CHART_PADDING_TOP,
   CHART_WIDTH,
+  getChartXForAge,
   getChartXForIndex,
   getChartYForValue,
   getRoundedScaleMax,
 } from './fireTrackerChartHelpers';
 import type {
   ChartEndLabel,
+  ChartMarkerLine,
   ChartScaleTick,
   ChartSeries,
   FireTrackerProjectionChartProps,
@@ -34,6 +36,7 @@ export function FireTrackerProjectionChart({
   endLabel,
   legend,
   help,
+  markers,
   formatCurrency,
   tooltipLabels,
   initialCapital,
@@ -48,6 +51,8 @@ export function FireTrackerProjectionChart({
   }
 
   const finalPoint = points[points.length - 1];
+  const startAge = points[0]?.age ?? 0;
+  const endAge = finalPoint.age;
   const contributionValues = points.map(
     (point, index) => initialCapital + index * 12 * monthlyContribution,
   );
@@ -67,6 +72,8 @@ export function FireTrackerProjectionChart({
 
   const xForIndex = (index: number) =>
     getChartXForIndex(index, points.length, innerWidth);
+  const xForAge = (age: number) =>
+    getChartXForAge(age, startAge, endAge, innerWidth);
   const yForValue = (value: number) =>
     getChartYForValue(value, minValue, maxValue, innerHeight);
 
@@ -128,18 +135,19 @@ export function FireTrackerProjectionChart({
     };
   });
   const initialCapitalY = yForValue(initialCapital);
+  const valueLabelX = CHART_WIDTH + 8;
   const endLabels: ChartEndLabel[] = [
     {
       key: series[0].label,
       label: formatCurrency(series[0].finalValue),
-      x: CHART_WIDTH - CHART_PADDING_RIGHT + 18,
+      x: valueLabelX,
       y: yForValue(series[0].finalValue) + 5,
       className: series[0].textClassName,
     },
     {
       key: series[2].label,
       label: formatCurrency(series[2].finalValue),
-      x: CHART_WIDTH - CHART_PADDING_RIGHT + 18,
+      x: valueLabelX,
       y: yForValue(series[2].finalValue) + 5,
       className: series[2].textClassName,
     },
@@ -156,11 +164,57 @@ export function FireTrackerProjectionChart({
     hoveredPoint === null
       ? 0
       : Math.max(hoveredPoint.fireNumber - hoveredPoint.portfolioWithContributions, 0);
+  const rightEdgeMarkerThreshold = CHART_WIDTH - CHART_PADDING_RIGHT - 40;
+  const retirementMarkerX = xForAge(markers.retirementAge.age);
+  const pensionMarkerX = xForAge(markers.pensionStartAge.age);
+  const fireMarkerX = markers.fireAge ? xForAge(markers.fireAge.age) : null;
+  const markerLabelBaseY = CHART_PADDING_TOP + 22;
+  const markerLabelStackedY = CHART_PADDING_TOP + 40;
+  const markerLineGap = 10;
+  const shouldStackTimelineMarkers = Math.abs(retirementMarkerX - pensionMarkerX) < 80;
+  const markerLines: ChartMarkerLine[] = [
+    {
+      key: 'retirement',
+      age: markers.retirementAge.age,
+      label: markers.retirementAge.label,
+      x: retirementMarkerX,
+      y: markerLabelBaseY,
+      lineStartY: markerLabelBaseY + markerLineGap,
+      textAnchor: 'middle',
+      lineClassName: 'stroke-foreground/64',
+      labelClassName: 'fill-foreground/64 text-[13px] font-semibold',
+    },
+    {
+      key: 'pension',
+      age: markers.pensionStartAge.age,
+      label: markers.pensionStartAge.label,
+      x: pensionMarkerX,
+      y: shouldStackTimelineMarkers ? markerLabelStackedY : markerLabelBaseY,
+      lineStartY: (shouldStackTimelineMarkers ? markerLabelStackedY : markerLabelBaseY) + markerLineGap,
+      textAnchor: 'middle',
+      lineClassName: 'stroke-foreground/42',
+      labelClassName: 'fill-foreground/42 text-[13px] font-semibold',
+    },
+    ...(markers.fireAge
+      ? [{
+          key: 'fire',
+          age: markers.fireAge.age,
+          label: markers.fireAge.label,
+          x: fireMarkerX ?? CHART_PADDING_LEFT,
+          y: CHART_PADDING_TOP + 22,
+          textAnchor: (fireMarkerX ?? 0) >= rightEdgeMarkerThreshold ? 'end' as const : 'start' as const,
+          lineClassName: 'stroke-chart-target/65',
+          lineStrokeWidth: 1.5,
+          labelClassName: 'fill-chart-target text-[13px] font-bold',
+          showLabelBadge: true,
+        }]
+      : []),
+  ];
 
   return (
     <FireTrackerCard title={title} className='h-full content-start gap-3 xl:p-5'>
       <div
-        className='relative overflow-visible rounded-[var(--radius-sm)] border border-border-token/70 bg-surface/50 px-2 py-3 xl:px-3'
+        className='relative overflow-visible rounded-[var(--radius-sm)] border border-border-token/70 bg-surface/50 px-0.5 py-3 sm:px-1 xl:px-1.5'
         onMouseLeave={() => setHoveredIndex(null)}
       >
         {hoveredPoint ? (
@@ -184,6 +238,7 @@ export function FireTrackerProjectionChart({
           series={series}
           visibleScaleTicks={visibleScaleTicks}
           endLabels={endLabels}
+          markerLines={markerLines}
           fireTargetY={fireTargetY}
           initialCapitalY={initialCapitalY}
           innerHeight={innerHeight}

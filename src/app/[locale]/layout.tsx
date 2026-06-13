@@ -50,9 +50,11 @@ export default async function LocaleLayout({
       // read translations without each route reloading message files.
       messages={await loadMessages(resolvedLocale)}
     >
-      <div className="relative min-h-screen text-foreground">
+      <div className="relative flex min-h-dvh flex-col text-foreground">
         <Navbar />
-        {children}
+        <div className="flex min-h-0 flex-1 flex-col">
+          {children}
+        </div>
         <Footer locale={resolvedLocale} />
         <CookieBanner />
       </div>

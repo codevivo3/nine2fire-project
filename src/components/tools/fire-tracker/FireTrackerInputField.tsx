@@ -14,6 +14,7 @@ import {
   getCurrencySymbol,
   normalizeLocalizedNumber,
 } from './fireTrackerFormatters';
+import { FireTrackerInfoTooltip } from './FireTrackerInfoTooltip';
 import type {
   CalculatorField,
   CalculatorFormState,
@@ -56,12 +57,18 @@ export function FireTrackerInputField({
 
   return (
     <div className='flex min-w-0 flex-col'>
-      <label
-        htmlFor={field.key}
-        className='mb-1 px-1 text-[11px] font-medium leading-none text-foreground/72'
-      >
-        {field.label}
-      </label>
+      <div className='mb-1 flex items-center justify-between gap-3 px-1'>
+        <label
+          htmlFor={field.key}
+          className='min-w-0 text-[11px] font-medium leading-none text-foreground/72'
+        >
+          {field.label}
+        </label>
+        <FireTrackerInfoTooltip
+          label={field.tooltipAriaLabel}
+          text={field.tooltip}
+        />
+      </div>
 
       <div className='relative'>
         {isCurrencyField ? (

@@ -15,7 +15,7 @@ export type FireTrackerChartLegend = {
 
 export type FireTrackerChartHelp = {
   title: string;
-  items: [string, string, string, string, string];
+  items: string[];
 };
 
 export type FireTrackerChartTooltipLabels = {
@@ -24,6 +24,20 @@ export type FireTrackerChartTooltipLabels = {
   withoutContributions: string;
   fireTarget: string;
   gap: string;
+  pensionActive: string;
+  yes: string;
+  no: string;
+};
+
+export type ChartMarker = {
+  age: number;
+  label: string;
+};
+
+export type FireTrackerChartMarkers = {
+  retirementAge: ChartMarker;
+  pensionStartAge: ChartMarker;
+  fireAge: ChartMarker | null;
 };
 
 export type FireTrackerProjectionChartProps = {
@@ -32,6 +46,7 @@ export type FireTrackerProjectionChartProps = {
   endLabel: string;
   legend: FireTrackerChartLegend;
   help: FireTrackerChartHelp;
+  markers: FireTrackerChartMarkers;
   formatCurrency: (value: number) => string;
   tooltipLabels: FireTrackerChartTooltipLabels;
   initialCapital: number;
@@ -53,6 +68,20 @@ export type ChartSeries = {
 export type ChartScaleTick = {
   value: number;
   y: number;
+};
+
+export type ChartMarkerLine = {
+  key: string;
+  age: number;
+  label: string;
+  x: number;
+  y: number;
+  lineStartY?: number;
+  textAnchor?: 'start' | 'middle' | 'end';
+  lineClassName?: string;
+  lineStrokeWidth?: number;
+  labelClassName?: string;
+  showLabelBadge?: boolean;
 };
 
 export type ChartEndLabel = {

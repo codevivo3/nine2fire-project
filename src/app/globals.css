@@ -26,6 +26,7 @@ html.light {
   --color-primary: #28282b;
   --color-secondary: #4d5d53;
   --color-accent: #ffcf40;
+  --color-warning-text: #9a6a00;
 
   /* Chart tokens */
   --chart-total: var(--color-accent);
@@ -80,6 +81,7 @@ html.dark {
   --color-primary: #28282b;
   --color-secondary: #738678;
   --color-accent: #ffcf40;
+  --color-warning-text: var(--color-accent);
 
   /* Chart tokens */
   --chart-total: var(--color-accent);
@@ -127,6 +129,7 @@ html.dark {
   --color-primary-token: var(--color-primary);
   --color-secondary-token: var(--color-secondary);
   --color-accent-token: var(--color-accent);
+  --color-warning-text-token: var(--color-warning-text);
   --color-chart-total: var(--chart-total);
   --color-chart-total-label: var(--chart-total-label);
   --color-chart-contributions: var(--chart-contributions);
