@@ -120,7 +120,7 @@ html.dark {
 /* =========================================================
    3. TAILWIND TOKEN BRIDGE
    ========================================================= */
-
+/* stylelint-disable-next-line at-rule-no-unknown */
 @theme inline {
   /* Mirror semantic CSS variables into Tailwind v4 tokens for utility classes. */
   --color-background: var(--color-bg);
