@@ -11,7 +11,7 @@
  */
 import type { Metadata } from "next";
 import { Analytics } from "@vercel/analytics/react";
-import { Manrope } from "next/font/google";
+import { Manrope, Roboto_Mono } from "next/font/google";
 import { ThemeBootstrap } from "@/components/theme/ThemeBootstrap";
 import { getProductionSiteUrl, isProduction } from "@/lib/env";
 import { HOME_SEO_DESCRIPTION } from "@/lib/metadata";
@@ -22,6 +22,13 @@ const manrope = Manrope({
   variable: "--font-manrope",
   subsets: ["latin"],
   weight: ["400", "600", "700", "800"],
+  display: "swap",
+});
+
+const robotoMono = Roboto_Mono({
+  variable: "--font-roboto-mono",
+  subsets: ["latin"],
+  weight: ["400", "500", "700"],
   display: "swap",
 });
 
@@ -170,7 +177,7 @@ export default async function RootLayout({
   return (
     <html
       lang="en"
-      className={`${manrope.variable} h-full scroll-smooth antialiased`}
+      className={`${manrope.variable} ${robotoMono.variable} h-full scroll-smooth antialiased`}
       suppressHydrationWarning
     >
       <body className="min-h-full text-foreground font-sans before:content-[''] before:fixed before:inset-[-32px] before:-z-10 before:bg-[var(--background-pattern)] before:bg-cover before:bg-center before:bg-no-repeat">

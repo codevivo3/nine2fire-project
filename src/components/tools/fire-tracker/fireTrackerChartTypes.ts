@@ -91,3 +91,8 @@ export type ChartEndLabel = {
   y: number;
   className: string;
 };
+
+export type ChartTooltipPlacement = {
+  leftPercent: number;
+  topPercent: number;
+};

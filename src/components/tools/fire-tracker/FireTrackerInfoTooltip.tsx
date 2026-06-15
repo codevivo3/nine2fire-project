@@ -25,7 +25,7 @@ export function FireTrackerInfoTooltip({
       <div
         id={tooltipId}
         role='tooltip'
-        className='pointer-events-none absolute left-1/2 top-full z-20 mt-2 w-52 -translate-x-1/2 rounded-[var(--radius-sm)] border border-border-token bg-surface-strong/96 px-3 py-2 text-left text-[11px] leading-4 text-foreground opacity-0 shadow-[0_14px_30px_rgba(0,0,0,0.18)] transition-opacity duration-150 group-hover:opacity-100 group-focus-within:opacity-100'
+        className='pointer-events-none absolute left-1/2 top-full z-20 hidden w-52 -translate-x-1/2 rounded-[var(--radius-sm)] border border-border-token bg-surface-strong/96 px-3 py-2 text-left text-[11px] leading-4 text-foreground shadow-[0_14px_30px_rgba(0,0,0,0.18)] group-hover:block group-focus-within:block'
       >
         {text}
       </div>

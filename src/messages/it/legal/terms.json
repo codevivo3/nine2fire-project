@@ -18,6 +18,11 @@
       "body": "I contenuti sono forniti così come sono, senza garanzie di accuratezza o completezza. Non costituiscono consulenza professionale."
     },
 
+    "financialTools": {
+      "title": "Strumenti finanziari",
+      "body": "Calcolatori, proiezioni, esempi e simulazioni presenti su questo sito hanno esclusivamente finalità illustrative. Si basano su ipotesi che potrebbero non riflettere le future condizioni di mercato, le circostanze personali o i risultati effettivi degli investimenti."
+    },
+
     "liability": {
       "title": "Responsabilità",
       "body": "Il proprietario del sito non è responsabile per eventuali perdite o danni derivanti dall’uso di questo sito o dall’affidamento sui suoi contenuti."
@@ -30,7 +35,7 @@
 
     "contact": {
       "title": "Contatti",
-      "body": "Per qualsiasi domanda relativa a questi termini, puoi contattare il proprietario del sito tramite i canali disponibili."
+      "body": "Per qualsiasi domanda relativa a questi termini, alle pratiche sulla privacy o ai contenuti del sito, puoi contattarmi tramite i recapiti disponibili su Nine2Fire."
     }
   }
 }

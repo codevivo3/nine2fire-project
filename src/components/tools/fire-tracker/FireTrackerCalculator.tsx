@@ -1,34 +1,15 @@
 'use client';
-/**
- * FILE: src/components/tools/fire-tracker/FireTrackerCalculator.tsx
- *
- * PURPOSE:
- * - Hosts FIRE Tracker calculator state, parsing, calculation execution, and high-level rendering
- *
- * NOTES:
- * - Field config, input panel rendering, and result-item mapping live in sibling modules
- *   so this component stays focused on orchestration
- */
-
 import { useEffect, useState } from 'react';
 import { useLocale, useTranslations } from 'next-intl';
 import { calculateCoastFire } from '@/lib/fire';
 import { FireTrackerCalculatorForm } from './FireTrackerCalculatorForm';
 import { FireTrackerProjectionChart } from './FireTrackerProjectionChart';
 import { FireTrackerResults } from './FireTrackerResults';
+import { buildFireTrackerProjectionProps } from './calculator/fireTrackerProjectionProps';
+import { buildFireTrackerResultViewModel } from './calculator/fireTrackerResultViewModel';
 import { getFireTrackerCalculatorFields } from './fireTrackerCalculatorFields';
-import {
-  buildFireTrackerResultItems,
-} from './fireTrackerResultItems';
-import {
-  getLocaleTag,
-  parseNumber,
-  toDecimalPercent,
-} from './fireTrackerFormatters';
-import type {
-  CalculatorFormState,
-  FireTrackerPlanStatus,
-} from './fireTrackerTypes';
+import { getLocaleTag, parseNumber, toDecimalPercent } from './fireTrackerFormatters';
+import type { CalculatorFormState } from './fireTrackerTypes';
 
 const defaultValues: CalculatorFormState = {
   currency: 'EUR',
@@ -53,8 +34,7 @@ const numberFormatter = new Intl.NumberFormat('en-US', {
   maximumFractionDigits: 0,
 });
 
-const FIRE_TRACKER_CALCULATOR_INPUTS_STORAGE_KEY =
-  'nine2fire-fire-tracker-calculator-inputs';
+const FIRE_TRACKER_CALCULATOR_INPUTS_STORAGE_KEY = 'nine2fire-fire-tracker-calculator-inputs';
 
 export function FireTrackerCalculator() {
   const locale = useLocale();
@@ -209,44 +189,27 @@ export function FireTrackerCalculator() {
     }
   }
 
-  const resultItems = result
-    ? [
-        ...buildFireTrackerResultItems({
-          result,
-          formatCurrency: (value) => currencyFormatter.format(value),
-          formatPercent: (value) => percentFormatter.format(value),
-          formatNumber: (value) => numberFormatter.format(value),
-          formatEstimate: (value) => estimateFormatter.format(value),
-          labels: {
-            planStatus: t('beta.results.planStatus'),
-            fireNumber: t('beta.results.fireNumber'),
-            adjustedFireNumber: t('beta.results.adjustedFireNumber'),
-            yearsToFire: t('beta.results.yearsToFire'),
-            estimatedFireAge: t('beta.results.estimatedFireAge'),
-            pensionStartAge: t('beta.results.pensionStartAge'),
-            annualPensionIncome: t('beta.results.annualPensionIncome'),
-            coastFireNumberToday: t('beta.results.coastFireNumberToday'),
-            projectedPortfolioAtRetirement: t('beta.results.projectedPortfolioAtRetirement'),
-            coastFireToday: t('beta.results.coastFireToday'),
-            fireByRetirement: t('beta.results.fireByRetirement'),
-            progressToCoastFire: t('beta.results.progressToCoastFire'),
-            progressToFullFire: t('beta.results.progressToFullFire'),
-            yearsToRetirement: t('beta.results.yearsToRetirement'),
-            realReturn: t('beta.results.realReturn'),
-            yes: t('beta.results.yes'),
-            no: t('beta.results.no'),
-            alreadyReached: t('beta.results.alreadyReached'),
-            notReachedWithinCurrentAssumptions: t('beta.results.notReachedWithinCurrentAssumptions'),
-          },
-          getStatusLabel: (status) =>
-            t(`beta.results.statuses.${status as FireTrackerPlanStatus}`),
-        }),
-      ]
-    : [];
+  const resultViewModel = result
+    ? buildFireTrackerResultViewModel({
+        result,
+        t,
+        formatCurrency: (value) => currencyFormatter.format(value),
+        formatPercent: (value) => percentFormatter.format(value),
+        formatNumber: (value) => numberFormatter.format(value),
+        formatEstimate: (value) => estimateFormatter.format(value),
+      })
+    : null;
+  const projectionChartProps = result
+    ? buildFireTrackerProjectionProps({
+        result,
+        t,
+        formatCurrency: (value) => currencyFormatter.format(value),
+      })
+    : null;
 
   return (
     <>
-      <div className='w-full lg:col-start-2'>
+      <div className='min-w-0 w-full lg:col-start-2'>
         <FireTrackerCalculatorForm
           title={t('beta.calculator.title')}
           calculateLabel={t('beta.actions.calculate')}
@@ -266,69 +229,14 @@ export function FireTrackerCalculator() {
 
       {result ? (
         <>
-          <div className='w-full lg:col-span-2'>
-            <FireTrackerProjectionChart
-              title={t('beta.chart.title')}
-              startLabel={`${t('beta.chart.age')} ${result.projection[0]?.age ?? ''}`}
-              endLabel={`${t('beta.chart.age')} ${
-                result.projection[result.projection.length - 1]?.age ?? ''
-              }`}
-              legend={{
-                totalPortfolio: t('beta.chart.legend.totalPortfolio'),
-                capitalInvested: t('beta.chart.legend.capitalInvested'),
-                currentCapitalGrowth: t('beta.chart.legend.currentCapitalGrowth'),
-                fireTarget: t('beta.chart.legend.fireTarget'),
-              }}
-              help={{
-                title: t('beta.chart.help.title'),
-                items: [
-                  t('beta.chart.help.items.totalPortfolio'),
-                  t('beta.chart.help.items.capitalInvested'),
-                  t('beta.chart.help.items.currentCapitalGrowth'),
-                  t('beta.chart.help.items.fireTarget'),
-                  t('beta.chart.help.items.reachesFire'),
-                ],
-              }}
-              markers={{
-                retirementAge: {
-                  age: result.retirementAge,
-                  label: t('beta.chart.markers.retirementAge'),
-                },
-                pensionStartAge: {
-                  age: result.pensionStartAge,
-                  label: t('beta.chart.markers.pensionStartAge'),
-                },
-                fireAge:
-                  result.fireAge === null
-                    ? null
-                    : {
-                        age: result.fireAge,
-                        label: t('beta.chart.markers.fireAge'),
-                      },
-              }}
-              tooltipLabels={{
-                age: t('beta.chart.tooltip.age'),
-                portfolio: t('beta.chart.tooltip.portfolio'),
-                withoutContributions: t('beta.chart.tooltip.withoutContributions'),
-                fireTarget: t('beta.chart.tooltip.fireTarget'),
-                gap: t('beta.chart.tooltip.gap'),
-                pensionActive: t('beta.chart.tooltip.pensionActive'),
-                yes: t('beta.results.yes'),
-                no: t('beta.results.no'),
-              }}
-              formatCurrency={(value) => currencyFormatter.format(value)}
-              initialCapital={result.currentInvestedAssets}
-              monthlyContribution={result.monthlyContribution}
-              points={result.projection}
-            />
+          <div className='min-w-0 w-full lg:col-span-2'>
+            {projectionChartProps ? <FireTrackerProjectionChart {...projectionChartProps} /> : null}
           </div>
-          <div className='w-full lg:col-span-2'>
+          <div className='min-w-0 w-full lg:col-span-2'>
             <FireTrackerResults
               title={t('beta.results.title')}
-              summaryText={t(
-                `beta.results.summaries.${result.planStatus as FireTrackerPlanStatus}`,
-              )}
-              items={resultItems}
+              summaryText={resultViewModel?.summaryText}
+              items={resultViewModel?.resultItems ?? []}
             />
           </div>
         </>

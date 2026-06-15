@@ -23,7 +23,7 @@ export function FireTrackerCard({
   return (
     <section
       className={cn(
-        'section-grid w-full rounded-[var(--radius-md)] border border-border-token bg-surface-strong p-4 md:p-5',
+        'section-grid min-w-0 w-full rounded-[var(--radius-md)] border border-border-token bg-surface-strong p-4 md:p-5',
         className,
       )}
     >

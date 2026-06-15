@@ -37,6 +37,7 @@ export type ResultItem = {
   key: string;
   label: string;
   value: string;
+  valueType?: 'numeric' | 'text';
   tone?: 'positive' | 'warning';
   progressPercent?: number;
 };

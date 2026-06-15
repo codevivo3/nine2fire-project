@@ -18,6 +18,11 @@
       "body": "Content is provided as-is, without guarantees of accuracy or completeness. It is not intended as professional advice."
     },
 
+    "financialTools": {
+      "title": "Financial tools",
+      "body": "Calculators, projections, examples, and simulations provided on this site are illustrative only. They rely on assumptions that may not reflect future market conditions, personal circumstances, or actual investment results."
+    },
+
     "liability": {
       "title": "Liability",
       "body": "The site owner is not liable for any loss or damage resulting from the use of this site or reliance on its content."
@@ -30,7 +35,7 @@
 
     "contact": {
       "title": "Contact",
-      "body": "For any questions regarding these terms, you can contact the site owner through the available channels."
+      "body": "If you have questions regarding these terms, privacy practices, or the content of this site, you can reach out through the contact information provided on Nine2Fire."
     }
   }
 }

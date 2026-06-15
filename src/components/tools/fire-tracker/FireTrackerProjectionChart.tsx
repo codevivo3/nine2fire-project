@@ -1,34 +1,10 @@
-/**
- * FILE: src/components/tools/fire-tracker/FireTrackerProjectionChart.tsx
- *
- * PURPOSE:
- * - Prepares the FIRE Tracker projection chart view model and wires hover/help state into subcomponents
- */
 import { useState } from 'react';
 import { FireTrackerCard } from './FireTrackerCard';
 import { FireTrackerChartLegend } from './FireTrackerChartLegend';
 import { FireTrackerChartSvg } from './FireTrackerChartSvg';
 import { FireTrackerChartTooltip } from './FireTrackerChartTooltip';
-import {
-  buildLinePath,
-  CHART_HEIGHT,
-  CHART_PADDING_BOTTOM,
-  CHART_PADDING_LEFT,
-  CHART_PADDING_RIGHT,
-  CHART_PADDING_TOP,
-  CHART_WIDTH,
-  getChartXForAge,
-  getChartXForIndex,
-  getChartYForValue,
-  getRoundedScaleMax,
-} from './fireTrackerChartHelpers';
-import type {
-  ChartEndLabel,
-  ChartMarkerLine,
-  ChartScaleTick,
-  ChartSeries,
-  FireTrackerProjectionChartProps,
-} from './fireTrackerChartTypes';
+import { buildFireTrackerProjectionViewModel } from './chart/fireTrackerProjectionViewModel';
+import type { FireTrackerProjectionChartProps } from './fireTrackerChartTypes';
 
 export function FireTrackerProjectionChart({
   title,
@@ -50,177 +26,46 @@ export function FireTrackerProjectionChart({
     return null;
   }
 
-  const finalPoint = points[points.length - 1];
-  const startAge = points[0]?.age ?? 0;
-  const endAge = finalPoint.age;
-  const contributionValues = points.map(
-    (point, index) => initialCapital + index * 12 * monthlyContribution,
-  );
-  const portfolioValues = points.flatMap((point, index) => [
-    point.portfolioWithContributions,
-    point.portfolioWithoutContributions,
-    contributionValues[index],
+  const {
+    endLabels,
+    finalPoint,
+    fireTargetY,
+    hideEndLabel,
+    hideStartLabel,
+    hoveredPoint,
+    initialCapitalY,
+    innerHeight,
+    markerLines,
+    maxValue,
+    minValue,
+    series,
+    tooltipGap,
+    tooltipPlacement,
+    visibleScaleTicks,
+    xForIndex,
+    yForValue,
+  } = buildFireTrackerProjectionViewModel({
+    startLabel,
+    endLabel,
+    legend,
+    markers,
+    formatCurrency,
     initialCapital,
-  ]);
-  const minValue = Math.min(0, ...portfolioValues);
-  const maxPortfolioValue = Math.max(...portfolioValues);
-  const maxReferenceValue = Math.max(maxPortfolioValue, finalPoint.fireNumber);
-  const maxValue = maxReferenceValue === 0 ? 1 : getRoundedScaleMax(maxReferenceValue * 1.08);
-  const innerWidth = CHART_WIDTH - CHART_PADDING_LEFT - CHART_PADDING_RIGHT;
-  const innerHeight = CHART_HEIGHT - CHART_PADDING_TOP - CHART_PADDING_BOTTOM;
-  const hoveredPoint = hoveredIndex === null ? null : points[hoveredIndex];
-
-  const xForIndex = (index: number) =>
-    getChartXForIndex(index, points.length, innerWidth);
-  const xForAge = (age: number) =>
-    getChartXForAge(age, startAge, endAge, innerWidth);
-  const yForValue = (value: number) =>
-    getChartYForValue(value, minValue, maxValue, innerHeight);
-
-  const series: ChartSeries[] = [
-    {
-      label: legend.totalPortfolio,
-      lineClassName: 'text-chart-total',
-      textClassName: 'fill-chart-total-label',
-      dotClassName: 'bg-chart-total',
-      linePath: buildLinePath(
-        points.map((point) => point.portfolioWithContributions),
-        minValue,
-        maxValue,
-        innerWidth,
-        innerHeight,
-      ),
-      finalValue: finalPoint.portfolioWithContributions,
-      strokeWidth: 4.5,
-    },
-    {
-      label: legend.currentCapitalGrowth,
-      lineClassName: 'text-chart-capital',
-      textClassName: 'fill-chart-capital',
-      dotClassName: 'bg-chart-capital',
-      linePath: buildLinePath(
-        points.map((point) => point.portfolioWithoutContributions),
-        minValue,
-        maxValue,
-        innerWidth,
-        innerHeight,
-      ),
-      finalValue: finalPoint.portfolioWithoutContributions,
-      strokeWidth: 2.5,
-    },
-    {
-      label: legend.capitalInvested,
-      lineClassName: 'text-chart-contributions',
-      textClassName: 'fill-chart-contributions',
-      dotClassName: 'bg-chart-contributions',
-      linePath: buildLinePath(
-        contributionValues,
-        minValue,
-        maxValue,
-        innerWidth,
-        innerHeight,
-      ),
-      finalValue: contributionValues[contributionValues.length - 1] ?? initialCapital,
-      strokeWidth: 2,
-      strokeDasharray: '9 7',
-    },
-  ];
-
-  const fireTargetY = yForValue(finalPoint.fireNumber);
-  const scaleTicks: ChartScaleTick[] = [0, 0.25, 0.5, 0.75, 1].map((ratio) => {
-    const value = minValue + (maxValue - minValue) * ratio;
-    return {
-      value,
-      y: yForValue(value),
-    };
+    monthlyContribution,
+    points,
+    hoveredIndex,
   });
-  const initialCapitalY = yForValue(initialCapital);
-  const valueLabelX = CHART_WIDTH + 8;
-  const endLabels: ChartEndLabel[] = [
-    {
-      key: series[0].label,
-      label: formatCurrency(series[0].finalValue),
-      x: valueLabelX,
-      y: yForValue(series[0].finalValue) + 5,
-      className: series[0].textClassName,
-    },
-    {
-      key: series[2].label,
-      label: formatCurrency(series[2].finalValue),
-      x: valueLabelX,
-      y: yForValue(series[2].finalValue) + 5,
-      className: series[2].textClassName,
-    },
-  ];
-  const visibleScaleTicks = scaleTicks.filter((tick) => {
-    const overlapsFinalLabel = endLabels.some(
-      (label) => Math.abs(tick.y - label.y) < 20,
-    );
-    return !overlapsFinalLabel;
-  });
-  const tooltipLeft =
-    hoveredIndex === null ? 0 : Math.min(Math.max((xForIndex(hoveredIndex) / CHART_WIDTH) * 100, 18), 82);
-  const tooltipGap =
-    hoveredPoint === null
-      ? 0
-      : Math.max(hoveredPoint.fireNumber - hoveredPoint.portfolioWithContributions, 0);
-  const rightEdgeMarkerThreshold = CHART_WIDTH - CHART_PADDING_RIGHT - 40;
-  const retirementMarkerX = xForAge(markers.retirementAge.age);
-  const pensionMarkerX = xForAge(markers.pensionStartAge.age);
-  const fireMarkerX = markers.fireAge ? xForAge(markers.fireAge.age) : null;
-  const markerLabelBaseY = CHART_PADDING_TOP + 22;
-  const markerLabelStackedY = CHART_PADDING_TOP + 40;
-  const markerLineGap = 10;
-  const shouldStackTimelineMarkers = Math.abs(retirementMarkerX - pensionMarkerX) < 80;
-  const markerLines: ChartMarkerLine[] = [
-    {
-      key: 'retirement',
-      age: markers.retirementAge.age,
-      label: markers.retirementAge.label,
-      x: retirementMarkerX,
-      y: markerLabelBaseY,
-      lineStartY: markerLabelBaseY + markerLineGap,
-      textAnchor: 'middle',
-      lineClassName: 'stroke-foreground/64',
-      labelClassName: 'fill-foreground/64 text-[13px] font-semibold',
-    },
-    {
-      key: 'pension',
-      age: markers.pensionStartAge.age,
-      label: markers.pensionStartAge.label,
-      x: pensionMarkerX,
-      y: shouldStackTimelineMarkers ? markerLabelStackedY : markerLabelBaseY,
-      lineStartY: (shouldStackTimelineMarkers ? markerLabelStackedY : markerLabelBaseY) + markerLineGap,
-      textAnchor: 'middle',
-      lineClassName: 'stroke-foreground/42',
-      labelClassName: 'fill-foreground/42 text-[13px] font-semibold',
-    },
-    ...(markers.fireAge
-      ? [{
-          key: 'fire',
-          age: markers.fireAge.age,
-          label: markers.fireAge.label,
-          x: fireMarkerX ?? CHART_PADDING_LEFT,
-          y: CHART_PADDING_TOP + 22,
-          textAnchor: (fireMarkerX ?? 0) >= rightEdgeMarkerThreshold ? 'end' as const : 'start' as const,
-          lineClassName: 'stroke-chart-target/65',
-          lineStrokeWidth: 1.5,
-          labelClassName: 'fill-chart-target text-[13px] font-bold',
-          showLabelBadge: true,
-        }]
-      : []),
-  ];
 
   return (
-    <FireTrackerCard title={title} className='h-full content-start gap-3 xl:p-5'>
+    <FireTrackerCard title={title} className='min-w-0 h-full content-start gap-2 xl:p-4'>
       <div
-        className='relative overflow-visible rounded-[var(--radius-sm)] border border-border-token/70 bg-surface/50 px-0.5 py-3 sm:px-1 xl:px-1.5'
+        className='relative min-w-0 overflow-x-hidden overflow-y-visible rounded-[var(--radius-sm)] border border-border-token/70 bg-surface/50 px-0.5 py-2 sm:px-1 xl:px-1'
         onMouseLeave={() => setHoveredIndex(null)}
       >
         {hoveredPoint ? (
           <FireTrackerChartTooltip
             point={hoveredPoint}
-            leftPercent={tooltipLeft}
+            placement={tooltipPlacement}
             labels={tooltipLabels}
             gap={tooltipGap}
             formatCurrency={formatCurrency}
@@ -246,6 +91,8 @@ export function FireTrackerProjectionChart({
           maxValue={maxValue}
           hoveredIndex={hoveredIndex}
           hoveredPoint={hoveredPoint}
+          hideStartLabel={hideStartLabel}
+          hideEndLabel={hideEndLabel}
           xForIndex={xForIndex}
           yForValue={yForValue}
           onHoverIndex={setHoveredIndex}

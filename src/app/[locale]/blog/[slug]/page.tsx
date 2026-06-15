@@ -15,7 +15,7 @@
  * - Article rendering should remain stable when the source moves to Sanity
  */
 import { draftMode } from "next/headers";
-import { setRequestLocale } from "next-intl/server";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { ArticleLayout } from "@/components/blog/ArticleLayout";
 import { PortableTextContent } from "@/components/blog/PortableTextContent";
@@ -92,6 +92,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
   const { locale, slug } = await params;
   const { isEnabled: isDraftMode } = await draftMode();
   setRequestLocale(locale);
+  const t = await getTranslations({ locale, namespace: "Blog" });
 
   const post = await getSanityPostBySlug(slug, locale, { preview: isDraftMode });
 
@@ -110,6 +111,8 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
       imageData={post.coverImageData}
       excerpt={post.excerpt}
       tags={post.allTags}
+      archiveCtaTitle={t('article.archiveCta.title')}
+      archiveCtaLabel={t('article.archiveCta.link')}
     >
       <div className="mt-6 space-y-4 max-w-[680px]">
         <PortableTextContent value={post.body} locale={locale} />

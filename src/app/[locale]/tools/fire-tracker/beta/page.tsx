@@ -26,11 +26,11 @@ export default async function FireTrackerBetaPage({
 
   return (
     <main className="flex flex-1 flex-col pt-14">
-      <Container className="flex flex-1 flex-col py-4">
+      <Container className="flex min-w-0 flex-1 flex-col py-4">
         <FireTrackerBetaGuard>
-          <div className="flex flex-1 flex-col justify-center gap-6 md:gap-8">
-            <div className="grid gap-5 lg:grid-cols-2 lg:items-center">
-              <div className="section-grid gap-4">
+          <div className="flex min-w-0 flex-1 flex-col justify-center gap-5 md:gap-6">
+            <div className="grid min-w-0 gap-4 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:items-center">
+              <div className="section-grid min-w-0 gap-4">
                 <p className="pl-[4px] text-xs font-semibold uppercase tracking-[0.18em] text-accent-eyebrow-token opacity-90">
                   {t("beta.eyebrow")}
                 </p>
@@ -45,9 +45,9 @@ export default async function FireTrackerBetaPage({
               <FireTrackerCalculator />
             </div>
 
-            <p className="max-w-2xl text-[11px] leading-4 text-foreground/60 md:text-xs md:leading-5">
+            {/* <p className="max-w-2xl text-[11px] leading-4 text-foreground/60 md:text-xs md:leading-5">
               {t("beta.note")}
-            </p>
+            </p> */}
           </div>
         </FireTrackerBetaGuard>
       </Container>

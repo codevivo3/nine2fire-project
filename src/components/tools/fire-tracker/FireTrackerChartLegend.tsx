@@ -23,7 +23,7 @@ export function FireTrackerChartLegend({
 }: FireTrackerChartLegendProps) {
   return (
     <>
-      <div className='flex flex-wrap items-center gap-x-6 gap-y-2 text-xs leading-4 text-foreground/78'>
+      <div className='flex flex-wrap items-center gap-x-4 gap-y-1.5 text-xs leading-4 text-foreground/78'>
         {series.map((item) => (
           <div key={item.label} className='flex items-center gap-2'>
             <span className={`h-2.5 w-2.5 rounded-full ${item.dotClassName}`} />
@@ -39,7 +39,7 @@ export function FireTrackerChartLegend({
       <div className='rounded-[var(--radius-sm)] border border-border-token/60 bg-surface/30'>
         <button
           type='button'
-          className='flex w-full items-center justify-between gap-3 px-3 py-2 text-left text-xs font-medium text-foreground/72 transition-colors hover:text-foreground'
+          className='flex w-full items-center justify-between gap-3 px-3 py-1 text-left text-xs font-medium text-foreground/72 transition-colors hover:text-foreground'
           aria-expanded={isHelpOpen}
           onClick={onToggleHelp}
         >
@@ -58,7 +58,7 @@ export function FireTrackerChartLegend({
           }`}
         >
           <div className='overflow-hidden'>
-            <ol className='space-y-2 px-3 pb-3 text-xs leading-5 text-foreground/64'>
+            <ol className='space-y-1.5 px-3 pb-2 text-xs leading-5 text-foreground/64'>
               {help.items.map((item, index) => (
                 <li key={item} className='flex gap-2'>
                   <span className='text-foreground/40'>{index + 1}.</span>

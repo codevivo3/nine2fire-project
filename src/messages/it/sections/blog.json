@@ -6,7 +6,14 @@
     "sections": {
       "featured": "In evidenza",
       "latest": "Ultime note",
-      "archive": "Archivio"
+      "archive": "Archivio",
+      "archiveCta": "Sfoglia l'archivio →"
+    },
+    "article": {
+      "archiveCta": {
+        "title": "Continua a esplorare il journal.",
+        "link": "Sfoglia l'archivio →"
+      }
     }
   }
 }

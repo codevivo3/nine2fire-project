@@ -105,7 +105,7 @@ export function FireTrackerInputField({
               }}
               onFocus={() => onFocus(field.key)}
               onBlur={onBlur}
-              className={`h-9 w-full rounded-full border border-border-token bg-input px-3.5 text-sm font-medium text-primary-token outline-none placeholder:text-primary-token/40 focus:border-accent-token${
+              className={`numeric-value h-9 w-full rounded-full border border-border-token bg-input px-3.5 text-sm font-medium text-primary-token outline-none placeholder:text-primary-token/40 focus:border-accent-token${
                 adornment ? ' pr-8' : ''
               }`}
             />

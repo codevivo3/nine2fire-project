@@ -1,4 +1,4 @@
-/**
+/*****
  * PURPOSE:
  * Defines the global token system and document-level styling primitives.
  *
@@ -144,6 +144,7 @@ html.dark {
   --color-input: var(--color-input);
 
   --font-sans: var(--font-manrope);
+  --font-mono: var(--font-roboto-mono);
 }
 
 /* =========================================================
@@ -292,8 +293,21 @@ input:disabled {
   right: 6%;
 }
 
+.link-highlight--article-archive::before {
+  left: -5px;
+  right: -8px;
+  top: 65%;
+  height: 152%;
+
+  transform: translateY(-45%) rotate(-19deg) scaleX(0);
+}
+
 .link-highlight:hover::before {
   transform: translateY(-50%) rotate(-10deg) scaleX(1);
+}
+
+.link-highlight--article-archive:hover::before {
+  transform: translateY(-45%) rotate(-3deg) scaleX(1);
 }
 
 .link-highlight:hover {
@@ -328,6 +342,12 @@ html.dark .logo-dark {
   /* Consistent vertical rhythm */
   display: grid;
   gap: 1.5rem;
+}
+
+.numeric-value {
+  font-family: var(--font-mono), monospace;
+  font-variant-numeric: tabular-nums lining-nums;
+  font-feature-settings: 'tnum' 1, 'lnum' 1;
 }
 
 @media (min-width: 768px) {

@@ -15,8 +15,9 @@
 import type { ReactNode } from "react";
 
 import { formatPostDate } from "@/lib/blog/formatPostDate";
-import { Link } from "@/i18n/navigation";
 import { routes } from "@/config/routes";
+import { ActionTextLink } from "@/components/ui/ActionTextLink";
+import { Link } from "@/i18n/navigation";
 import type { AppLocale } from "@/i18n/routing";
 import { EditorialImage } from "@/components/ui/EditorialImage";
 import {
@@ -35,6 +36,8 @@ type ArticleLayoutProps = {
   imageData?: SanityImageValue;
   excerpt?: string;
   tags?: string[];
+  archiveCtaTitle: string;
+  archiveCtaLabel: string;
   children: ReactNode;
 };
 
@@ -48,6 +51,8 @@ export function ArticleLayout({
   imageData,
   excerpt,
   tags,
+  archiveCtaTitle,
+  archiveCtaLabel,
   children,
 }: ArticleLayoutProps) {
   const portraitCover = isPortraitImage(imageData);
@@ -109,6 +114,20 @@ export function ArticleLayout({
 
       <div className="mt-2 space-y-4 text-[15px] leading-7 text-foreground/90 [&>p:first-child]:text-[17px] [&>p:first-child]:leading-8 [&>p:first-child]:font-medium">
         {children}
+      </div>
+
+      <div className="border-t border-border-token/60 pt-6">
+        <div className="space-y-2">
+          <p className="text-sm font-medium text-foreground/78">
+            {archiveCtaTitle}
+          </p>
+          <ActionTextLink
+            href={routes.blog}
+            className="link-highlight--article-archive"
+          >
+            {archiveCtaLabel}
+          </ActionTextLink>
+        </div>
       </div>
     </article>
   );
