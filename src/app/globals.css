@@ -33,8 +33,7 @@ html.light {
   --chart-total-label: #9a6a00;
   --chart-contributions: #007acc;
   --chart-capital: var(--color-button-text-dark);
-  --chart-target: #368D55
-;
+  --chart-target: #368d55;
 
   --color-accent-eyebrow: var(--color-primary);
 
@@ -49,7 +48,7 @@ html.light {
 
   /* Surfaces & UI layers */
   --color-border: color-mix(in srgb, #738678 42%, #d6f3c4 58%);
-  --color-surface: #d6f3c4; 
+  --color-surface: #d6f3c4;
   --color-surface-strong: #f8f8f4;
 
   /* Text / utility */
@@ -293,6 +292,7 @@ input:disabled {
   right: 6%;
 }
 
+.link-highlight--archive::before,
 .link-highlight--article-archive::before {
   left: -5px;
   right: -8px;
@@ -306,6 +306,7 @@ input:disabled {
   transform: translateY(-50%) rotate(-10deg) scaleX(1);
 }
 
+.link-highlight--archive:hover::before,
 .link-highlight--article-archive:hover::before {
   transform: translateY(-45%) rotate(-3deg) scaleX(1);
 }
@@ -347,7 +348,9 @@ html.dark .logo-dark {
 .numeric-value {
   font-family: var(--font-mono), monospace;
   font-variant-numeric: tabular-nums lining-nums;
-  font-feature-settings: 'tnum' 1, 'lnum' 1;
+  font-feature-settings:
+    'tnum' 1,
+    'lnum' 1;
 }
 
 @media (min-width: 768px) {

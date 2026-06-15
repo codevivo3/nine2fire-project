@@ -17,11 +17,10 @@
 import type { Metadata } from "next";
 import { draftMode } from 'next/headers';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
-import { BlogList } from '@/components/blog/BlogList';
+import { BlogArchiveList } from '@/components/blog/BlogArchiveList';
 import { routes } from '@/config/routes';
 import { EditorialImage } from '@/components/ui/EditorialImage';
 import { ScrollCue } from '@/components/ui/ScrollCue';
-import { ActionTextLink } from '@/components/ui/ActionTextLink';
 import { Link } from '@/i18n/navigation';
 import { formatPostDate } from '@/lib/blog/formatPostDate';
 import type { AppLocale } from '@/i18n/routing';
@@ -133,35 +132,15 @@ export default async function BlogPage({ params }: BlogPageProps) {
         </section>
       ) : null}
 
-      {latestPosts.length ? (
-        <section className='space-y-6 mt-48 2xl:mt-72'>
-          <div className='flex items-center justify-between gap-4 border-b border-border/50 pb-4'>
-            <h2 className={sectionLabelClassName}>{t('sections.latest')}</h2>
-          </div>
-
-          <BlogList posts={latestPosts} locale={locale} variant='latest' />
-
-          {archivePosts.length ? (
-            <div className='pt-1'>
-              <ActionTextLink href='#archive'>
-                {t('sections.archiveCta')}
-              </ActionTextLink>
-            </div>
-          ) : null}
-        </section>
-      ) : null}
-
-      {archivePosts.length ? (
-        <section id='archive' className='space-y-6'>
-          <div className='flex items-center justify-between gap-4 mt-32 2xl:mt-40'>
-            <h2 className={sectionLabelClassName}>{t('sections.archive')}</h2>
-          </div>
-
-          <div className="-mt-2">
-            <BlogList posts={archivePosts} locale={locale} variant='archive' />
-          </div>
-        </section>
-      ) : null}
+      <BlogArchiveList
+        locale={locale}
+        latestPosts={latestPosts}
+        archivePosts={archivePosts}
+        latestLabel={t('sections.latest')}
+        archiveLabel={t('sections.archive')}
+        archiveCtaLabel={t('sections.archiveCta')}
+        sectionLabelClassName={sectionLabelClassName}
+      />
     </main>
   );
 }

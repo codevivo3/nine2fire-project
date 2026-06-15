@@ -49,7 +49,7 @@ export function BlogCard({
   }
 
   return (
-    <article className="border-t border-border/50 py-8 first:border-t-0 first:pt-0">
+    <article className="border-t border-border/50 py-6 first:border-t-0 first:pt-0">
       <div className="flex flex-col gap-5 md:flex-row md:items-start md:justify-between">
         <div className="min-w-0 flex-1 space-y-3">
           <Link
@@ -85,14 +85,14 @@ export function BlogCard({
         {post.coverImage ? (
           <Link
             href={routes.blogPost(post.slug)}
-            className="order-first overflow-hidden rounded-sm md:order-none md:w-32 md:shrink-0"
+            className="order-first overflow-hidden rounded-sm md:order-none md:w-48 md:shrink-0"
           >
             <EditorialImage
               src={post.coverImage}
               alt={post.coverImageAlt || post.title}
-              width={160}
-              height={120}
-              imageClassName="h-24 w-full object-cover md:h-20"
+              width={320}
+              height={240}
+              imageClassName="h-40 w-full object-cover md:h-28"
             />
           </Link>
         ) : null}
