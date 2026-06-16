@@ -48,7 +48,7 @@ export async function Footer({ locale }: FooterProps) {
   `;
 
   return (
-    <footer className='bg-surface/80 backdrop-blur-md text-[color:var(--color-fg)]'>
+    <footer className='bg-surface/80 pb-[env(safe-area-inset-bottom)] backdrop-blur-md text-[color:var(--color-fg)]'>
       <Container className='section-grid grid-cols-2 py-12 md:grid-cols-[2fr_1fr_1fr_1fr] md:items-start'>
         <div className='section-grid gap-4 order-1 col-span-2 md:col-span-1 md:order-none'>
           <BrandLogo />

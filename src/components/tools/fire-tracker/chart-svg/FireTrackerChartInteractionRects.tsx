@@ -6,6 +6,7 @@ type FireTrackerChartInteractionRectsProps = {
   innerHeight: number;
   chartTopY: number;
   xForIndex: (index: number) => number;
+  canHover: boolean;
   onHoverIndex: (index: number) => void;
 };
 
@@ -15,6 +16,7 @@ export function FireTrackerChartInteractionRects({
   innerHeight,
   chartTopY,
   xForIndex,
+  canHover,
   onHoverIndex,
 }: FireTrackerChartInteractionRectsProps) {
   return points.map((point, index) => {
@@ -29,8 +31,8 @@ export function FireTrackerChartInteractionRects({
         width={width}
         height={innerHeight}
         fill='transparent'
-        onMouseEnter={() => onHoverIndex(index)}
-        onMouseMove={() => onHoverIndex(index)}
+        onMouseEnter={canHover ? () => onHoverIndex(index) : undefined}
+        onMouseMove={canHover ? () => onHoverIndex(index) : undefined}
       />
     );
   });

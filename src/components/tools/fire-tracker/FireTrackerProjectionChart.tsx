@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { FireTrackerCard } from './FireTrackerCard';
 import { FireTrackerChartLegend } from './FireTrackerChartLegend';
 import { FireTrackerChartSvg } from './FireTrackerChartSvg';
@@ -21,6 +21,20 @@ export function FireTrackerProjectionChart({
 }: FireTrackerProjectionChartProps) {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const [isHelpOpen, setIsHelpOpen] = useState(false);
+  const [canHover, setCanHover] = useState(false);
+  const activeHoveredIndex = canHover ? hoveredIndex : null;
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia('(hover: hover) and (pointer: fine)');
+    const updateCanHover = () => setCanHover(mediaQuery.matches);
+
+    updateCanHover();
+    mediaQuery.addEventListener('change', updateCanHover);
+
+    return () => {
+      mediaQuery.removeEventListener('change', updateCanHover);
+    };
+  }, []);
 
   if (points.length === 0) {
     return null;
@@ -53,14 +67,14 @@ export function FireTrackerProjectionChart({
     initialCapital,
     monthlyContribution,
     points,
-    hoveredIndex,
+    hoveredIndex: activeHoveredIndex,
   });
 
   return (
     <FireTrackerCard title={title} className='min-w-0 h-full content-start gap-2 xl:p-4'>
       <div
-        className='relative min-w-0 overflow-x-hidden overflow-y-visible rounded-[var(--radius-sm)] border border-border-token/70 bg-surface/50 px-0.5 py-2 sm:px-1 xl:px-1'
-        onMouseLeave={() => setHoveredIndex(null)}
+        className='relative min-w-0 overflow-x-hidden overflow-y-visible rounded-[var(--radius-sm)] border border-border-token/70 bg-surface/50 px-0.5 py-2 sm:px-1 md:px-3 lg:px-1 xl:px-1'
+        onMouseLeave={canHover ? () => setHoveredIndex(null) : undefined}
       >
         {hoveredPoint ? (
           <FireTrackerChartTooltip
@@ -93,6 +107,7 @@ export function FireTrackerProjectionChart({
           hoveredPoint={hoveredPoint}
           hideStartLabel={hideStartLabel}
           hideEndLabel={hideEndLabel}
+          canHover={canHover}
           xForIndex={xForIndex}
           yForValue={yForValue}
           onHoverIndex={setHoveredIndex}

@@ -43,6 +43,7 @@ type FireTrackerChartSvgProps = {
   hoveredPoint: ProjectionChartPoint | null;
   hideStartLabel: boolean;
   hideEndLabel: boolean;
+  canHover: boolean;
   xForIndex: (index: number) => number;
   yForValue: (value: number) => number;
   onHoverIndex: (index: number) => void;
@@ -69,6 +70,7 @@ export function FireTrackerChartSvg({
   hoveredPoint,
   hideStartLabel,
   hideEndLabel,
+  canHover,
   xForIndex,
   yForValue,
   onHoverIndex,
@@ -138,6 +140,7 @@ export function FireTrackerChartSvg({
         innerHeight={innerHeight}
         chartTopY={CHART_PADDING_TOP}
         xForIndex={xForIndex}
+        canHover={canHover}
         onHoverIndex={onHoverIndex}
       />
     </svg>

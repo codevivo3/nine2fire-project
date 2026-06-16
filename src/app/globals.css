@@ -302,17 +302,19 @@ input:disabled {
   transform: translateY(-45%) rotate(-19deg) scaleX(0);
 }
 
-.link-highlight:hover::before {
-  transform: translateY(-50%) rotate(-10deg) scaleX(1);
-}
+@media (hover: hover) and (pointer: fine) {
+  .link-highlight:hover::before {
+    transform: translateY(-50%) rotate(-10deg) scaleX(1);
+  }
 
-.link-highlight--archive:hover::before,
-.link-highlight--article-archive:hover::before {
-  transform: translateY(-45%) rotate(-3deg) scaleX(1);
-}
+  .link-highlight--archive:hover::before,
+  .link-highlight--article-archive:hover::before {
+    transform: translateY(-45%) rotate(-3deg) scaleX(1);
+  }
 
-.link-highlight:hover {
-  color: var(--color-highlight-text);
+  .link-highlight:hover {
+    color: var(--color-highlight-text);
+  }
 }
 
 /* =========================================================
