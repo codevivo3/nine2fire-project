@@ -45,7 +45,7 @@ export function Navbar() {
       >
         <BrandLogo className='shrink-0' />
 
-        <nav className='hidden items-center gap-8 md:flex absolute left-1/2 -translate-x-1/2'>
+        <nav className='absolute left-1/2 hidden -translate-x-1/2 items-center gap-8 lg:flex'>
           {mainNavLinks.map((link) => (
             <NavLink key={link.href} href={link.href}>
               {t(link.labelKey)}
@@ -53,11 +53,11 @@ export function Navbar() {
           ))}
         </nav>
 
-        <div className='flex items-center gap-2 md:ml-auto'>
+        <div className='flex items-center gap-2 lg:ml-auto'>
           {/* Keep these controls mounted so their internal state persists while hidden. */}
           <div
             className={cn(
-              'hidden items-center gap-2 md:flex transition-all duration-200 ease-out',
+              'hidden items-center gap-2 transition-all duration-200 ease-out lg:flex',
               isOpen
                 ? 'opacity-100 translate-x-0'
                 : 'opacity-0 translate-x-6 pointer-events-none',
@@ -131,7 +131,7 @@ export function Navbar() {
       <div
         id='mobile-navigation'
         className={cn(
-          'bg-background/95 backdrop-blur-sm md:hidden',
+          'bg-background/95 backdrop-blur-sm lg:hidden',
           isOpen ? 'block' : 'hidden',
         )}
       >

@@ -23,9 +23,9 @@ export function NewsletterSection() {
   return (
     <section>
       <Container className='py-16 md:py-24'>
-        <div className='rounded-[var(--radius-lg)] border border-border-token bg-surface p-6 backdrop-blur-lg md:p-10'>
-          <div className='section-grid gap-8 md:grid-cols-[minmax(0,1fr)_minmax(280px,420px)] md:items-end'>
-            <div className='section-grid gap-4'>
+        <div className='rounded-[var(--radius-lg)] border border-border-token bg-surface p-6 backdrop-blur-lg md:p-8 lg:p-10'>
+          <div className='grid gap-8 md:grid-cols-[2fr_1fr] md:items-center md:gap-6 lg:gap-8'>
+            <div className='section-grid gap-4 md:min-w-0'>
               <p className='text-xs font-semibold uppercase tracking-[0.18em] text-accent-eyebrow-token'>
                 {t('eyebrow')}
               </p>
@@ -38,7 +38,7 @@ export function NewsletterSection() {
             </div>
 
             <form
-              className='section-grid gap-3'
+              className='section-grid gap-3 md:w-full md:max-w-sm md:justify-self-end'
               onSubmit={async (e) => {
                 e.preventDefault();
                 if (isSubmitting) return;
