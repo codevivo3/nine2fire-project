@@ -9,27 +9,27 @@
  * - Locale resolution falls back to English for routes that render outside the
  *   localized segment tree.
  */
-import type { Metadata } from "next";
-import { Analytics } from "@vercel/analytics/react";
-import { Manrope, Roboto_Mono } from "next/font/google";
-import { ThemeBootstrap } from "@/components/theme/ThemeBootstrap";
-import { getProductionSiteUrl, isProduction } from "@/lib/env";
-import { HOME_SEO_DESCRIPTION } from "@/lib/metadata";
-import { THEME_STORAGE_KEY } from "@/lib/theme";
-import "./globals.css";
+import type { Metadata } from 'next';
+import { Analytics } from '@vercel/analytics/react';
+import { Manrope, Roboto_Mono } from 'next/font/google';
+import { ThemeBootstrap } from '@/components/theme/ThemeBootstrap';
+import { getProductionSiteUrl, isProduction } from '@/lib/env';
+import { HOME_SEO_DESCRIPTION } from '@/lib/metadata';
+import { THEME_STORAGE_KEY } from '@/lib/theme';
+import './globals.css';
 
 const manrope = Manrope({
-  variable: "--font-manrope",
-  subsets: ["latin"],
-  weight: ["400", "600", "700", "800"],
-  display: "swap",
+  variable: '--font-manrope',
+  subsets: ['latin'],
+  weight: ['400', '600', '700', '800'],
+  display: 'swap',
 });
 
 const robotoMono = Roboto_Mono({
-  variable: "--font-roboto-mono",
-  subsets: ["latin"],
-  weight: ["400", "500", "700"],
-  display: "swap",
+  variable: '--font-roboto-mono',
+  subsets: ['latin'],
+  weight: ['400', '500', '700'],
+  display: 'swap',
 });
 
 /**
@@ -40,10 +40,10 @@ const robotoMono = Roboto_Mono({
 const productionSiteUrl = getProductionSiteUrl();
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL?.trim() || productionSiteUrl;
 const openGraphImage = {
-  url: "/opengraph-image.png",
+  url: '/opengraph-image.png',
   width: 1200,
   height: 630,
-  alt: "Nine2Fire",
+  alt: 'Nine2Fire',
 };
 
 export const metadata: Metadata = {
@@ -51,32 +51,35 @@ export const metadata: Metadata = {
   // preview deployments never become the indexed source of truth.
   metadataBase: new URL(siteUrl),
   alternates: {
-    canonical: "/",
+    canonical: '/',
   },
   title: {
-    default: "Nine2Fire",
-    template: "%s | Nine2Fire",
+    default: 'Nine2Fire',
+    template: '%s | Nine2Fire',
   },
   description: HOME_SEO_DESCRIPTION,
   keywords: [
-    "financial independence",
-    "FIRE",
-    "wealth systems",
-    "investing",
-    "personal finance",
+    'financial independence',
+    'FIRE',
+    'wealth systems',
+    'investing',
+    'personal finance',
   ],
+  other: {
+    'impact-site-verification': 'da9465cf-8bbc-48d7-91ee-d7102cef508d',
+  },
   openGraph: {
-    title: "Nine2Fire",
+    title: 'Nine2Fire',
     description: HOME_SEO_DESCRIPTION,
     url: siteUrl,
-    siteName: "Nine2Fire",
-    locale: "en",
-    type: "website",
+    siteName: 'Nine2Fire',
+    locale: 'en',
+    type: 'website',
     images: [openGraphImage],
   },
   twitter: {
-    card: "summary_large_image",
-    title: "Nine2Fire",
+    card: 'summary_large_image',
+    title: 'Nine2Fire',
     description: HOME_SEO_DESCRIPTION,
     images: [openGraphImage.url],
   },
@@ -94,8 +97,8 @@ export const metadata: Metadata = {
           index: false,
           follow: false,
           noimageindex: true,
-          "max-image-preview": "none",
-          "max-snippet": 0,
+          'max-image-preview': 'none',
+          'max-snippet': 0,
         },
       },
   /**
@@ -108,13 +111,13 @@ export const metadata: Metadata = {
    */
   icons: {
     icon: [
-      { url: "/favicon.ico" },
-      { url: "/favicon-512x512.png", sizes: "512x512", type: "image/png" },
-      { url: "/favicon-96x96.png", sizes: "96x96", type: "image/png" }
+      { url: '/favicon.ico' },
+      { url: '/favicon-512x512.png', sizes: '512x512', type: 'image/png' },
+      { url: '/favicon-96x96.png', sizes: '96x96', type: 'image/png' },
     ],
     apple: [
-      { url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" }
-    ]
+      { url: '/apple-touch-icon.png', sizes: '180x180', type: 'image/png' },
+    ],
   },
 };
 
@@ -176,7 +179,7 @@ export default async function RootLayout({
 
   return (
     <html
-      lang="en"
+      lang='en'
       className={`${manrope.variable} ${robotoMono.variable} h-full scroll-smooth antialiased`}
       suppressHydrationWarning
     >
